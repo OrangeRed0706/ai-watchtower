@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {%- if title -%}{{ title }} · {%- endif -%}{{ site.name }}
+    </title>
+    <link rel="stylesheet" href="{{ '/assets/styles.css' | url }}" />
+  </head>
+  <body>
+    {% include "partials/nav.njk" %}
+    <main class="container">
+      <section class="notice" role="note" aria-label="Demo notice">
+        <strong>Demo:</strong> {{ site.notice }}
+      </section>
+      {{ content | safe }}
+    </main>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>{{ site.name }} · {{ site.tagline }}</div>
+        <div>
+          <a href="{{ '/about/' | url }}">About</a> ·
+          <a href="{{ '/sources/' | url }}">Sources</a> ·
+          <a href="{{ '/digests/' | url }}">Archive</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

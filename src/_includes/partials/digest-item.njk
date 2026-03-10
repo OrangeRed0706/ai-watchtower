@@ -1,0 +1,23 @@
+<li class="item">
+  <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+  <p>{{ item.summary }}</p>
+  <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+
+  <div class="meta">
+    <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
+    <span class="pill">{{ item.impactArea }}</span>
+    {% for tag in item.tags %}
+      <span class="pill">#{{ tag }}</span>
+    {% endfor %}
+  </div>
+
+  {% if item.sources and item.sources.length %}
+    <p style="margin-top: 0.6rem;">
+      <strong>Sources:</strong>
+      {% for s in item.sources %}
+        <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+</li>
+

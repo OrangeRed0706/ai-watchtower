@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: Sources
+permalink: /sources/index.html
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Sources</h1>
+    <div class="subtle">{{ sources.length }} configured (sample)</div>
+  </div>
+  <p class="kicker">
+    This list is mock data for the demo site. In the next phase, it will come from the ingestion config and pipeline run state.
+  </p>
+
+  <ul class="items">
+    {% for s in sources %}
+      <li class="item">
+        <h3><a href="{{ s.url }}">{{ s.name }}</a></h3>
+        <div class="meta">
+          <span class="pill">{{ s.category }}</span>
+          <span class="pill">id: {{ s.id }}</span>
+        </div>
+        {% if s.notes %}
+          <p>{{ s.notes }}</p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+

@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+title: Digest archive
+permalink: /digests/index.html
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Digest archive</h1>
+    <div class="subtle">{{ meta.allDigests.length }} day(s)</div>
+  </div>
+  <p class="kicker">
+    Reverse chronological list of daily digests (sample data).
+  </p>
+
+  <ul class="list">
+    {% for d in meta.allDigests %}
+      <li>
+        <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
+        — {{ d.items.length }} item(s)
+      </li>
+    {% endfor %}
+  </ul>
+</section>

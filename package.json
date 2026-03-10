@@ -1,0 +1,14 @@
+{
+  "name": "ai-watchtower",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --watch",
+    "clean": "rm -rf public .cache"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
+

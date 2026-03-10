@@ -1,0 +1,17 @@
+image: node:20
+
+pages:
+  stage: deploy
+  script:
+    - npm install
+    - |
+      if [ -n "${CI_PAGES_URL:-}" ]; then
+        export ELEVENTY_PATH_PREFIX="$(node -e 'const u=new URL(process.env.CI_PAGES_URL); process.stdout.write(u.pathname.endsWith("/") ? u.pathname : u.pathname + "/");')"
+      fi
+    - npm run build
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH
+

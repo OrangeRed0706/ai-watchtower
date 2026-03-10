@@ -1,0 +1,57 @@
+---
+layout: layouts/base.njk
+title: Home
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Latest digest</h1>
+    {% if meta.latestDigest %}
+      <div class="subtle">{{ meta.latestDigest.date | prettyDate }}</div>
+    {% endif %}
+  </div>
+
+  {% if meta.latestDigest %}
+    <p class="kicker">{{ meta.latestDigest.summary }}</p>
+
+    <div class="split" style="margin-top: 1rem;">
+      <div>
+        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Top items</h2>
+        <ol class="items">
+          {% for item in meta.latestDigest.items %}
+            <li class="item">
+              <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              <p>{{ item.summary }}</p>
+              <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+              <div class="meta">
+                <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
+                <span class="pill">{{ item.impactArea }}</span>
+                {% for tag in item.tags %}
+                  <span class="pill">#{{ tag }}</span>
+                {% endfor %}
+              </div>
+            </li>
+          {% endfor %}
+        </ol>
+      </div>
+      <aside class="panel" style="padding: 0.95rem 1rem;">
+        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Quick links</h2>
+        <ul class="list">
+          <li><a href="{{ '/digests/' | url }}">Digest archive</a></li>
+          <li><a href="{{ '/sources/' | url }}">Sources</a></li>
+          <li><a href="{{ '/about/' | url }}">About this project</a></li>
+        </ul>
+        <p class="kicker" style="margin-top: 0.9rem;">
+          GitLab Pages output: <code>public/</code>
+        </p>
+      </aside>
+    </div>
+
+    <p style="margin-top: 1.1rem;">
+      Prefer the full daily page?
+      <a href="{{ ('/digests/' ~ meta.latestDigest.date ~ '/') | url }}">Open {{ meta.latestDigest.date }}</a>.
+    </p>
+  {% else %}
+    <p>No digests available yet.</p>
+  {% endif %}
+</section>

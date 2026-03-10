@@ -1,0 +1,57 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: meta.allDigests
+  size: 1
+  alias: digest
+permalink: "digests/{{ digest.date }}/index.html"
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Daily digest</h1>
+    <div class="subtle">{{ digest.date | prettyDate }}</div>
+  </div>
+
+  <p class="kicker">{{ digest.summary }}</p>
+
+  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">High impact</h2>
+  <ul class="items">
+    {% for item in digest.items %}
+      {% if item.impactLevel == 'high' %}
+        {% include "partials/digest-item.njk" %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">Medium impact</h2>
+  <ul class="items">
+    {% for item in digest.items %}
+      {% if item.impactLevel == 'medium' %}
+        {% include "partials/digest-item.njk" %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">Low impact</h2>
+  <ul class="items">
+    {% for item in digest.items %}
+      {% if item.impactLevel == 'low' %}
+        {% include "partials/digest-item.njk" %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <nav class="pager" aria-label="Digest navigation">
+    <div>
+      {% if pagination.next %}
+        <a href="{{ ('/digests/' ~ pagination.next.date ~ '/') | url }}">← {{ pagination.next.date | prettyDate }}</a>
+      {% endif %}
+    </div>
+    <div>
+      {% if pagination.previous %}
+        <a href="{{ ('/digests/' ~ pagination.previous.date ~ '/') | url }}">{{ pagination.previous.date | prettyDate }} →</a>
+      {% endif %}
+    </div>
+  </nav>
+</section>
