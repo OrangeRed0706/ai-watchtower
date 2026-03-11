@@ -29,6 +29,9 @@ permalink: /items/index.html
             <p>{{ item.snippet }}</p>
           {% endif %}
           <div class="meta">
+            {% if item.score is not none %}
+              <span class="pill">score: {{ item.score }}</span>
+            {% endif %}
             {% if item.publishedAt %}
               <span class="pill">{{ item.publishedAt }}</span>
             {% endif %}
@@ -49,4 +52,3 @@ permalink: /items/index.html
     </p>
   {% endif %}
 </section>
-

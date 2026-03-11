@@ -17,6 +17,10 @@ function loadConfiguredSources() {
       url: s.siteUrl,
       feedUrl: s.feedUrl,
       category: s.category,
+      tier: s.tier || null,
+      priority: s.priority ?? null,
+      sourceType: s.sourceType || null,
+      fetchPolicy: s.fetchPolicy || null,
       notes: s.notes
     }));
 }
@@ -28,6 +32,10 @@ module.exports =
       name: "OpenAI Blog",
       url: "https://openai.com/blog",
       category: "Model / Product",
+      tier: "official",
+      priority: 95,
+      sourceType: "vendor_blog",
+      fetchPolicy: "feed",
       notes: "Official updates and announcements."
     },
     {
@@ -35,6 +43,10 @@ module.exports =
       name: "Anthropic News",
       url: "https://www.anthropic.com/news",
       category: "Model / Safety",
+      tier: "official",
+      priority: 90,
+      sourceType: "vendor_news",
+      fetchPolicy: "manual",
       notes: "Official releases and research posts."
     },
     {
@@ -42,6 +54,10 @@ module.exports =
       name: "GitHub Changelog",
       url: "https://github.blog/changelog/",
       category: "Tooling",
+      tier: "primary",
+      priority: 70,
+      sourceType: "changelog",
+      fetchPolicy: "feed",
       notes: "Product updates that affect developer workflows."
     }
   ];

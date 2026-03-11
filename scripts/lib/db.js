@@ -97,6 +97,25 @@ function migrateDb(db) {
     v = 1;
   }
 
+  if (v < 2) {
+    // Add source policy/tiering metadata. These are optional and default to null.
+    // Guard each ALTER TABLE so re-runs or schema drift don't hard-fail.
+    const existingCols = new Set(
+      db
+        .prepare("PRAGMA table_info(sources);")
+        .all()
+        .map((r) => String(r.name))
+    );
+
+    if (!existingCols.has("tier")) db.exec("ALTER TABLE sources ADD COLUMN tier TEXT;");
+    if (!existingCols.has("priority")) db.exec("ALTER TABLE sources ADD COLUMN priority INTEGER;");
+    if (!existingCols.has("source_type")) db.exec("ALTER TABLE sources ADD COLUMN source_type TEXT;");
+    if (!existingCols.has("fetch_policy")) db.exec("ALTER TABLE sources ADD COLUMN fetch_policy TEXT;");
+
+    setUserVersion(db, 2);
+    v = 2;
+  }
+
   return v;
 }
 
@@ -104,4 +123,3 @@ module.exports = {
   openDb,
   migrateDb
 };
-

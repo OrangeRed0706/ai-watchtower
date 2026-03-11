@@ -19,6 +19,15 @@ permalink: /sources/index.html
         <h3><a href="{{ s.url }}">{{ s.name }}</a></h3>
         <div class="meta">
           <span class="pill">{{ s.category }}</span>
+          {% if s.tier %}
+            <span class="pill">tier: {{ s.tier }}</span>
+          {% endif %}
+          {% if s.priority is not none %}
+            <span class="pill">priority: {{ s.priority }}</span>
+          {% endif %}
+          {% if s.sourceType %}
+            <span class="pill">{{ s.sourceType }}</span>
+          {% endif %}
           <span class="pill">id: {{ s.id }}</span>
           {% if ingested and ingested.sources %}
             {% for rs in ingested.sources %}

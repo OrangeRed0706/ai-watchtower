@@ -6,8 +6,9 @@ AI news intelligence pipeline for Lynn.
 
 - **Visible static demo site** built with **Eleventy (11ty)** using **sample/mock data**
 - Specs in `docs/` describing the intended ingestion → publish pipeline
-- GitLab Pages config that builds the static site into `public/`
+- GitHub Pages workflow that builds the static site into `public/` (`.gitlab-ci.yml` also exists for optional GitLab Pages)
 - **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `src/_data/ingested.json` (site renders it when present)
+- **Deterministic candidate scoring (v1)**: ingested items get `score` + `scoreReasons`, and the site exposes a pre-summary shortlist at `/candidates/`
 
 The UI includes a prominent note that it is currently mock data; pipeline implementation is next.
 
@@ -75,7 +76,7 @@ The UI includes a prominent note that it is currently mock data; pipeline implem
 
 ## Next step
 
-Implement the next pipeline stages (dedup/classification/summarization) to replace the mock digests with generated daily pages from ingested sources.
+Implement the next pipeline stages (dedup, classification, AI summarization + synthesis) to replace the mock digests with generated daily pages from ingested sources.
 
 ## Local development (static demo site)
 

@@ -17,7 +17,7 @@ This phase adds a real RSS/Atom ingestion pipeline that writes to a local SQLite
 
 ## Configuration
 
-`config/sources.json` (MVP fields):
+`config/sources.json` (current fields):
 
 - `sources[].id`: stable identifier (used as the DB primary key).
 - `sources[].name`
@@ -25,6 +25,11 @@ This phase adds a real RSS/Atom ingestion pipeline that writes to a local SQLite
 - `sources[].feedUrl`: RSS/Atom URL ingested by the pipeline.
 - `sources[].category`, `sources[].notes`
 - `sources[].enabled`: set `false` to disable a source.
+- Source policy metadata (used for ranking and future budgeting):
+  - `sources[].tier`: `primary|official|reference|secondary`
+  - `sources[].priority`: `0..100` (higher = more important)
+  - `sources[].sourceType`: `changelog|release_notes|vendor_blog|...`
+  - `sources[].fetchPolicy`: `feed` (ingest) or `manual` (document only; not ingested yet)
 
 ## Storage + idempotency
 
@@ -46,11 +51,15 @@ Idempotency rule:
 
 The ingest script writes `src/_data/ingested.json` (not committed by default). Eleventy will pick it up automatically as `ingested`.
 
-Shape (schemaVersion 1):
+Shape (schemaVersion 2):
 
 - `ingested.run`: run metadata (counts, hashes, timestamps)
 - `ingested.sources[]`: source list + last fetch status/error
 - `ingested.items[]`: most recent normalized entries across sources
+- `ingested.scoring`: scoring metadata for the current snapshot
+- Per-item scoring fields:
+  - `items[].score`, `items[].scoreVersion`
+  - `items[].scoreReasons[]`: explainable “why” signals (keyword/path/recency/source policy)
 
 ## Running locally
 
@@ -71,7 +80,7 @@ Commands:
 
 - Cross-source deduplication (beyond per-source idempotency)
 - Classification (rules + AI assist)
-- AI summarization and digest assembly
+- AI summarization and digest assembly (the “final” compact digest output)
+- Diversity controls and per-source budgeting (e.g., avoid 10 items from one source)
 - Redirect-following canonical URL expansion (bounded) and HTML full-text extraction
-- CI scheduling to run ingestion before deploy (GitHub Actions currently builds the demo site without ingest)
-
+- CI scheduling to run ingestion before deploy (GitHub Pages currently builds the site without ingestion)

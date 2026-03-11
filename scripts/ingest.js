@@ -23,6 +23,7 @@ const {
   normalizeTitle,
   sha256Hex
 } = require("./lib/normalize");
+const { scoreItem } = require("./lib/scoring");
 
 const DEFAULT_CONFIG_PATH = path.join(process.cwd(), "config", "sources.json");
 const DEFAULT_DB_PATH = path.join(process.cwd(), ".data", "watchtower.sqlite");
@@ -30,6 +31,28 @@ const DEFAULT_EXPORT_PATH = path.join(process.cwd(), "src", "_data", "ingested.j
 
 function nowIso() {
   return new Date().toISOString();
+}
+
+function normalizeTier(tier) {
+  const t = String(tier || "").trim().toLowerCase();
+  if (!t) return null;
+  if (t === "primary" || t === "official" || t === "reference" || t === "secondary") return t;
+  return null;
+}
+
+function normalizeFetchPolicy(fetchPolicy) {
+  const v = String(fetchPolicy || "").trim().toLowerCase();
+  if (!v) return null;
+  if (v === "feed" || v === "manual") return v;
+  return null;
+}
+
+function normalizePriority(priority) {
+  if (priority === null || priority === undefined || priority === "") return null;
+  const n = Number(priority);
+  if (!Number.isFinite(n)) return null;
+  const clamped = Math.max(0, Math.min(100, Math.round(n)));
+  return clamped;
 }
 
 function ensureDirForFile(filePath) {
@@ -46,6 +69,43 @@ function configHashFromFileBytes(filePath) {
 
 function toIntBool(v) {
   return v ? 1 : 0;
+}
+
+function validateConfig({ configPath, config }) {
+  const errors = [];
+  const sources = Array.isArray(config?.sources) ? config.sources : [];
+  const enabledSources = sources.filter((s) => s && s.enabled !== false);
+
+  const seenIds = new Set();
+  for (const s of enabledSources) {
+    const id = String(s?.id || "").trim();
+    if (!id) {
+      errors.push("A source is missing required field: id");
+      continue;
+    }
+    if (seenIds.has(id)) errors.push(`Duplicate source id: ${id}`);
+    seenIds.add(id);
+
+    const feedUrl = String(s?.feedUrl || "").trim();
+    if (!feedUrl) errors.push(`Source ${id} is enabled but missing feedUrl`);
+
+    const tier = normalizeTier(s?.tier);
+    if (s?.tier && !tier) errors.push(`Source ${id} has invalid tier: ${String(s.tier)}`);
+
+    const fetchPolicy = normalizeFetchPolicy(s?.fetchPolicy);
+    if (s?.fetchPolicy && !fetchPolicy)
+      errors.push(`Source ${id} has invalid fetchPolicy: ${String(s.fetchPolicy)}`);
+
+    const priority = normalizePriority(s?.priority);
+    if (s?.priority !== undefined && priority === null)
+      errors.push(`Source ${id} has invalid priority: ${String(s.priority)}`);
+  }
+
+  if (errors.length) {
+    const rel = path.relative(process.cwd(), configPath);
+    const msg = [`Invalid config: ${rel}`, ...errors.map((e) => `- ${e}`)].join("\n");
+    throw new Error(msg);
+  }
 }
 
 async function fetchWithTimeout(url, { timeoutMs, headers }) {
@@ -101,6 +161,7 @@ async function main() {
   }
 
   const config = readJson(configPath);
+  validateConfig({ configPath, config });
   const sources = Array.isArray(config?.sources) ? config.sources : [];
   const enabledSources = sources.filter((s) => s && s.enabled !== false);
   if (enabledSources.length === 0) {
@@ -125,15 +186,19 @@ async function main() {
     .get(startedAt, cfgHash, enabledSources.length).id;
 
   const upsertSourceStmt = db.prepare(
-    `INSERT INTO sources (id, name, site_url, feed_url, category, notes, enabled)
-     VALUES (?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO sources (id, name, site_url, feed_url, category, notes, enabled, tier, priority, source_type, fetch_policy)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(id) DO UPDATE SET
        name=excluded.name,
        site_url=excluded.site_url,
        feed_url=excluded.feed_url,
        category=excluded.category,
        notes=excluded.notes,
-       enabled=excluded.enabled`
+       enabled=excluded.enabled,
+       tier=excluded.tier,
+       priority=excluded.priority,
+       source_type=excluded.source_type,
+       fetch_policy=excluded.fetch_policy`
   );
 
   for (const s of enabledSources) {
@@ -144,7 +209,11 @@ async function main() {
       s.feedUrl,
       s.category || null,
       s.notes || null,
-      toIntBool(s.enabled !== false)
+      toIntBool(s.enabled !== false),
+      normalizeTier(s.tier),
+      normalizePriority(s.priority),
+      s.sourceType ? String(s.sourceType) : null,
+      normalizeFetchPolicy(s.fetchPolicy)
     );
   }
 
@@ -387,6 +456,10 @@ async function main() {
          s.feed_url AS feedUrl,
          s.category AS category,
          s.notes AS notes,
+         s.tier AS sourceTier,
+         s.priority AS sourcePriority,
+         s.source_type AS sourceType,
+         s.fetch_policy AS fetchPolicy,
          e.title_raw AS title,
          e.snippet_norm AS snippet,
          e.url_canonical AS url,
@@ -401,6 +474,18 @@ async function main() {
     )
     .all(maxItems);
 
+  const scoringNowMs = Date.parse(finishedAt) || Date.now();
+  const scoredItems = latestItems.map((item) => {
+    const scored = scoreItem(item, { nowMs: scoringNowMs });
+    return {
+      ...item,
+      scoreVersion: 1,
+      score: scored.score,
+      scoreAgeHours: scored.ageHours,
+      scoreReasons: scored.reasons
+    };
+  });
+
   const sourcesForExport = db
     .prepare(
       `SELECT
@@ -410,6 +495,10 @@ async function main() {
          feed_url AS feedUrl,
          category,
          notes,
+         tier,
+         priority,
+         source_type AS sourceType,
+         fetch_policy AS fetchPolicy,
          last_fetch_at AS lastFetchAt,
          last_fetch_status AS lastFetchStatus,
          last_fetch_error AS lastFetchError
@@ -425,6 +514,10 @@ async function main() {
       feedUrl: row.feedUrl,
       category: row.category,
       notes: row.notes,
+      tier: row.tier,
+      priority: row.priority,
+      sourceType: row.sourceType,
+      fetchPolicy: row.fetchPolicy,
       lastFetch: {
         at: row.lastFetchAt,
         status: row.lastFetchStatus,
@@ -434,8 +527,14 @@ async function main() {
     }));
 
   const exportObj = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt: finishedAt,
+    scoring: {
+      version: 1,
+      scoredAt: finishedAt,
+      note:
+        "Deterministic pre-summary ranking. Used to select digest candidates before dedup/classification/AI summarization."
+    },
     run: {
       id: runId,
       startedAt,
@@ -447,7 +546,7 @@ async function main() {
       sourcesErrored: totalErrors
     },
     sources: sourcesForExport,
-    items: latestItems
+    items: scoredItems
   };
 
   fs.writeFileSync(exportPath, `${JSON.stringify(exportObj, null, 2)}\n`, "utf8");

@@ -1,4 +1,4 @@
-# Site information architecture (GitLab Pages)
+# Site information architecture (static hosting)
 
 ## Goals
 - Make the latest digest immediately visible.
@@ -12,8 +12,13 @@
 - “Top items” list (ordered, with impact area + level badges)
 - Links to:
   - archive
+  - candidates (pre-summary)
   - sources
   - about
+
+### `/candidates/`
+- Pre-summary shortlist of “worth reading” items
+- Deterministic score + explanation (debuggable and inspectable)
 
 ### `/digests/`
 - Archive index (reverse chronological)
@@ -58,11 +63,10 @@
 - Pipeline run reports (failures, AI budget usage).
 
 ## Navigation components (MVP)
-- Top nav: Home, Archive, Sources, About
+- Top nav: Home, Archive, Candidates, Sources, Items, About
 - Digest pages: previous/next day links
 
 ## Static-site implementation notes
 - Prefer generating Markdown/JSON content into a `site-content/` folder.
 - Site generator reads `site-content/` and builds into `public/`.
-- All links should be relative and compatible with GitLab Pages base paths.
-
+- All links should be relative and compatible with base paths (GitHub Pages project pages, GitLab Pages subpaths, etc.).

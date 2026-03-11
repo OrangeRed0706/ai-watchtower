@@ -6,6 +6,20 @@
 - Prefer sources with stable RSS/Atom feeds.
 - Keep the initial list small; expand only when source quality is proven.
 
+## Working policy: tiers + priorities
+
+Goal: we can ingest many raw sources, but the output shown to Lynn must stay compact.
+
+Each source gets:
+- `tier`: coarse trust/importance bucket
+  - `primary`: release notes / changelogs / security advisories
+  - `official`: official vendor or project blog/news
+  - `reference`: standards/regulators/docs collections (selective)
+  - `secondary`: rare, curated editorial sources (sparingly)
+- `priority`: 0–100 importance within a tier (used as a deterministic ranking signal)
+- `sourceType`: short label (`changelog`, `release_notes`, `vendor_blog`, …)
+- `fetchPolicy`: currently `feed` (RSS/Atom) or `manual` (documented, not ingested yet)
+
 ## Inclusion criteria
 
 Include sources that are:
@@ -35,24 +49,20 @@ Exclude (MVP):
 
 ## Initial candidate sources (seed list)
 
-Note: feed URLs should be validated during implementation; treat this as a concrete starting set. If a URL is wrong or missing, implementation should use feed discovery (HTML `<link rel="alternate" …>`), well-known paths (e.g., `/feed/`, `/rss.xml`), and/or documented vendor feeds.
+Note: any uncertain feed URL should be documented as `enabled: false` (do not guess and enable).
 
 ### Official labs / vendors
-- OpenAI (blog + product updates) — feed URL TBD (discover/confirm)
-- Anthropic (news/blog) — feed URL TBD (discover/confirm)
-- Google (DeepMind / Google AI blog) — feed URL TBD (discover/confirm)
-- Microsoft (AI / Azure AI updates) — feed URL TBD (discover/confirm)
-- Meta AI (research/blog) — feed URL TBD (discover/confirm)
-- NVIDIA (developer/blog, CUDA/AI announcements) — feed URL TBD (discover/confirm)
-- Apple (machine learning / research news) — feed URL TBD (discover/confirm)
-- Amazon (AWS AI / Bedrock updates) — feed URL TBD (discover/confirm)
+- OpenAI Blog — `https://openai.com/blog/rss.xml`
+- AWS Machine Learning Blog — `https://aws.amazon.com/blogs/machine-learning/feed/`
+- Anthropic News — no stable feed configured yet (documented but disabled)
 
 ### Developer platforms / releases
-- GitHub Blog — likely RSS: `https://github.blog/feed/`
-- Hugging Face Blog — likely RSS: `https://huggingface.co/blog/feed.xml`
-- PyTorch Blog — likely RSS: `https://pytorch.org/blog/feed.xml`
-- TensorFlow Blog (optional; lower priority) — likely RSS: `https://blog.tensorflow.org/feeds/posts/default?alt=rss`
-- ONNX (optional) — use GitHub releases RSS for the repo(s) of interest
+- GitHub Changelog — `https://github.blog/changelog/feed/`
+- Hugging Face Blog — `https://huggingface.co/blog/feed.xml`
+- PyTorch Blog — `https://pytorch.org/blog/feed.xml`
+- GitHub release notes (Atom) for key SDKs:
+  - `https://github.com/openai/openai-python/releases.atom`
+  - `https://github.com/openai/openai-node/releases.atom`
 
 ### Research / publication streams (high volume; use filters)
 - arXiv categories (RSS): `http://export.arxiv.org/rss/cs.CL`, `http://export.arxiv.org/rss/cs.LG`, `http://export.arxiv.org/rss/cs.AI`
@@ -63,17 +73,17 @@ Note: feed URLs should be validated during implementation; treat this as a concr
 - EU AI Act-related official updates (where feed exists)
 - UK / US agency AI policy updates (only official pages with feeds)
 
-## Minimal “source spec” template (for `sources.yml`)
+## Minimal “source spec” template (for `config/sources.json`)
 
 Each source entry should be structured like:
 - `id`: stable identifier
 - `name`
-- `feed_url`
-- `site_url` (optional)
+- `feedUrl`
+- `siteUrl` (optional)
 - `category`: `official|research|releases|policy|community`
-- `priority`: `1..5` (5 = most important)
-- `fetch_policy`: `rss_only|allow_html_fetch`
-- `dedup_hints` (optional): host-specific canonicalization notes
+- `tier`: `primary|official|reference|secondary`
+- `priority`: `0..100` (100 = most important)
+- `fetchPolicy`: `feed|manual`
 - `notes`: why included, what “good” looks like
 
 ## Source configuration requirements

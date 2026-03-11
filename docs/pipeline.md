@@ -2,7 +2,7 @@
 
 ## Overview
 
-The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to SQLite as the source of truth and generates deterministic site content and a GitLab Pages artifact.
+The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to SQLite as the source of truth and generates deterministic site content and a GitHub Pages artifact (CI can be adapted to GitLab Pages if needed).
 
 ## Stage 0 — Inputs and configuration
 
@@ -52,6 +52,16 @@ The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to S
   - `title_hash`
   - `content_hash` (normalized text used for AI cache)
   - optional `simhash` for similarity grouping
+
+## Stage 2.5 — Candidate scoring (deterministic)
+
+Before AI exists, apply a deterministic scoring function to rank “worth reading” items:
+- source `tier` + `priority`
+- recency
+- title keywords
+- URL/path hints
+
+This produces a **digest-candidate** shortlist (still pre-dedup/classification) used for inspection and future budgeted steps.
 
 ## Stage 3 — Deduplication
 
@@ -114,7 +124,7 @@ The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to S
 **Output**
 - Create/replace a `digests` row for the date (idempotent).
 
-## Stage 7 — Publish (GitLab Pages)
+## Stage 7 — Publish (GitHub Pages)
 
 **Site content generation**
 - Emit deterministic content files (Markdown/JSON) from SQLite snapshot.
@@ -125,6 +135,9 @@ The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to S
 **GitLab Pages**
 - `pages` job publishes `public/` as artifact.
 
+**GitHub Pages**
+- GitHub Actions builds the static site and deploys `public/` as the Pages artifact.
+
 ## Observability (MVP-friendly)
 
 - Per-run summary:
@@ -133,4 +146,3 @@ The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to S
   - new items
   - AI calls made + estimated tokens/cost
 - Persist warnings/errors for later review.
-

@@ -228,3 +228,28 @@ main {
   color: var(--muted);
 }
 
+.reason-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+  color: var(--muted);
+}
+
+.reason-list li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.reason-delta {
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.08rem 0.45rem;
+  font-size: 0.78rem;
+  color: var(--text);
+  background: rgba(11, 18, 32, 0.2);
+}
