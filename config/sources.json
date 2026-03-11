@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "openai-blog",
+      "name": "OpenAI Blog",
+      "siteUrl": "https://openai.com/blog",
+      "feedUrl": "https://openai.com/blog/rss.xml",
+      "category": "Model / Product",
+      "notes": "Official updates and announcements.",
+      "enabled": true
+    },
+    {
+      "id": "github-changelog",
+      "name": "GitHub Changelog",
+      "siteUrl": "https://github.blog/changelog/",
+      "feedUrl": "https://github.blog/changelog/feed/",
+      "category": "Tooling",
+      "notes": "Product updates that affect developer workflows.",
+      "enabled": true
+    },
+    {
+      "id": "aws-ml-blog",
+      "name": "AWS Machine Learning Blog",
+      "siteUrl": "https://aws.amazon.com/blogs/machine-learning/",
+      "feedUrl": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "category": "Tooling / Infrastructure",
+      "notes": "ML platform and tooling updates; useful for deployment and MLOps signals.",
+      "enabled": true
+    }
+  ]
+}

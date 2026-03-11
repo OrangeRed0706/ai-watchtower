@@ -1,0 +1,52 @@
+---
+layout: layouts/base.njk
+title: Items
+permalink: /items/index.html
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Latest items</h1>
+    {% if ingested and ingested.run %}
+      <div class="subtle">
+        Last ingest: {{ ingested.run.finishedAt }} • {{ ingested.run.entriesNew }} new
+      </div>
+    {% else %}
+      <div class="subtle">No ingested data yet</div>
+    {% endif %}
+  </div>
+
+  {% if ingested and ingested.items and ingested.items.length %}
+    <p class="kicker">
+      These are raw normalized feed entries (no dedup/classification/summarization yet).
+    </p>
+
+    <ol class="items">
+      {% for item in ingested.items %}
+        <li class="item">
+          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          {% if item.snippet %}
+            <p>{{ item.snippet }}</p>
+          {% endif %}
+          <div class="meta">
+            {% if item.publishedAt %}
+              <span class="pill">{{ item.publishedAt }}</span>
+            {% endif %}
+            {% if item.sourceName %}
+              <span class="pill">{{ item.sourceName }}</span>
+            {% endif %}
+            {% if item.category %}
+              <span class="pill">{{ item.category }}</span>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="kicker">
+      Run <code>npm run ingest</code> to fetch configured RSS/Atom feeds and generate
+      <code>src/_data/ingested.json</code>.
+    </p>
+  {% endif %}
+</section>
+

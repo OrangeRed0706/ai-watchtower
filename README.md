@@ -7,6 +7,7 @@ AI news intelligence pipeline for Lynn.
 - **Visible static demo site** built with **Eleventy (11ty)** using **sample/mock data**
 - Specs in `docs/` describing the intended ingestion → publish pipeline
 - GitLab Pages config that builds the static site into `public/`
+- **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `src/_data/ingested.json` (site renders it when present)
 
 The UI includes a prominent note that it is currently mock data; pipeline implementation is next.
 
@@ -74,15 +75,20 @@ The UI includes a prominent note that it is currently mock data; pipeline implem
 
 ## Next step
 
-Implement the ingestion/classification pipeline (per `docs/`) to replace the sample dataset with generated content from real sources, while preserving provenance and cost controls.
+Implement the next pipeline stages (dedup/classification/summarization) to replace the mock digests with generated daily pages from ingested sources.
 
 ## Local development (static demo site)
 
-Prereqs: Node.js 18+ (recommended: 20).
+Prereqs:
+- Site build/dev: Node.js 18+ (recommended: 20+)
+- Ingestion MVP: Node.js 24+ (uses `node:sqlite`)
 
 - Install: `npm install`
+- Ingest: `npm run ingest` (writes `.data/watchtower.sqlite`, exports `src/_data/ingested.json`)
 - Build: `npm run build` (outputs to `public/`)
 - Preview: `npm run dev` (Eleventy dev server)
+
+See `docs/ingestion-mvp.md` for details and Phase 1 limitations.
 
 ### Notes on GitLab Pages base paths
 

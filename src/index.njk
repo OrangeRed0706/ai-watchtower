@@ -39,6 +39,7 @@ title: Home
         <ul class="list">
           <li><a href="{{ '/digests/' | url }}">Digest archive</a></li>
           <li><a href="{{ '/sources/' | url }}">Sources</a></li>
+          <li><a href="{{ '/items/' | url }}">Latest items</a></li>
           <li><a href="{{ '/about/' | url }}">About this project</a></li>
         </ul>
         <p class="kicker" style="margin-top: 0.9rem;">
@@ -55,3 +56,31 @@ title: Home
     <p>No digests available yet.</p>
   {% endif %}
 </section>
+
+{% if ingested and ingested.items and ingested.items.length %}
+  <section class="panel" style="margin-top: 1rem;">
+    <div class="page-title">
+      <h2 style="margin: 0;">Latest ingested items</h2>
+      <div class="subtle">{{ ingested.run.finishedAt }}</div>
+    </div>
+    <ol class="items">
+      {% for item in ingested.items | slice(0, 5) %}
+        <li class="item">
+          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          {% if item.snippet %}
+            <p>{{ item.snippet }}</p>
+          {% endif %}
+          <div class="meta">
+            <span class="pill">{{ item.sourceName }}</span>
+            {% if item.publishedAt %}
+              <span class="pill">{{ item.publishedAt }}</span>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+    <p class="kicker" style="margin-top: 0.9rem;">
+      Browse more on <a href="{{ '/items/' | url }}">Items</a>.
+    </p>
+  </section>
+{% endif %}
