@@ -9,9 +9,15 @@ permalink: /sources/index.html
     <h1>Sources</h1>
     <div class="subtle">{{ sources.length }} configured</div>
   </div>
-  <p class="kicker">
-    This list comes from <code>config/sources.json</code> when present, otherwise it falls back to sample data.
+  <p class="lede">
+    Curated sources scanned for AI developments. Each item links back to its original publisher.
   </p>
+  <details class="details">
+    <summary>Configuration</summary>
+    <p class="kicker" style="margin-top: 0.45rem;">
+      This list is driven by repository configuration when present; local/dev runs may fall back to a minimal default set.
+    </p>
+  </details>
 
   <ul class="items">
     {% for s in sources %}
@@ -20,15 +26,17 @@ permalink: /sources/index.html
         <div class="meta">
           <span class="pill">{{ s.category }}</span>
           {% if s.tier %}
-            <span class="pill">tier: {{ s.tier }}</span>
+            <span class="pill">{{ s.tier }}</span>
           {% endif %}
           {% if s.priority is not none %}
-            <span class="pill">priority: {{ s.priority }}</span>
+            <span class="pill">priority {{ s.priority }}</span>
           {% endif %}
           {% if s.sourceType %}
             <span class="pill">{{ s.sourceType }}</span>
           {% endif %}
-          <span class="pill">id: {{ s.id }}</span>
+          {% if s.feedUrl %}
+            <a class="pill" href="{{ s.feedUrl }}">feed</a>
+          {% endif %}
           {% if ingested and ingested.sources %}
             {% for rs in ingested.sources %}
               {% if rs.id == s.id and rs.lastFetch %}
@@ -53,10 +61,22 @@ permalink: /sources/index.html
         {% if ingested and ingested.sources %}
           {% for rs in ingested.sources %}
             {% if rs.id == s.id and rs.lastFetch and rs.lastFetch.error %}
-              <p class="kicker"><strong>Last error:</strong> {{ rs.lastFetch.error }}</p>
+              <details class="details">
+                <summary>Last fetch error</summary>
+                <p class="kicker" style="margin-top: 0.45rem;">{{ rs.lastFetch.error }}</p>
+              </details>
             {% endif %}
           {% endfor %}
         {% endif %}
+        <details class="details">
+          <summary>Source metadata</summary>
+          <div class="meta" style="margin-top: 0.45rem;">
+            <span class="pill">id: {{ s.id }}</span>
+            {% if s.fetchPolicy %}
+              <span class="pill">fetch: {{ s.fetchPolicy }}</span>
+            {% endif %}
+          </div>
+        </details>
       </li>
     {% endfor %}
   </ul>

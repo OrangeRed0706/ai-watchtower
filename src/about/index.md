@@ -6,7 +6,7 @@ permalink: /about/index.html
 
 ## What this is
 
-`ai-watchtower` is a personal “AI news intelligence” project: ingest a curated set of high-signal sources, deduplicate and classify items, then publish a daily digest as a **GitLab Pages** static site.
+`ai-watchtower` is a personal “AI news intelligence” project: ingest a curated set of high-signal sources, deduplicate and classify items, then publish a daily briefing as a **GitHub Pages** static site.
 
 ## Current state (this repo)
 

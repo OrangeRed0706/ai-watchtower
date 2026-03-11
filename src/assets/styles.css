@@ -63,9 +63,21 @@ a:hover {
 }
 
 .brand {
-  font-weight: 700;
-  letter-spacing: 0.2px;
+  display: grid;
+  gap: 0.05rem;
   color: var(--text);
+  text-decoration: none;
+}
+.brand__name {
+  font-weight: 720;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+}
+.brand__tagline {
+  font-size: 0.78rem;
+  font-weight: 560;
+  color: var(--muted);
+  line-height: 1.1;
 }
 
 .nav {
@@ -87,13 +99,34 @@ main {
 }
 
 .notice {
-  background: rgba(255, 215, 138, 0.10);
-  border: 1px solid rgba(255, 215, 138, 0.30);
+  background: rgba(255, 215, 138, 0.08);
+  border: 1px solid rgba(255, 215, 138, 0.24);
   border-radius: 12px;
-  padding: 0.75rem 0.9rem;
+  padding: 0.7rem 0.9rem;
   color: var(--muted);
   box-shadow: var(--shadow);
   margin-bottom: 1.2rem;
+}
+.notice__inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  align-items: baseline;
+}
+.notice__label {
+  font-size: 0.78rem;
+  font-weight: 720;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--medium);
+}
+.notice__body a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: rgba(183, 194, 227, 0.45);
+}
+.notice__body a:hover {
+  color: var(--text);
 }
 
 .panel {
@@ -182,6 +215,28 @@ main {
 .kicker {
   color: var(--muted);
   margin: 0.25rem 0 0;
+}
+
+.lede {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.details {
+  margin-top: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(11, 18, 32, 0.18);
+}
+.details summary {
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 650;
+}
+.details summary:hover {
+  text-decoration: underline;
 }
 
 .split {

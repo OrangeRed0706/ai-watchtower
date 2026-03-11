@@ -1,30 +1,54 @@
 ---
 layout: layouts/base.njk
-title: Digest archive
+title: Briefing archive
 permalink: /digests/index.html
 ---
 
 <section class="panel">
   <div class="page-title">
-    <h1>Digest archive</h1>
+    <h1>Briefing archive</h1>
     <div class="subtle">{{ meta.allDigests.length }} day(s)</div>
   </div>
-  <p class="kicker">
-    Reverse chronological list of daily candidate shortlists generated from the latest ingestion snapshot.
+  <p class="lede">
+    Daily briefings built from the ranked shortlist on each run.
   </p>
 
   {% if meta.allDigests and meta.allDigests.length %}
     <ul class="list">
       {% for d in meta.allDigests %}
+        {% set highCount = 0 %}
+        {% set mediumCount = 0 %}
+        {% set lowCount = 0 %}
+        {% for it in d.items %}
+          {% if it.impactLevel == 'high' %}
+            {% set highCount = highCount + 1 %}
+          {% elif it.impactLevel == 'medium' %}
+            {% set mediumCount = mediumCount + 1 %}
+          {% elif it.impactLevel == 'low' %}
+            {% set lowCount = lowCount + 1 %}
+          {% endif %}
+        {% endfor %}
         <li>
           <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
           — {{ d.items.length }} item(s)
+          {% if highCount or mediumCount or lowCount %}
+            <span class="subtle">(high {{ highCount }}, medium {{ mediumCount }}, low {{ lowCount }})</span>
+          {% endif %}
+          {% if d.summary %}
+            <div class="kicker" style="margin-top: 0.25rem;">{{ d.summary }}</div>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
   {% else %}
     <p class="kicker">
-      No digests yet. Run <code>npm run ingest</code> then <code>npm run artifacts</code>.
+      No published briefings yet.
     </p>
+    <details class="details">
+      <summary>For contributors</summary>
+      <p class="kicker" style="margin-top: 0.45rem;">
+        Generate the data locally with <code>npm run pipeline</code>, then build the site with <code>npm run build</code>.
+      </p>
+    </details>
   {% endif %}
 </section>

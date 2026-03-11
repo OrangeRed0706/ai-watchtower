@@ -131,8 +131,8 @@ function buildDigests(ingested) {
 
     return {
       date: day,
-      title: "Daily candidates",
-      summary: "Deterministic shortlist from ingested feeds. Not yet AI-summarized.",
+      title: "Daily briefing",
+      summary: "Ranked shortlist from curated sources. Narrative summary isn’t published yet.",
       items: top.map((it) => ({
         title: it.title,
         url: it.url,
@@ -220,4 +220,3 @@ module.exports = {
   buildDigests,
   buildDedupGroups
 };
-

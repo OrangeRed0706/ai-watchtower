@@ -1,6 +1,6 @@
 module.exports = {
-  name: "ai-watchtower",
-  tagline: "Daily AI news pipeline (deterministic)",
+  name: "AI Watchtower",
+  tagline: "Daily AI industry signals",
   notice:
-    "Early pipeline: deterministic ingestion, scoring, cross-source dedup, and first-pass classification. No AI summarization/synthesis yet."
+    "Beta: a daily ranked shortlist of AI developments from curated sources. Narrative summaries aren’t published yet."
 };

@@ -5,7 +5,7 @@ title: Home
 
 <section class="panel">
   <div class="page-title">
-    <h1>Latest candidates</h1>
+    <h1>Daily briefing</h1>
     {% if meta.latestDigest %}
       <div class="subtle">{{ meta.latestDigest.date | prettyDate }}</div>
     {% elif candidates and candidates.available and candidates.run %}
@@ -14,7 +14,10 @@ title: Home
   </div>
 
   {% if meta.latestDigest %}
-    <p class="kicker">{{ meta.latestDigest.summary }}</p>
+    <p class="lede">
+      A ranked shortlist of developments from curated sources, with provenance and explainability.
+      {% if meta.latestDigest.summary %}<span class="kicker">{{ meta.latestDigest.summary }}</span>{% endif %}
+    </p>
 
     <div class="split" style="margin-top: 1rem;">
       <div>
@@ -33,7 +36,7 @@ title: Home
                   <span class="pill">#{{ tag }}</span>
                 {% endfor %}
                 {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
-                  <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+                  <span class="pill">{{ item.dedup.groupSize }} sources</span>
                 {% endif %}
               </div>
             </li>
@@ -41,18 +44,22 @@ title: Home
         </ol>
       </div>
       <aside class="panel" style="padding: 0.95rem 1rem;">
-        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Quick links</h2>
+        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Browse</h2>
         <ul class="list">
-          <li><a href="{{ '/digests/' | url }}">Digest archive</a></li>
-          <li><a href="{{ '/candidates/' | url }}">Digest candidates (pre-summary)</a></li>
-          <li><a href="{{ '/dedup/' | url }}">Dedup groups</a></li>
+          <li><a href="{{ '/digests/' | url }}">Briefing archive</a></li>
+          <li><a href="{{ '/candidates/' | url }}">Ranked candidates</a></li>
+          <li><a href="{{ '/dedup/' | url }}">Story clusters</a></li>
           <li><a href="{{ '/sources/' | url }}">Sources</a></li>
           <li><a href="{{ '/items/' | url }}">Latest items</a></li>
           <li><a href="{{ '/about/' | url }}">About this project</a></li>
         </ul>
-        <p class="kicker" style="margin-top: 0.9rem;">
-          Static output: <code>public/</code>
-        </p>
+        <details class="details">
+          <summary>How to read this</summary>
+          <p class="kicker" style="margin-top: 0.45rem;">
+            This briefing is a ranked shortlist. It links to original sources and exposes the signals behind the ranking.
+            Narrative summaries and cross-item synthesis aren’t published yet.
+          </p>
+        </details>
       </aside>
     </div>
 
@@ -62,9 +69,9 @@ title: Home
     </p>
   {% else %}
     {% if candidates and candidates.available and candidates.items and candidates.items.length %}
-      <p class="kicker">
-        Daily digest pages aren’t published yet — here are the latest ranked items from the pipeline.
-        Browse more on <a href="{{ '/candidates/' | url }}">Candidates</a>.
+      <p class="lede">
+        No daily briefing page has been published yet. Here are the latest ranked items from the most recent run.
+        Browse more on <a href="{{ '/candidates/' | url }}">Ranked candidates</a>.
       </p>
       <h2 style="margin: 1.1rem 0 0.5rem; font-size: 1.1rem;">Top candidates</h2>
       <ol class="items">
@@ -83,7 +90,7 @@ title: Home
                 {% endfor %}
               {% endif %}
               {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
-                <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+                <span class="pill">{{ item.dedup.groupSize }} sources</span>
               {% endif %}
               {% if item.sourceName %}
                 <span class="pill">{{ item.sourceName }}</span>
@@ -93,10 +100,16 @@ title: Home
         {% endfor %}
       </ol>
     {% else %}
-      <p class="kicker">
-        No pipeline data yet. Run <code>npm run ingest</code>, or browse the current snapshot on
-        <a href="{{ '/candidates/' | url }}">Candidates</a>.
+      <p class="lede">
+        No published data yet.
+        <a href="{{ '/about/' | url }}">About</a> explains what appears here once ingestion artifacts are available.
       </p>
+      <details class="details">
+        <summary>For contributors</summary>
+        <p class="kicker" style="margin-top: 0.45rem;">
+          Generate the data locally with <code>npm run pipeline</code>, then build the site with <code>npm run build</code>.
+        </p>
+      </details>
     {% endif %}
   {% endif %}
 </section>

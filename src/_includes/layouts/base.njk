@@ -12,7 +12,13 @@
     {% include "partials/nav.njk" %}
     <main class="container">
       <section class="notice" role="note" aria-label="Site status">
-        <strong>Status:</strong> {{ site.notice }}
+        <div class="notice__inner">
+          <div class="notice__label">Status</div>
+          <div class="notice__body">
+            {{ site.notice }}
+            <a href="{{ '/about/' | url }}">What this is</a>.
+          </div>
+        </div>
       </section>
       {{ content | safe }}
     </main>

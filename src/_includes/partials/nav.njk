@@ -1,11 +1,14 @@
 <header class="header">
   <div class="container header__inner">
-    <a class="brand" href="{{ '/' | url }}">{{ site.name }}</a>
+    <a class="brand" href="{{ '/' | url }}">
+      <span class="brand__name">{{ site.name }}</span>
+      <span class="brand__tagline">{{ site.tagline }}</span>
+    </a>
     <nav class="nav" aria-label="Primary">
       <a href="{{ '/' | url }}">Home</a>
       <a href="{{ '/digests/' | url }}">Archive</a>
-      <a href="{{ '/candidates/' | url }}">Candidates</a>
-      <a href="{{ '/dedup/' | url }}">Dedup</a>
+      <a href="{{ '/candidates/' | url }}">Ranked</a>
+      <a href="{{ '/dedup/' | url }}">Clusters</a>
       <a href="{{ '/sources/' | url }}">Sources</a>
       <a href="{{ '/items/' | url }}">Items</a>
       <a href="{{ '/about/' | url }}">About</a>

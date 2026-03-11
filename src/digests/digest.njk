@@ -1,5 +1,6 @@
 ---
 layout: layouts/base.njk
+title: Daily briefing
 pagination:
   data: meta.allDigests
   size: 1
@@ -9,11 +10,15 @@ permalink: "digests/{{ digest.date }}/index.html"
 
 <section class="panel">
   <div class="page-title">
-    <h1>Daily candidates</h1>
+    <h1>Daily briefing</h1>
     <div class="subtle">{{ digest.date | prettyDate }}</div>
   </div>
 
-  <p class="kicker">{{ digest.summary }}</p>
+  {% if digest.summary %}
+    <p class="lede">{{ digest.summary }}</p>
+  {% else %}
+    <p class="lede">A ranked shortlist with links back to original sources.</p>
+  {% endif %}
 
   {% set impactBuckets = ['high', 'medium', 'low'] %}
   {% for level in impactBuckets %}
@@ -36,7 +41,7 @@ permalink: "digests/{{ digest.date }}/index.html"
                 <span class="pill">score: {{ item.score }}</span>
               {% endif %}
               {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
-                <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+                <span class="pill">{{ item.dedup.groupSize }} sources</span>
               {% endif %}
             </div>
 
