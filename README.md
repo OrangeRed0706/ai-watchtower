@@ -1,103 +1,261 @@
 # ai-watchtower
 
-AI news intelligence pipeline for Lynn.
+`ai-watchtower` 不是單純的 AI 新聞站，也不是 RSS reader。
 
-## Current state (today)
+它的目標是把高噪音、分散、容易造成焦慮的 AI 資訊流，轉成**可驗證、可回看、可決策**的個人 intelligence publishing system。
 
-- **Visible static site** built with **Eleventy (11ty)** driven by the latest ingestion snapshot when present
-- Specs in `docs/` describing the intended ingestion → publish pipeline
-- GitHub Pages workflow that builds the static site into `public/` (`.gitlab-ci.yml` also exists for optional GitLab Pages)
-- **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `artifacts/ingested.json`; `npm run artifacts` produces site-ready artifacts (site renders them when present)
-- **Deterministic candidate scoring (v1)**: `score` + `scoreReasons`
-- **Deterministic dedup (v1)**: cross-source groups + canonical selection
-- **Deterministic classification (v1)**: `impactArea`, `impactLevel`, `tags`, `reasons`
-- Site views: `/digests/` (daily candidates), `/candidates/` (ranked shortlist), `/dedup/` (groups), `/items/` (raw entries)
+---
 
-The UI includes a prominent notice that the pipeline is still early and does not yet include AI summarization/synthesis.
+## 這個專案在做什麼
 
-**Goal**
-- Ingest high-signal AI sources (RSS/blog/official updates).
-- Normalize + deduplicate entries with deterministic logic.
-- Classify entries into impact areas (model / product / tooling / career).
-- Use AI **only** where fuzzy judgment is required (e.g., summarization, ambiguous classification).
-- Generate a daily digest and publish it to a **GitLab Pages** static site.
+系統分成四層：
 
-**Non-goals (MVP)**
-- No real-time alerting (Telegram may be added later).
-- No social scraping or paywalled content crawling.
-- No “AI everywhere” approach; deterministic first.
+1. **Source Acquisition**
+   - 抓取 RSS / Atom / 官方 news / blog / changelog / release notes
+   - 管理來源分級、優先級、抓取策略
 
-## Recommended MVP architecture
+2. **Intelligence Pipeline**
+   - normalization
+   - dedup
+   - classification
+   - scoring
+   - digest candidate selection
+   - digest assembly
 
-**Stack (recommended)**
-- **Node.js (TypeScript)** for the pipeline (mature RSS/HTML tooling; easy CI).
-- **SQLite** as the single durable store (idempotency, dedup, provenance, low cost).
-- **Eleventy (11ty)** to build the static site from generated Markdown/JSON (simple, Node-aligned).
+3. **Static Publishing**
+   - 只讀 pipeline 產出的 artifacts
+   - 用 Eleventy render 成靜態網站
 
-**Why Eleventy for MVP**
-- Lowest complexity within a Node toolchain: content in Markdown, templates are straightforward, builds fast.
-- “Static first” and GitLab Pages friendly.
+4. **Delivery**
+   - GitHub Actions 跑 pipeline + build
+   - GitHub Pages 只負責 serve 最終靜態內容
 
-**Alternatives (brief)**
-- **Astro**: great DX + components, but heavier and unnecessary for a digest MVP.
-- **Hugo**: very fast and simple, but introduces a second toolchain (Go) alongside Node pipeline.
-- **Plain HTML**: minimal dependencies, but you’ll quickly re-invent templating, archives, and taxonomy pages.
+---
 
-## System overview (end-to-end)
+## 架構圖
 
-1. **Ingest**: fetch feeds on a schedule; store raw items and fetch snapshots.
-2. **Normalize**: canonicalize URLs, normalize timestamps, extract plain text.
-3. **Deduplicate**: deterministic clustering (URL/GUID/exact hashes + similarity heuristics).
-4. **Classify**: deterministic rules first; AI only for ambiguous cases.
-5. **Summarize**: AI produces concise summaries + key takeaways in a strict JSON schema.
-6. **Publish**: generate daily digest pages + archives; build to `public/` for GitLab Pages.
+```text
+[ Sources / Feeds ]
+        |
+        v
+[ scripts/ingest.js ]
+  - fetch
+  - normalize
+  - dedup
+  - classify
+  - score
+        |
+        v
+[ artifacts/*.json ]
+  - ingested.json
+  - candidates.json
+  - digests.json
+  - dedupGroups.json
+        |
+        v
+[ Eleventy site (src/) ]
+  - load artifacts
+  - render pages
+        |
+        v
+[ public/ ]
+        |
+        v
+[ GitHub Pages ]
+```
 
-## Repo contents
+---
 
-- Site:
-  - `src/`: Eleventy site source (templates + data views)
-  - `eleventy.config.js`: Eleventy config (builds to `public/`)
-  - `.gitlab-ci.yml`: GitLab Pages build + publish
-  - `public/`: build output directory (generated; not committed)
+## 現在的設計原則
 
-- `docs/spec.md`: end-to-end product + technical spec
-- `docs/mvp-plan.md`: phased plan, risks, acceptance criteria
-- `docs/data-model.md`: proposed SQLite entities/tables and fields
-- `docs/source-strategy.md`: source categories and candidate sources
-- `docs/pipeline.md`: ingestion → publish flow with ops concerns
-- `docs/site-ia.md`: GitLab Pages site information architecture
-- `docs/ai-usage.md`: deterministic vs AI tasks, prompts, guardrails
+### 1. Artifact-first
+先產資料，再 render 網站。
 
-## Operating model (target)
+不是在 build 頁面時順便偷偷算資料，而是：
+- pipeline 先產出 artifacts
+- site 只讀 artifacts
+- deploy 只發靜態結果
 
-- Runs daily via **GitLab CI scheduled pipeline**.
-- Produces a static site artifact in `public/`.
-- Keeps costs low by:
-  - minimizing AI calls (batching, caching, thresholds)
-  - preferring deterministic heuristics
-  - storing provenance to support debugging and trust
+### 2. Architecture first
+必要時接受 breaking changes。
 
-## Next step
+這個專案目前優先順序不是相容舊混合態，而是先把架構收斂正確。
 
-Add AI summarization + synthesis (with strict provenance) to turn daily candidate pages into compact human-readable digests.
+### 3. Deterministic first
+現階段優先用 deterministic pipeline 建立穩定骨架。
 
-## Local development (static site)
+AI summary / synthesis 會放在後續階段，不在目前這一輪硬塞進整條鏈。
 
-Prereqs:
-- Site build/dev: Node.js 18+ (recommended: 20+)
-- Ingestion MVP: Node.js 24+ (uses `node:sqlite`)
+### 4. Real-data first
+不再接受 fake/example content 當主要展示內容。
 
-- Install: `npm install`
-- Ingest: `npm run ingest` (writes `.data/watchtower.sqlite`, exports `artifacts/ingested.json`)
-- Publish artifacts: `npm run artifacts` (writes `artifacts/candidates.json`, `artifacts/digests.json`, `artifacts/dedupGroups.json`)
-- Build: `npm run build` (outputs to `public/`)
-- Preview: `npm run dev` (Eleventy dev server)
+---
 
-See `docs/ingestion-mvp.md` for details and Phase 1 limitations.
+## 目前已完成的能力
 
-### Notes on GitLab Pages base paths
+### 已完成
+- GitHub Pages 上線
+- RSS / Atom ingestion MVP
+- source policy / tiering
+- normalization
+- deterministic candidate scoring
+- cross-source dedup 初版
+- deterministic classification 初版
+- real-data-first homepage / candidates / dedup views
+- CI 與本機 Node 版本對齊（Node 24）
+- GitHub Pages workflow 已改成先跑 pipeline，再 build site
+- artifact-first 主幹已開始落地
 
-GitLab Pages often serves project sites under a subpath (e.g. `/ai-watchtower/`). The Eleventy build supports this via `ELEVENTY_PATH_PREFIX`.
+### 目前 artifact 輸出
+執行 pipeline 後會產生：
 
-- In CI, `.gitlab-ci.yml` derives `ELEVENTY_PATH_PREFIX` from `CI_PAGES_URL`.
-- Locally (optional), you can preview a prefixed build with: `ELEVENTY_PATH_PREFIX=/ai-watchtower/ npm run build`
+- `artifacts/ingested.json`
+- `artifacts/candidates.json`
+- `artifacts/digests.json`
+- `artifacts/dedupGroups.json`
+
+這些檔案是網站渲染的正式資料輸入。
+
+---
+
+## 目前還沒完成的部分
+
+這個專案還沒有完全收斂完成，主要剩下：
+
+- site layer 再瘦身，徹底只做 render
+- artifact contract 再固定
+- digest assembly 再產品化
+- AI summary / why-it-matters / synthesis layer
+- 更完整的 publishing quality（daily / weekly intelligence surface）
+
+也就是說：
+
+**現在已經不是錯架構，但仍在從 prototype / mixed build 過渡到完整 artifact-first publishing pipeline 的過程中。**
+
+---
+
+## 目錄說明
+
+### 手寫 source / pipeline
+- `config/sources.json`：來源設定
+- `scripts/ingest.js`：抓取與處理入口
+- `scripts/build-artifacts.js`：生成 publishing artifacts
+- `scripts/lib/`：dedup / classify / scoring / publish 等邏輯
+
+### Site layer
+- `src/`：Eleventy templates / styles / site data loaders
+
+### Generated artifacts
+- `artifacts/`：pipeline 產出的資料（gitignored）
+
+### Final static output
+- `public/`：Eleventy build 後產出的網站（gitignored）
+
+---
+
+## 本機執行方式
+
+### 1. 安裝依賴
+```bash
+npm ci
+```
+
+### 2. 跑 pipeline
+```bash
+npm run pipeline
+```
+
+這一步會：
+- 抓來源
+- 更新資料庫
+- 產出 artifacts
+
+### 3. build 靜態網站
+```bash
+npm run build
+```
+
+### 4. 開發模式
+```bash
+npm run dev
+```
+
+### 清理
+```bash
+npm run clean
+```
+
+---
+
+## CI / Deploy 流程
+
+GitHub Actions Pages workflow 現在是：
+
+1. `npm ci`
+2. `npm run pipeline`
+3. `npm run build`
+4. deploy 到 GitHub Pages
+
+這代表：
+- CI 不再只 build 頁面
+- CI 會先生成 artifacts
+- Pages 看到的是 pipeline + site 一致的結果
+
+---
+
+## Source of Truth
+
+### Pipeline truth
+- `artifacts/*.json`
+- 這些是網站真正吃的資料輸出
+
+### Site truth
+- `src/` 裡的 templates / styles / loaders
+- 只負責 render，不應再承擔主要 business logic
+
+---
+
+## Live URLs
+
+- Site: <https://orangered0706.github.io/ai-watchtower/>
+- Candidates: <https://orangered0706.github.io/ai-watchtower/candidates/>
+- Dedup: <https://orangered0706.github.io/ai-watchtower/dedup/>
+- Repo: <https://github.com/OrangeRed0706/ai-watchtower>
+
+---
+
+## 目前 Phase 狀態
+
+### Phase 1
+- ingestion MVP
+- 已完成
+
+### Phase 2
+- source policy / scoring / candidates / dedup / classification 初版
+- 已大致完成
+
+### Phase 3
+- artifact-first refactor
+- 進行中，但已完成關鍵主幹：
+  - 拆掉 prebuild coupling
+  - 導入 artifacts/
+  - CI 改成先 pipeline 再 build
+
+### 後續階段
+- digest productization
+- summary synthesis
+- higher-quality intelligence surface
+
+---
+
+## 專案判斷標準
+
+這個專案後續不是看「加了幾個頁面」或「抓了多少來源」，而是看：
+
+1. pipeline / artifacts / site / deploy 邊界是否清楚
+2. local / CI / Pages 是否一致
+3. 最終輸出是否真的降低資訊噪音
+4. Lynn 是否能直接看懂並做判斷
+5. 專案是否可長期穩定演進
+
+如果這幾件事沒有同時成立，就不算真正完成。
