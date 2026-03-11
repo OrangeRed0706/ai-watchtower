@@ -7,9 +7,11 @@ permalink: /candidates/index.html
 <section class="panel">
   <div class="page-title">
     <h1>Digest candidates (pre-summary)</h1>
-    {% if candidates and candidates.available and candidates.run %}
+    {% if candidates and candidates.available and candidates.items and candidates.items.length %}
+      {% set ingestTime = (candidates.run and candidates.run.finishedAt) or candidates.generatedAt %}
       <div class="subtle">
-        From ingest {{ candidates.run.finishedAt }} • showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
+        {% if ingestTime %}From ingest {{ ingestTime }} • {% endif %}
+        showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
       </div>
     {% else %}
       <div class="subtle">No candidate data yet</div>

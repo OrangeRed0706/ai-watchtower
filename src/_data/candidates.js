@@ -64,7 +64,10 @@ module.exports = (() => {
     return Boolean(it?.dedup?.isCanonical);
   });
 
-  const enriched = canonicalOnly.map((it) => enrichWithDedupGroup(it, groupIndex));
+  // Prefer canonical items, but fall back to raw ingested items if dedup output is sparse/missing.
+  const baseItems = canonicalOnly.length ? canonicalOnly : items;
+
+  const enriched = baseItems.map((it) => enrichWithDedupGroup(it, groupIndex));
   const sorted = [...enriched].sort(sortCandidates);
   const top = sorted.slice(0, 50);
 
@@ -76,7 +79,7 @@ module.exports = (() => {
     classification: ingested?.classification || null,
     dedup: ingested?.dedup || null,
     totalItems: items.length,
-    uniqueItems: canonicalOnly.length,
+    uniqueItems: canonicalOnly.length || items.length,
     topCount: top.length,
     items: top
   };

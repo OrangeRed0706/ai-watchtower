@@ -4,6 +4,7 @@
   "type": "commonjs",
   "scripts": {
     "ingest": "node scripts/ingest.js",
+    "prebuild": "npm run ingest",
     "build": "eleventy",
     "dev": "eleventy --serve --watch",
     "clean": "rm -rf public .cache"

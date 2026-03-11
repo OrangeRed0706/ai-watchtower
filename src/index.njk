@@ -61,12 +61,11 @@ title: Home
       <a href="{{ ('/digests/' ~ meta.latestDigest.date ~ '/') | url }}">Open {{ meta.latestDigest.date }}</a>.
     </p>
   {% else %}
-    <p class="kicker">
-      No daily candidate pages yet. Run <code>npm run ingest</code>, or browse the current snapshot on
-      <a href="{{ '/candidates/' | url }}">Candidates</a>.
-    </p>
-
     {% if candidates and candidates.available and candidates.items and candidates.items.length %}
+      <p class="kicker">
+        Daily digest pages aren’t published yet — here are the latest ranked items from the pipeline.
+        Browse more on <a href="{{ '/candidates/' | url }}">Candidates</a>.
+      </p>
       <h2 style="margin: 1.1rem 0 0.5rem; font-size: 1.1rem;">Top candidates</h2>
       <ol class="items">
         {% for item in candidates.items | slice(0, 10) %}
@@ -93,6 +92,11 @@ title: Home
           </li>
         {% endfor %}
       </ol>
+    {% else %}
+      <p class="kicker">
+        No pipeline data yet. Run <code>npm run ingest</code>, or browse the current snapshot on
+        <a href="{{ '/candidates/' | url }}">Candidates</a>.
+      </p>
     {% endif %}
   {% endif %}
 </section>
