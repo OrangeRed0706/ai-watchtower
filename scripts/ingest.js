@@ -29,7 +29,7 @@ const { dedupeItems } = require("./lib/dedup");
 
 const DEFAULT_CONFIG_PATH = path.join(process.cwd(), "config", "sources.json");
 const DEFAULT_DB_PATH = path.join(process.cwd(), ".data", "watchtower.sqlite");
-const DEFAULT_EXPORT_PATH = path.join(process.cwd(), "src", "_data", "ingested.json");
+const DEFAULT_EXPORT_PATH = path.join(process.cwd(), "artifacts", "ingested.json");
 
 function nowIso() {
   return new Date().toISOString();

@@ -5,7 +5,8 @@ This phase adds a real RSS/Atom ingestion pipeline that writes to a local SQLite
 ## What you get in Phase 1
 
 - `config/sources.json`: seed list of RSS/Atom feeds.
-- `npm run ingest`: fetch feeds, parse entries, store raw rows in SQLite, export normalized items to `src/_data/ingested.json`.
+- `npm run ingest`: fetch feeds, parse entries, store raw rows in SQLite, export normalized items to `artifacts/ingested.json`.
+- `npm run artifacts`: derive site-ready artifacts (candidates/digests/dedup groups) from `artifacts/ingested.json`.
 - Basic normalization:
   - canonical URL cleanup (tracking param stripping, fragments removed, stable query ordering)
   - timestamp normalization (ISO-8601 UTC when parseable)
@@ -16,7 +17,7 @@ This phase adds a real RSS/Atom ingestion pipeline that writes to a local SQLite
   - cross-source dedup (v1): stable groups keyed by canonical URL (fallback to content hash, then day+title)
   - first-pass classification (v1): `impactArea`, `impactLevel`, `tags`, `reasons`
 - Site wiring:
-  - If `src/_data/ingested.json` exists, the site renders the homepage, daily candidate pages, candidates, items, dedup groups, and per-source fetch status from real data.
+  - If `artifacts/ingested.json` exists (and `npm run artifacts` has been run), the site renders the homepage, daily candidate pages, candidates, items, dedup groups, and per-source fetch status from real data.
   - If it does not exist, pages render with empty states (prompting you to run `npm run ingest`).
 
 ## Configuration
@@ -53,7 +54,7 @@ Idempotency rule:
 
 ## Export for the site
 
-The ingest script writes `src/_data/ingested.json` (not committed by default). Eleventy will pick it up automatically as `ingested`.
+The ingest script writes `artifacts/ingested.json` (not committed by default). The site reads it via `src/_data/ingested.js`.
 
 Shape (schemaVersion 2, with additive fields):
 

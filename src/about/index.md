@@ -10,7 +10,7 @@ permalink: /about/index.html
 
 ## Current state (this repo)
 
-This site is a **static MVP** built with **Eleventy**. When `npm run ingest` has generated `src/_data/ingested.json`,
+This site is a **static MVP** built with **Eleventy**. When `npm run ingest` has generated `artifacts/ingested.json` (and `npm run artifacts` has produced derived publish artifacts),
 the primary browsing flow is driven by real ingested entries with deterministic processing:
 
 - Home page with the latest daily candidate shortlist

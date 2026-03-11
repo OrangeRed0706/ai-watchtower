@@ -7,10 +7,11 @@
   },
   "scripts": {
     "ingest": "node scripts/ingest.js",
-    "prebuild": "npm run ingest",
+    "artifacts": "node scripts/build-artifacts.js",
+    "pipeline": "npm run ingest && npm run artifacts",
     "build": "eleventy",
     "dev": "eleventy --serve --watch",
-    "clean": "rm -rf public .cache"
+    "clean": "rm -rf public .cache artifacts src/_data/ingested.json"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"

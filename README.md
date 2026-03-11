@@ -7,7 +7,7 @@ AI news intelligence pipeline for Lynn.
 - **Visible static site** built with **Eleventy (11ty)** driven by the latest ingestion snapshot when present
 - Specs in `docs/` describing the intended ingestion → publish pipeline
 - GitHub Pages workflow that builds the static site into `public/` (`.gitlab-ci.yml` also exists for optional GitLab Pages)
-- **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `src/_data/ingested.json` (site renders it when present)
+- **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `artifacts/ingested.json`; `npm run artifacts` produces site-ready artifacts (site renders them when present)
 - **Deterministic candidate scoring (v1)**: `score` + `scoreReasons`
 - **Deterministic dedup (v1)**: cross-source groups + canonical selection
 - **Deterministic classification (v1)**: `impactArea`, `impactLevel`, `tags`, `reasons`
@@ -88,7 +88,8 @@ Prereqs:
 - Ingestion MVP: Node.js 24+ (uses `node:sqlite`)
 
 - Install: `npm install`
-- Ingest: `npm run ingest` (writes `.data/watchtower.sqlite`, exports `src/_data/ingested.json`)
+- Ingest: `npm run ingest` (writes `.data/watchtower.sqlite`, exports `artifacts/ingested.json`)
+- Publish artifacts: `npm run artifacts` (writes `artifacts/candidates.json`, `artifacts/digests.json`, `artifacts/dedupGroups.json`)
 - Build: `npm run build` (outputs to `public/`)
 - Preview: `npm run dev` (Eleventy dev server)
 

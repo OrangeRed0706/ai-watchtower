@@ -2,7 +2,7 @@
 
 This project intentionally starts with **deterministic, inspectable heuristics** before adding AI summarization.
 
-The output of `npm run ingest` writes per-item fields to `src/_data/ingested.json`:
+The output of `npm run ingest` writes per-item fields to `artifacts/ingested.json`:
 - `score`: integer “worth reading” rank
 - `scoreReasons[]`: explainable contributions (key + delta + optional note)
 
@@ -73,4 +73,3 @@ To turn candidates into a daily digest:
 2. Classification (rules-first, then AI assist for ambiguous cases)
 3. Diversity controls (per-source caps, avoid single-topic dominance)
 4. AI summarization and synthesis into a small final digest with provenance links
-

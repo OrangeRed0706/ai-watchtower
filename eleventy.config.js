@@ -1,6 +1,7 @@
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addWatchTarget("artifacts");
 
   eleventyConfig.addFilter("prettyDate", (isoDate) => {
     if (!isoDate) return "";
