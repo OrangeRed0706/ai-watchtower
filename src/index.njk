@@ -5,9 +5,11 @@ title: Home
 
 <section class="panel">
   <div class="page-title">
-    <h1>Latest digest</h1>
+    <h1>Latest candidates</h1>
     {% if meta.latestDigest %}
       <div class="subtle">{{ meta.latestDigest.date | prettyDate }}</div>
+    {% elif candidates and candidates.available and candidates.run %}
+      <div class="subtle">From ingest {{ candidates.run.finishedAt }}</div>
     {% endif %}
   </div>
 
@@ -21,14 +23,18 @@ title: Home
           {% for item in meta.latestDigest.items %}
             <li class="item">
               <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
-              <p>{{ item.summary }}</p>
-              <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+              {% if item.snippet %}
+                <p>{{ item.snippet }}</p>
+              {% endif %}
               <div class="meta">
                 <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
                 <span class="pill">{{ item.impactArea }}</span>
                 {% for tag in item.tags %}
                   <span class="pill">#{{ tag }}</span>
                 {% endfor %}
+                {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+                  <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+                {% endif %}
               </div>
             </li>
           {% endfor %}
@@ -39,6 +45,7 @@ title: Home
         <ul class="list">
           <li><a href="{{ '/digests/' | url }}">Digest archive</a></li>
           <li><a href="{{ '/candidates/' | url }}">Digest candidates (pre-summary)</a></li>
+          <li><a href="{{ '/dedup/' | url }}">Dedup groups</a></li>
           <li><a href="{{ '/sources/' | url }}">Sources</a></li>
           <li><a href="{{ '/items/' | url }}">Latest items</a></li>
           <li><a href="{{ '/about/' | url }}">About this project</a></li>
@@ -54,7 +61,39 @@ title: Home
       <a href="{{ ('/digests/' ~ meta.latestDigest.date ~ '/') | url }}">Open {{ meta.latestDigest.date }}</a>.
     </p>
   {% else %}
-    <p>No digests available yet.</p>
+    <p class="kicker">
+      No daily candidate pages yet. Run <code>npm run ingest</code>, or browse the current snapshot on
+      <a href="{{ '/candidates/' | url }}">Candidates</a>.
+    </p>
+
+    {% if candidates and candidates.available and candidates.items and candidates.items.length %}
+      <h2 style="margin: 1.1rem 0 0.5rem; font-size: 1.1rem;">Top candidates</h2>
+      <ol class="items">
+        {% for item in candidates.items | slice(0, 10) %}
+          <li class="item">
+            <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            {% if item.snippet %}
+              <p>{{ item.snippet }}</p>
+            {% endif %}
+            <div class="meta">
+              {% if item.classification %}
+                <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
+                <span class="pill">{{ item.classification.impactArea }}</span>
+                {% for tag in item.classification.tags %}
+                  <span class="pill">#{{ tag }}</span>
+                {% endfor %}
+              {% endif %}
+              {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+                <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+              {% endif %}
+              {% if item.sourceName %}
+                <span class="pill">{{ item.sourceName }}</span>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
   {% endif %}
 </section>
 

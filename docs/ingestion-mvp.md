@@ -11,9 +11,13 @@ This phase adds a real RSS/Atom ingestion pipeline that writes to a local SQLite
   - timestamp normalization (ISO-8601 UTC when parseable)
   - normalized title/snippet fields (whitespace collapse, HTML stripped, snippet truncation)
   - stable hashes (`fingerprint`, `content_hash`) for future dedup + AI cache keys
+- Deterministic processing:
+  - candidate scoring (v1): `score` + `scoreReasons`
+  - cross-source dedup (v1): stable groups keyed by canonical URL (fallback to content hash, then day+title)
+  - first-pass classification (v1): `impactArea`, `impactLevel`, `tags`, `reasons`
 - Site wiring:
-  - If `src/_data/ingested.json` exists, the site renders “Latest items” and per-source fetch status.
-  - If it does not exist, the demo site continues to render using mock digests/sources.
+  - If `src/_data/ingested.json` exists, the site renders the homepage, daily candidate pages, candidates, items, dedup groups, and per-source fetch status from real data.
+  - If it does not exist, pages render with empty states (prompting you to run `npm run ingest`).
 
 ## Configuration
 
@@ -51,15 +55,22 @@ Idempotency rule:
 
 The ingest script writes `src/_data/ingested.json` (not committed by default). Eleventy will pick it up automatically as `ingested`.
 
-Shape (schemaVersion 2):
+Shape (schemaVersion 2, with additive fields):
 
 - `ingested.run`: run metadata (counts, hashes, timestamps)
 - `ingested.sources[]`: source list + last fetch status/error
 - `ingested.items[]`: most recent normalized entries across sources
 - `ingested.scoring`: scoring metadata for the current snapshot
+- `ingested.dedup`: dedup metadata + groups (inspectable)
+- `ingested.classification`: classification metadata (version + timestamp)
 - Per-item scoring fields:
   - `items[].score`, `items[].scoreVersion`
   - `items[].scoreReasons[]`: explainable “why” signals (keyword/path/recency/source policy)
+- Per-item dedup fields:
+  - `items[].dedup.key`, `items[].dedup.basis`, `items[].dedup.groupSize`, `items[].dedup.isCanonical`
+- Per-item classification fields:
+  - `items[].classification.impactArea`, `items[].classification.impactLevel`
+  - `items[].classification.tags[]`, `items[].classification.reasons[]`
 
 ## Running locally
 
@@ -78,8 +89,6 @@ Commands:
 
 ## What remains (not in Phase 1)
 
-- Cross-source deduplication (beyond per-source idempotency)
-- Classification (rules + AI assist)
 - AI summarization and digest assembly (the “final” compact digest output)
 - Diversity controls and per-source budgeting (e.g., avoid 10 items from one source)
 - Redirect-following canonical URL expansion (bounded) and HTML full-text extraction

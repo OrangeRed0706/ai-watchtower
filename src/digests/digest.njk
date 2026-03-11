@@ -9,38 +9,50 @@ permalink: "digests/{{ digest.date }}/index.html"
 
 <section class="panel">
   <div class="page-title">
-    <h1>Daily digest</h1>
+    <h1>Daily candidates</h1>
     <div class="subtle">{{ digest.date | prettyDate }}</div>
   </div>
 
   <p class="kicker">{{ digest.summary }}</p>
 
-  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">High impact</h2>
-  <ul class="items">
-    {% for item in digest.items %}
-      {% if item.impactLevel == 'high' %}
-        {% include "partials/digest-item.njk" %}
-      {% endif %}
-    {% endfor %}
-  </ul>
+  {% set impactBuckets = ['high', 'medium', 'low'] %}
+  {% for level in impactBuckets %}
+    <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">{{ level | capitalize }} impact</h2>
+    <ul class="items">
+      {% for item in digest.items %}
+        {% if item.impactLevel == level %}
+          <li class="item">
+            <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            {% if item.snippet %}
+              <p>{{ item.snippet }}</p>
+            {% endif %}
+            <div class="meta">
+              <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
+              <span class="pill">{{ item.impactArea }}</span>
+              {% for tag in item.tags %}
+                <span class="pill">#{{ tag }}</span>
+              {% endfor %}
+              {% if item.score is not none %}
+                <span class="pill">score: {{ item.score }}</span>
+              {% endif %}
+              {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+                <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+              {% endif %}
+            </div>
 
-  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">Medium impact</h2>
-  <ul class="items">
-    {% for item in digest.items %}
-      {% if item.impactLevel == 'medium' %}
-        {% include "partials/digest-item.njk" %}
-      {% endif %}
-    {% endfor %}
-  </ul>
-
-  <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">Low impact</h2>
-  <ul class="items">
-    {% for item in digest.items %}
-      {% if item.impactLevel == 'low' %}
-        {% include "partials/digest-item.njk" %}
-      {% endif %}
-    {% endfor %}
-  </ul>
+            {% if item.sources and item.sources.length %}
+              <p style="margin-top: 0.6rem;">
+                <strong>Sources:</strong>
+                {% for s in item.sources %}
+                  <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </p>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endfor %}
 
   <nav class="pager" aria-label="Digest navigation">
     <div>

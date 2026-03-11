@@ -4,13 +4,16 @@ AI news intelligence pipeline for Lynn.
 
 ## Current state (today)
 
-- **Visible static demo site** built with **Eleventy (11ty)** using **sample/mock data**
+- **Visible static site** built with **Eleventy (11ty)** driven by the latest ingestion snapshot when present
 - Specs in `docs/` describing the intended ingestion → publish pipeline
 - GitHub Pages workflow that builds the static site into `public/` (`.gitlab-ci.yml` also exists for optional GitLab Pages)
 - **Phase 1 ingestion MVP**: `npm run ingest` writes to SQLite and exports `src/_data/ingested.json` (site renders it when present)
-- **Deterministic candidate scoring (v1)**: ingested items get `score` + `scoreReasons`, and the site exposes a pre-summary shortlist at `/candidates/`
+- **Deterministic candidate scoring (v1)**: `score` + `scoreReasons`
+- **Deterministic dedup (v1)**: cross-source groups + canonical selection
+- **Deterministic classification (v1)**: `impactArea`, `impactLevel`, `tags`, `reasons`
+- Site views: `/digests/` (daily candidates), `/candidates/` (ranked shortlist), `/dedup/` (groups), `/items/` (raw entries)
 
-The UI includes a prominent note that it is currently mock data; pipeline implementation is next.
+The UI includes a prominent notice that the pipeline is still early and does not yet include AI summarization/synthesis.
 
 **Goal**
 - Ingest high-signal AI sources (RSS/blog/official updates).
@@ -51,8 +54,8 @@ The UI includes a prominent note that it is currently mock data; pipeline implem
 
 ## Repo contents
 
-- Demo site:
-  - `src/`: Eleventy site source (templates + mock data)
+- Site:
+  - `src/`: Eleventy site source (templates + data views)
   - `eleventy.config.js`: Eleventy config (builds to `public/`)
   - `.gitlab-ci.yml`: GitLab Pages build + publish
   - `public/`: build output directory (generated; not committed)
@@ -76,9 +79,9 @@ The UI includes a prominent note that it is currently mock data; pipeline implem
 
 ## Next step
 
-Implement the next pipeline stages (dedup, classification, AI summarization + synthesis) to replace the mock digests with generated daily pages from ingested sources.
+Add AI summarization + synthesis (with strict provenance) to turn daily candidate pages into compact human-readable digests.
 
-## Local development (static demo site)
+## Local development (static site)
 
 Prereqs:
 - Site build/dev: Node.js 18+ (recommended: 20+)

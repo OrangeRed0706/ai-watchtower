@@ -1,81 +1,105 @@
-module.exports = [
-  {
-    date: "2026-03-10",
-    title: "Daily digest",
-    summary:
-      "A few representative items across models, products, and tooling. This page demonstrates layout, labels, and provenance links.",
-    items: [
-      {
-        title: "Example: New model capability announced",
-        url: "https://example.com/model-capability",
-        sources: [
-          { name: "OpenAI Blog (mock)", url: "https://example.com/source/openai" },
-          { name: "Secondary write-up (mock)", url: "https://example.com/source/secondary" }
-        ],
-        impactArea: "model",
-        impactLevel: "high",
-        tags: ["models", "release"],
-        summary:
-          "A mock announcement describing improved reasoning and lower latency for a new model variant.",
-        whyItMatters:
-          "Higher capability at the same cost changes what workflows are feasible to automate and where latency-sensitive UX becomes viable."
-      },
-      {
-        title: "Example: Product update improves eval tooling",
-        url: "https://example.com/eval-tooling",
-        sources: [{ name: "GitHub Changelog (mock)", url: "https://example.com/source/github" }],
-        impactArea: "tooling",
-        impactLevel: "medium",
-        tags: ["tooling", "evaluation"],
-        summary:
-          "A mock tooling update adds better diffing and provenance export for evaluation runs.",
-        whyItMatters:
-          "Better evaluation primitives make it easier to ship model changes safely and understand regressions."
-      },
-      {
-        title: "Example: Career signal — hiring trend note",
-        url: "https://example.com/career-signal",
-        sources: [{ name: "Industry blog (mock)", url: "https://example.com/source/industry" }],
-        impactArea: "career",
-        impactLevel: "low",
-        tags: ["career", "market"],
-        summary:
-          "A mock observation about increasing demand for evaluation and safety engineering roles.",
-        whyItMatters:
-          "Signals where organizations are investing and which skills may have compounding value."
-      }
-    ]
-  },
-  {
-    date: "2026-03-09",
-    title: "Daily digest",
-    summary:
-      "A second mock digest used to demonstrate archive navigation and previous/next links.",
-    items: [
-      {
-        title: "Example: Product policy clarification",
-        url: "https://example.com/policy-clarification",
-        sources: [{ name: "Anthropic News (mock)", url: "https://example.com/source/anthropic" }],
-        impactArea: "product",
-        impactLevel: "medium",
-        tags: ["policy", "product"],
-        summary: "A mock update clarifies usage limits and data retention behavior.",
-        whyItMatters:
-          "Policy and retention details affect vendor selection, compliance posture, and user trust."
-      },
-      {
-        title: "Example: Tooling — CLI update",
-        url: "https://example.com/cli-update",
-        sources: [{ name: "GitHub Changelog (mock)", url: "https://example.com/source/github-2" }],
-        impactArea: "tooling",
-        impactLevel: "low",
-        tags: ["tooling"],
-        summary:
-          "A mock CLI update improves auth ergonomics and adds a new subcommand.",
-        whyItMatters:
-          "Small tooling improvements compound over time and reduce friction for daily workflows."
-      }
-    ]
-  }
-];
+function parseTimeMs(iso) {
+  const ms = Date.parse(String(iso || ""));
+  return Number.isFinite(ms) ? ms : null;
+}
 
+function isoDay(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toISOString().slice(0, 10);
+}
+
+function pickItemDay(item) {
+  return isoDay(item?.publishedAt) || isoDay(item?.updatedAt) || null;
+}
+
+function impactLevelFromScore(score) {
+  const s = Number(score);
+  if (!Number.isFinite(s)) return "low";
+  if (s >= 140) return "high";
+  if (s >= 105) return "medium";
+  return "low";
+}
+
+function defaultImpactArea(item) {
+  const c = String(item?.category || "").toLowerCase();
+  if (c.includes("model")) return "model";
+  if (c.includes("tool")) return "tooling";
+  if (c.includes("policy") || c.includes("safety")) return "policy";
+  return "product";
+}
+
+function buildDedupGroupIndex(ingested) {
+  const groups = Array.isArray(ingested?.dedup?.groups) ? ingested.dedup.groups : [];
+  const map = new Map();
+  for (const g of groups) {
+    const key = String(g?.key || "");
+    if (!key) continue;
+    map.set(key, g);
+  }
+  return map;
+}
+
+function sortNewestFirst(a, b) {
+  return String(b.date).localeCompare(String(a.date));
+}
+
+module.exports = (() => {
+  // Generated from real ingested/candidate data when present; otherwise render no digests.
+  let ingested = null;
+  try {
+    // eslint-disable-next-line global-require, import/no-unresolved
+    ingested = require("./ingested.json");
+  } catch {
+    return [];
+  }
+
+  const items = Array.isArray(ingested?.items) ? ingested.items : [];
+  const groupIndex = buildDedupGroupIndex(ingested);
+
+  const canonicalOnly = items.filter((it) => {
+    if (!it || !it.dedup) return true;
+    return Boolean(it?.dedup?.isCanonical);
+  });
+  const byDay = new Map();
+
+  for (const item of canonicalOnly) {
+    const day = pickItemDay(item);
+    if (!day) continue;
+    if (!byDay.has(day)) byDay.set(day, []);
+    byDay.get(day).push(item);
+  }
+
+  const days = Array.from(byDay.keys()).sort().reverse().slice(0, 14);
+  const digests = days.map((day) => {
+    const dayItems = byDay.get(day) || [];
+    const top = [...dayItems].sort((a, b) => (Number(b?.score) || -999) - (Number(a?.score) || -999)).slice(0, 16);
+    return {
+      date: day,
+      title: "Daily candidates",
+      summary: "Deterministic shortlist from ingested feeds. Not yet AI-summarized.",
+      items: top.map((it) => ({
+        title: it.title,
+        url: it.url,
+        snippet: it.snippet || "",
+        sources: (() => {
+          const key = String(it?.dedup?.key || "");
+          const g = key && groupIndex.has(key) ? groupIndex.get(key) : null;
+          const srcs = Array.isArray(g?.sources) ? g.sources : [];
+          if (srcs.length) {
+            return srcs.map((s) => ({ name: s.name || s.id, url: s.url || it.url }));
+          }
+          return it.sourceName ? [{ name: it.sourceName, url: it.sourceUrl || it.feedUrl || it.url }] : [];
+        })(),
+        impactArea: it?.classification?.impactArea || defaultImpactArea(it),
+        impactLevel: it?.classification?.impactLevel || impactLevelFromScore(it?.score),
+        tags: it?.classification?.tags || [],
+        dedup: it?.dedup || null,
+        score: it?.score ?? null
+      }))
+    };
+  });
+
+  return digests.sort(sortNewestFirst);
+})();

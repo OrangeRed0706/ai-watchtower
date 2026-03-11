@@ -18,7 +18,8 @@ permalink: /items/index.html
 
   {% if ingested and ingested.items and ingested.items.length %}
     <p class="kicker">
-      These are raw normalized feed entries (no dedup/classification/summarization yet).
+      These are normalized feed entries with deterministic scoring, first-pass classification, and cross-source dedup metadata.
+      (This page does not collapse duplicates; see <a href="{{ '/candidates/' | url }}">Candidates</a> for the deduped shortlist.)
     </p>
 
     <ol class="items">
@@ -32,6 +33,13 @@ permalink: /items/index.html
             {% if item.score is not none %}
               <span class="pill">score: {{ item.score }}</span>
             {% endif %}
+            {% if item.classification %}
+              <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
+              <span class="pill">{{ item.classification.impactArea }}</span>
+              {% for tag in item.classification.tags %}
+                <span class="pill">#{{ tag }}</span>
+              {% endfor %}
+            {% endif %}
             {% if item.publishedAt %}
               <span class="pill">{{ item.publishedAt }}</span>
             {% endif %}
@@ -40,6 +48,13 @@ permalink: /items/index.html
             {% endif %}
             {% if item.category %}
               <span class="pill">{{ item.category }}</span>
+            {% endif %}
+            {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+              {% if item.dedup.isCanonical %}
+                <span class="pill">dedup: canonical ({{ item.dedup.groupSize }})</span>
+              {% else %}
+                <span class="pill">dedup: duplicate ({{ item.dedup.groupSize }})</span>
+              {% endif %}
             {% endif %}
           </div>
         </li>

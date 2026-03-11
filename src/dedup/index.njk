@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+title: Dedup groups
+permalink: /dedup/index.html
+---
+
+<section class="panel">
+  <div class="page-title">
+    <h1>Dedup groups</h1>
+    {% if dedupGroups and dedupGroups.available and dedupGroups.stats %}
+      <div class="subtle">
+        {{ dedupGroups.stats.groups }} group(s) • {{ dedupGroups.stats.itemsIn }} item(s) • {{ dedupGroups.stats.duplicateItems }} duplicate row(s)
+      </div>
+    {% else %}
+      <div class="subtle">No dedup data yet</div>
+    {% endif %}
+  </div>
+
+  <p class="kicker">
+    Deterministic cross-source grouping. Primary key is canonical URL; fallback keys are content hash, then (day + normalized title).
+  </p>
+
+  {% if dedupGroups and dedupGroups.available and dedupGroups.groups and dedupGroups.groups.length %}
+    <ol class="items">
+      {% for g in dedupGroups.groups | slice(0, 200) %}
+        <li class="item">
+          <div class="split">
+            <div>
+              <h3 style="margin: 0;">
+                {% if g.canonical and g.canonical.url %}
+                  <a href="{{ g.canonical.url }}">{{ g.canonical.title or g.canonical.url }}</a>
+                {% else %}
+                  {{ g.canonical.title or 'Untitled' }}
+                {% endif %}
+              </h3>
+              <div class="meta">
+                <span class="pill">members: {{ g.members.length }}</span>
+                {% if g.basis %}
+                  <span class="pill">basis: {{ g.basis }}</span>
+                {% endif %}
+                <span class="pill"><code>{{ g.key }}</code></span>
+              </div>
+              {% if g.sources and g.sources.length %}
+                <p class="kicker" style="margin-top: 0.6rem;">
+                  <strong>Sources:</strong>
+                  {% for s in g.sources %}
+                    <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+              {% endif %}
+            </div>
+            <aside class="panel" style="padding: 0.75rem 0.85rem; min-width: 18rem;">
+              <div class="kicker" style="margin: 0 0 0.35rem;"><strong>Members</strong></div>
+              <ul class="list">
+                {% for m in g.members %}
+                  <li>
+                    {% if m.isCanonical %}<strong>canonical</strong> • {% endif %}
+                    {% if m.url %}
+                      <a href="{{ m.url }}">{{ m.sourceName or m.sourceId }}</a>
+                    {% else %}
+                      {{ m.sourceName or m.sourceId }}
+                    {% endif %}
+                    {% if m.score is not none %} <span class="subtle">(score {{ m.score }})</span>{% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </aside>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="kicker">
+      Run <code>npm run ingest</code> to generate <code>src/_data/ingested.json</code>.
+    </p>
+  {% endif %}
+</section>
+

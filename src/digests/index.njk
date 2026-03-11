@@ -10,15 +10,21 @@ permalink: /digests/index.html
     <div class="subtle">{{ meta.allDigests.length }} day(s)</div>
   </div>
   <p class="kicker">
-    Reverse chronological list of daily digests (sample data).
+    Reverse chronological list of daily candidate shortlists generated from the latest ingestion snapshot.
   </p>
 
-  <ul class="list">
-    {% for d in meta.allDigests %}
-      <li>
-        <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
-        — {{ d.items.length }} item(s)
-      </li>
-    {% endfor %}
-  </ul>
+  {% if meta.allDigests and meta.allDigests.length %}
+    <ul class="list">
+      {% for d in meta.allDigests %}
+        <li>
+          <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
+          — {{ d.items.length }} item(s)
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="kicker">
+      No digests yet. Run <code>npm run ingest</code> to generate <code>src/_data/ingested.json</code>.
+    </p>
+  {% endif %}
 </section>

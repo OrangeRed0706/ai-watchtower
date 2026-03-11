@@ -10,17 +10,20 @@ permalink: /about/index.html
 
 ## Current state (this repo)
 
-This site is a **static MVP demo** built with **Eleventy**, using **sample/mock data** to demonstrate:
+This site is a **static MVP** built with **Eleventy**. When `npm run ingest` has generated `src/_data/ingested.json`,
+the primary browsing flow is driven by real ingested entries with deterministic processing:
 
-- Home page with the latest digest
-- Digest archive and daily digest pages
+- Home page with the latest daily candidate shortlist
+- Archive of daily candidate pages (not AI summarized yet)
+- Dedup groups (cross-source clustering)
+- Candidate scoring + reasons
 - Sources list
 - Minimal styling and navigation
 - GitLab Pages-compatible build output in `public/`
 
 ## Next state (implementation)
 
-The next phase is the ingestion + normalization + dedup + classification + summarization pipeline described in `docs/`, producing real site content.
+The next phase is AI summarization + synthesis (still with strict provenance) described in `docs/`, producing compact human-readable digests.
 
 ## AI assistance disclosure (target behavior)
 
@@ -30,4 +33,3 @@ Per the spec, AI usage is constrained and auditable:
 - AI only for ambiguous judgment and for digest summaries
 - Strict structured output (JSON), cached by content hash
 - Always link back to original source URLs (provenance)
-

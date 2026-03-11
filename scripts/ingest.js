@@ -24,6 +24,8 @@ const {
   sha256Hex
 } = require("./lib/normalize");
 const { scoreItem } = require("./lib/scoring");
+const { classifyItem } = require("./lib/classify");
+const { dedupeItems } = require("./lib/dedup");
 
 const DEFAULT_CONFIG_PATH = path.join(process.cwd(), "config", "sources.json");
 const DEFAULT_DB_PATH = path.join(process.cwd(), ".data", "watchtower.sqlite");
@@ -460,12 +462,14 @@ async function main() {
          s.priority AS sourcePriority,
          s.source_type AS sourceType,
          s.fetch_policy AS fetchPolicy,
+         e.guid AS guid,
          e.title_raw AS title,
          e.snippet_norm AS snippet,
          e.url_canonical AS url,
          e.published_at AS publishedAt,
          e.updated_at AS updatedAt,
-         e.fingerprint AS fingerprint
+         e.fingerprint AS fingerprint,
+         e.content_hash AS contentHash
        FROM feed_entries_raw e
        JOIN sources s ON s.id = e.source_id
        WHERE s.enabled = 1
@@ -485,6 +489,13 @@ async function main() {
       scoreReasons: scored.reasons
     };
   });
+
+  const classifiedItems = scoredItems.map((item) => ({
+    ...item,
+    classification: classifyItem(item)
+  }));
+
+  const dedupResult = dedupeItems(classifiedItems);
 
   const sourcesForExport = db
     .prepare(
@@ -529,6 +540,20 @@ async function main() {
   const exportObj = {
     schemaVersion: 2,
     generatedAt: finishedAt,
+    classification: {
+      version: 1,
+      classifiedAt: finishedAt,
+      note:
+        "Deterministic first-pass labels (impact area/level + tags) derived from title/url/category/snippet + score thresholds."
+    },
+    dedup: {
+      version: 1,
+      dedupedAt: finishedAt,
+      note:
+        "Deterministic cross-source dedup groups. Keyed primarily by canonical URL; falls back to content hash, then (day + normalized title).",
+      stats: dedupResult.stats,
+      groups: dedupResult.groups
+    },
     scoring: {
       version: 1,
       scoredAt: finishedAt,
@@ -546,7 +571,7 @@ async function main() {
       sourcesErrored: totalErrors
     },
     sources: sourcesForExport,
-    items: scoredItems
+    items: dedupResult.items
   };
 
   fs.writeFileSync(exportPath, `${JSON.stringify(exportObj, null, 2)}\n`, "utf8");

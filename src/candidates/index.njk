@@ -9,7 +9,7 @@ permalink: /candidates/index.html
     <h1>Digest candidates (pre-summary)</h1>
     {% if candidates and candidates.available and candidates.run %}
       <div class="subtle">
-        From ingest {{ candidates.run.finishedAt }} • showing top {{ candidates.topCount }} of {{ candidates.totalItems }}
+        From ingest {{ candidates.run.finishedAt }} • showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
       </div>
     {% else %}
       <div class="subtle">No candidate data yet</div>
@@ -18,12 +18,22 @@ permalink: /candidates/index.html
 
   <p class="kicker">
     This page shows a <strong>deterministic</strong>, <strong>explainable</strong> ranking of items that are likely worth reading.
-    It is intentionally <strong>not</strong> a final digest: there is no deduplication, classification, or AI summarization yet.
+    It is intentionally <strong>not</strong> a final digest: there is no AI summarization or synthesis yet.
   </p>
 
   {% if candidates and candidates.available and candidates.scoring %}
     <p class="kicker">
       Scoring: v{{ candidates.scoring.version }} • {{ candidates.scoring.scoredAt }}
+    </p>
+  {% endif %}
+  {% if candidates and candidates.available and candidates.dedup and candidates.dedup.version %}
+    <p class="kicker">
+      Dedup: v{{ candidates.dedup.version }} • {{ candidates.dedup.dedupedAt }}
+    </p>
+  {% endif %}
+  {% if candidates and candidates.available and candidates.classification and candidates.classification.version %}
+    <p class="kicker">
+      Classification: v{{ candidates.classification.version }} • {{ candidates.classification.classifiedAt }}
     </p>
   {% endif %}
 
@@ -44,13 +54,32 @@ permalink: /candidates/index.html
                 {% if item.sourceTier %}
                   <span class="pill">tier: {{ item.sourceTier }}</span>
                 {% endif %}
+                {% if item.classification %}
+                  <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
+                  <span class="pill">{{ item.classification.impactArea }}</span>
+                  {% for tag in item.classification.tags %}
+                    <span class="pill">#{{ tag }}</span>
+                  {% endfor %}
+                {% endif %}
                 {% if item.publishedAt %}
                   <span class="pill">{{ item.publishedAt }}</span>
                 {% endif %}
                 {% if item.category %}
                   <span class="pill">{{ item.category }}</span>
                 {% endif %}
+                {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+                  <span class="pill">dupes: {{ item.dedup.groupSize }}</span>
+                {% endif %}
               </div>
+
+              {% if item.dedupGroup and item.dedupGroup.sources and item.dedupGroup.sources.length > 1 %}
+                <p class="kicker" style="margin-top: 0.6rem;">
+                  <strong>Also seen in:</strong>
+                  {% for s in item.dedupGroup.sources %}
+                    <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+              {% endif %}
             </div>
             <aside class="panel" style="padding: 0.75rem 0.85rem; min-width: 14rem;">
               <div class="meta" style="margin: 0 0 0.5rem;">
@@ -73,6 +102,20 @@ permalink: /candidates/index.html
                   {% endfor %}
                 </ul>
               {% endif %}
+
+              {% if item.classification and item.classification.reasons and item.classification.reasons.length %}
+                <div class="kicker" style="margin: 0.75rem 0 0.35rem;"><strong>Classification signals</strong></div>
+                <ul class="reason-list">
+                  {% for r in item.classification.reasons | slice(0, 6) %}
+                    <li>
+                      <code>{{ r.key }}</code>
+                      {% if r.note %}
+                        <span class="subtle">({{ r.note }})</span>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </aside>
           </div>
         </li>
@@ -84,4 +127,3 @@ permalink: /candidates/index.html
     </p>
   {% endif %}
 </section>
-
