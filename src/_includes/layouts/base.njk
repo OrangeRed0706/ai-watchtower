@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
-      {%- if title -%}{{ title }} · {%- endif -%}{{ site.name }}
+      {%- if title -%}{{ title }} &middot; {%- endif -%}{{ site.name }}
     </title>
     <link rel="stylesheet" href="{{ '/assets/styles.css' | url }}" />
   </head>
-  <body>
+  <body class="page-shell">
+    <div class="ambient" aria-hidden="true"></div>
     {% include "partials/nav.njk" %}
     <main class="container">
       <section class="notice" role="note" aria-label="Site status">
@@ -24,10 +25,10 @@
     </main>
     <footer class="footer">
       <div class="container footer__inner">
-        <div>{{ site.name }} · {{ site.tagline }}</div>
+        <div>{{ site.name }} &middot; {{ site.tagline }}</div>
         <div>
-          <a href="{{ '/about/' | url }}">About</a> ·
-          <a href="{{ '/sources/' | url }}">Sources</a> ·
+          <a href="{{ '/about/' | url }}">About</a> &middot;
+          <a href="{{ '/sources/' | url }}">Sources</a> &middot;
           <a href="{{ '/digests/' | url }}">Archive</a>
         </div>
       </div>

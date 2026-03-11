@@ -22,14 +22,14 @@ permalink: "digests/{{ digest.date }}/index.html"
 
   {% set impactBuckets = ['high', 'medium', 'low'] %}
   {% for level in impactBuckets %}
-    <h2 style="margin: 1.1rem 0 0.2rem; font-size: 1.1rem;">{{ level | capitalize }} impact</h2>
+    <h2 class="section-title mt-16">{{ level | capitalize }} impact</h2>
     <ul class="items">
       {% for item in digest.items %}
         {% if item.impactLevel == level %}
           <li class="item">
-            <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
             {% if item.snippet %}
-              <p>{{ item.snippet }}</p>
+              <p class="item__body">{{ item.snippet }}</p>
             {% endif %}
             <div class="meta">
               <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
@@ -46,7 +46,7 @@ permalink: "digests/{{ digest.date }}/index.html"
             </div>
 
             {% if item.sources and item.sources.length %}
-              <p style="margin-top: 0.6rem;">
+              <p class="kicker--spaced">
                 <strong>Sources:</strong>
                 {% for s in item.sources %}
                   <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
@@ -62,12 +62,12 @@ permalink: "digests/{{ digest.date }}/index.html"
   <nav class="pager" aria-label="Digest navigation">
     <div>
       {% if pagination.next %}
-        <a href="{{ ('/digests/' ~ pagination.next.date ~ '/') | url }}">← {{ pagination.next.date | prettyDate }}</a>
+        <a href="{{ ('/digests/' ~ pagination.next.date ~ '/') | url }}">&larr; {{ pagination.next.date | prettyDate }}</a>
       {% endif %}
     </div>
     <div>
       {% if pagination.previous %}
-        <a href="{{ ('/digests/' ~ pagination.previous.date ~ '/') | url }}">{{ pagination.previous.date | prettyDate }} →</a>
+        <a href="{{ ('/digests/' ~ pagination.previous.date ~ '/') | url }}">{{ pagination.previous.date | prettyDate }} &rarr;</a>
       {% endif %}
     </div>
   </nav>

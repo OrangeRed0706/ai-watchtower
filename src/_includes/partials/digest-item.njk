@@ -1,7 +1,7 @@
 <li class="item">
-  <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
-  <p>{{ item.summary }}</p>
-  <p><strong>Why it matters:</strong> {{ item.whyItMatters }}</p>
+  <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+  <p class="item__body">{{ item.summary }}</p>
+  <p class="kicker">Why it matters: {{ item.whyItMatters }}</p>
 
   <div class="meta">
     <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
@@ -12,7 +12,7 @@
   </div>
 
   {% if item.sources and item.sources.length %}
-    <p style="margin-top: 0.6rem;">
+    <p class="kicker--spaced">
       <strong>Sources:</strong>
       {% for s in item.sources %}
         <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
@@ -20,4 +20,3 @@
     </p>
   {% endif %}
 </li>
-

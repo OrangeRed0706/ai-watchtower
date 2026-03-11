@@ -1,17 +1,18 @@
 <header class="header">
   <div class="container header__inner">
+    {% set currentPath = page.url or "/" %}
     <a class="brand" href="{{ '/' | url }}">
       <span class="brand__name">{{ site.name }}</span>
       <span class="brand__tagline">{{ site.tagline }}</span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="{{ '/' | url }}">Home</a>
-      <a href="{{ '/digests/' | url }}">Archive</a>
-      <a href="{{ '/candidates/' | url }}">Ranked</a>
-      <a href="{{ '/dedup/' | url }}">Clusters</a>
-      <a href="{{ '/sources/' | url }}">Sources</a>
-      <a href="{{ '/items/' | url }}">Items</a>
-      <a href="{{ '/about/' | url }}">About</a>
+      <a class="nav__link {% if currentPath == '/' %}is-active{% endif %}" href="{{ '/' | url }}">Home</a>
+      <a class="nav__link {% if currentPath == '/digests/' or currentPath.startsWith('/digests/') %}is-active{% endif %}" href="{{ '/digests/' | url }}">Archive</a>
+      <a class="nav__link {% if currentPath == '/candidates/' or currentPath == '/candidates/index.html' %}is-active{% endif %}" href="{{ '/candidates/' | url }}">Ranked</a>
+      <a class="nav__link {% if currentPath == '/dedup/' %}is-active{% endif %}" href="{{ '/dedup/' | url }}">Clusters</a>
+      <a class="nav__link {% if currentPath == '/sources/' %}is-active{% endif %}" href="{{ '/sources/' | url }}">Sources</a>
+      <a class="nav__link {% if currentPath == '/items/' %}is-active{% endif %}" href="{{ '/items/' | url }}">Items</a>
+      <a class="nav__link {% if currentPath == '/about/' %}is-active{% endif %}" href="{{ '/about/' | url }}">About</a>
     </nav>
   </div>
 </header>

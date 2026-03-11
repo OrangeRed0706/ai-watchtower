@@ -14,7 +14,7 @@ permalink: /sources/index.html
   </p>
   <details class="details">
     <summary>Configuration</summary>
-    <p class="kicker" style="margin-top: 0.45rem;">
+    <p class="kicker--spaced">
       This list is driven by repository configuration when present; local/dev runs may fall back to a minimal default set.
     </p>
   </details>
@@ -22,7 +22,7 @@ permalink: /sources/index.html
   <ul class="items">
     {% for s in sources %}
       <li class="item">
-        <h3><a href="{{ s.url }}">{{ s.name }}</a></h3>
+        <h3 class="item__title"><a href="{{ s.url }}">{{ s.name }}</a></h3>
         <div class="meta">
           <span class="pill">{{ s.category }}</span>
           {% if s.tier %}
@@ -56,21 +56,21 @@ permalink: /sources/index.html
           {% endif %}
         </div>
         {% if s.notes %}
-          <p>{{ s.notes }}</p>
+          <p class="item__body">{{ s.notes }}</p>
         {% endif %}
         {% if ingested and ingested.sources %}
           {% for rs in ingested.sources %}
             {% if rs.id == s.id and rs.lastFetch and rs.lastFetch.error %}
               <details class="details">
                 <summary>Last fetch error</summary>
-                <p class="kicker" style="margin-top: 0.45rem;">{{ rs.lastFetch.error }}</p>
+                <p class="kicker--spaced">{{ rs.lastFetch.error }}</p>
               </details>
             {% endif %}
           {% endfor %}
         {% endif %}
         <details class="details">
           <summary>Source metadata</summary>
-          <div class="meta" style="margin-top: 0.45rem;">
+          <div class="meta kicker--spaced">
             <span class="pill">id: {{ s.id }}</span>
             {% if s.fetchPolicy %}
               <span class="pill">fetch: {{ s.fetchPolicy }}</span>

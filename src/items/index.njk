@@ -9,7 +9,7 @@ permalink: /items/index.html
     <h1>Latest items</h1>
     {% if ingested and ingested.run %}
       <div class="subtle">
-        Last ingest: {{ ingested.run.finishedAt }} • {{ ingested.run.entriesNew }} new
+        Last ingest: {{ ingested.run.finishedAt }} &middot; {{ ingested.run.entriesNew }} new
       </div>
     {% else %}
       <div class="subtle">No ingested data yet</div>
@@ -17,7 +17,7 @@ permalink: /items/index.html
   </div>
 
   {% if ingested and ingested.items and ingested.items.length %}
-    <p class="kicker">
+    <p class="lede">
       These are normalized feed entries with deterministic scoring, first-pass classification, and cross-source dedup metadata.
       (This page does not collapse duplicates; see <a href="{{ '/candidates/' | url }}">Candidates</a> for the deduped shortlist.)
     </p>
@@ -25,13 +25,13 @@ permalink: /items/index.html
     <ol class="items">
       {% for item in ingested.items %}
         <li class="item">
-          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
           {% if item.snippet %}
-            <p>{{ item.snippet }}</p>
+            <p class="item__body">{{ item.snippet }}</p>
           {% endif %}
           <div class="meta">
             {% if item.score is not none %}
-              <span class="pill">score: {{ item.score }}</span>
+              <span class="pill">Score: {{ item.score }}</span>
             {% endif %}
             {% if item.classification %}
               <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>

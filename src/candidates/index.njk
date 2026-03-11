@@ -10,8 +10,8 @@ permalink: /candidates/index.html
     {% if candidates and candidates.available and candidates.items and candidates.items.length %}
       {% set ingestTime = (candidates.run and candidates.run.finishedAt) or candidates.generatedAt %}
       <div class="subtle">
-        {% if ingestTime %}Updated {{ ingestTime }} • {% endif %}
-        showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
+        {% if ingestTime %}Updated {{ ingestTime }} &middot; {% endif %}
+        Showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
       </div>
     {% else %}
       <div class="subtle">No candidate data yet</div>
@@ -20,22 +20,22 @@ permalink: /candidates/index.html
 
   <p class="lede">
     A ranked shortlist of items likely worth reading right now, with provenance and transparent signals.
-    Narrative summaries and cross-item synthesis aren’t published yet.
+    Narrative summaries and cross-item synthesis are not published yet.
   </p>
 
   <details class="details">
-    <summary>Data & methodology</summary>
-    <p class="kicker" style="margin-top: 0.45rem;">
+    <summary>Data and methodology</summary>
+    <p class="kicker--spaced">
       This view is built from the latest ingestion snapshot and a deterministic scoring + dedup + first-pass classification pass.
     </p>
     {% if candidates and candidates.available and candidates.scoring %}
-      <p class="kicker">Scoring: v{{ candidates.scoring.version }} • {{ candidates.scoring.scoredAt }}</p>
+      <p class="kicker">Scoring: v{{ candidates.scoring.version }} &middot; {{ candidates.scoring.scoredAt }}</p>
     {% endif %}
     {% if candidates and candidates.available and candidates.dedup and candidates.dedup.version %}
-      <p class="kicker">Dedup: v{{ candidates.dedup.version }} • {{ candidates.dedup.dedupedAt }}</p>
+      <p class="kicker">Dedup: v{{ candidates.dedup.version }} &middot; {{ candidates.dedup.dedupedAt }}</p>
     {% endif %}
     {% if candidates and candidates.available and candidates.classification and candidates.classification.version %}
-      <p class="kicker">Classification: v{{ candidates.classification.version }} • {{ candidates.classification.classifiedAt }}</p>
+      <p class="kicker">Classification: v{{ candidates.classification.version }} &middot; {{ candidates.classification.classifiedAt }}</p>
     {% endif %}
   </details>
 
@@ -43,14 +43,14 @@ permalink: /candidates/index.html
     <ol class="items">
       {% for item in candidates.items %}
         <li class="item">
-          <h3 style="margin: 0;"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
           {% if item.snippet %}
-            <p>{{ item.snippet }}</p>
+            <p class="item__body">{{ item.snippet }}</p>
           {% endif %}
           <div class="meta">
             <span class="pill">#{{ loop.index }}</span>
             {% if item.score is not none %}
-              <span class="pill"><strong>Score</strong>: {{ item.score }}</span>
+              <span class="pill">Score: {{ item.score }}</span>
             {% endif %}
             {% if item.classification %}
               <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
@@ -77,11 +77,11 @@ permalink: /candidates/index.html
             <details class="details">
               <summary>Why this ranked / provenance</summary>
               {% if item.scoreAgeHours is not none %}
-                <p class="kicker" style="margin-top: 0.45rem;">Score age: {{ item.scoreAgeHours }}h</p>
+                <p class="kicker--spaced">Score age: {{ item.scoreAgeHours }}h</p>
               {% endif %}
 
               {% if item.scoreReasons and item.scoreReasons.length %}
-                <div class="kicker" style="margin-top: 0.45rem;"><strong>Ranking signals</strong></div>
+                <div class="kicker--spaced"><strong>Ranking signals</strong></div>
                 <ul class="reason-list">
                   {% for r in item.scoreReasons | slice(0, 8) %}
                     <li>
@@ -96,7 +96,7 @@ permalink: /candidates/index.html
               {% endif %}
 
               {% if item.classification and item.classification.reasons and item.classification.reasons.length %}
-                <div class="kicker" style="margin-top: 0.75rem;"><strong>Classification signals</strong></div>
+                <div class="kicker--spaced"><strong>Classification signals</strong></div>
                 <ul class="reason-list">
                   {% for r in item.classification.reasons | slice(0, 8) %}
                     <li>
@@ -110,7 +110,7 @@ permalink: /candidates/index.html
               {% endif %}
 
               {% if item.dedupGroup and item.dedupGroup.sources and item.dedupGroup.sources.length > 1 %}
-                <p class="kicker" style="margin-top: 0.75rem;">
+                <p class="kicker--spaced">
                   <strong>Also covered by:</strong>
                   {% for s in item.dedupGroup.sources %}
                     <a href="{{ s.url }}">{{ s.name }}</a>{% if not loop.last %}, {% endif %}
@@ -128,7 +128,7 @@ permalink: /candidates/index.html
     </p>
     <details class="details">
       <summary>For contributors</summary>
-      <p class="kicker" style="margin-top: 0.45rem;">
+      <p class="kicker--spaced">
         Generate the data locally with <code>npm run pipeline</code>, then build the site with <code>npm run build</code>.
       </p>
     </details>

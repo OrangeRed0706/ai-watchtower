@@ -9,12 +9,13 @@ permalink: /digests/index.html
     <h1>Briefing archive</h1>
     <div class="subtle">{{ meta.allDigests.length }} day(s)</div>
   </div>
+
   <p class="lede">
     Daily briefings built from the ranked shortlist on each run.
   </p>
 
   {% if meta.allDigests and meta.allDigests.length %}
-    <ul class="list">
+    <ul class="items">
       {% for d in meta.allDigests %}
         {% set highCount = 0 %}
         {% set mediumCount = 0 %}
@@ -28,14 +29,20 @@ permalink: /digests/index.html
             {% set lowCount = lowCount + 1 %}
           {% endif %}
         {% endfor %}
-        <li>
-          <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
-          — {{ d.items.length }} item(s)
+        <li class="item">
+          <h3 class="item__title">
+            <a href="{{ ('/digests/' ~ d.date ~ '/') | url }}">{{ d.date | prettyDate }}</a>
+          </h3>
+          <p class="item__body">&middot; {{ d.items.length }} item(s)</p>
           {% if highCount or mediumCount or lowCount %}
-            <span class="subtle">(high {{ highCount }}, medium {{ mediumCount }}, low {{ lowCount }})</span>
+            <div class="meta">
+              <span class="pill">high {{ highCount }}</span>
+              <span class="pill">medium {{ mediumCount }}</span>
+              <span class="pill">low {{ lowCount }}</span>
+            </div>
           {% endif %}
           {% if d.summary %}
-            <div class="kicker" style="margin-top: 0.25rem;">{{ d.summary }}</div>
+            <p class="kicker--spaced">{{ d.summary }}</p>
           {% endif %}
         </li>
       {% endfor %}
@@ -46,7 +53,7 @@ permalink: /digests/index.html
     </p>
     <details class="details">
       <summary>For contributors</summary>
-      <p class="kicker" style="margin-top: 0.45rem;">
+      <p class="kicker--spaced">
         Generate the data locally with <code>npm run pipeline</code>, then build the site with <code>npm run build</code>.
       </p>
     </details>

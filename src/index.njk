@@ -3,31 +3,97 @@ layout: layouts/base.njk
 title: Home
 ---
 
-<section class="panel">
-  <div class="page-title">
-    <h1>Daily briefing</h1>
-    {% if meta.latestDigest %}
-      <div class="subtle">{{ meta.latestDigest.date | prettyDate }}</div>
-    {% elif candidates and candidates.available and candidates.run %}
-      <div class="subtle">From ingest {{ candidates.run.finishedAt }}</div>
-    {% endif %}
+<section class="panel panel--hero">
+  <div class="hero">
+    <div class="hero__copy">
+      <div class="eyebrow">Artifact-first AI intelligence desk</div>
+      <h1 class="hero__title">Watch the AI cycle as signals, not a feed.</h1>
+      <p class="hero__text">
+        This system is strongest when it feels like a working console: ranked developments, source health,
+        clustering, and publish-ready briefing surfaces in one place.
+      </p>
+      <div class="hero__actions">
+        <a class="action-link action-link--primary" href="{{ '/candidates/' | url }}">Open ranked signals</a>
+        <a class="action-link" href="{{ '/digests/' | url }}">Browse briefings</a>
+        <a class="action-link" href="{{ '/dedup/' | url }}">Inspect clusters</a>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-card__label">Published digests</div>
+        <div class="metric-card__value">{{ meta.snapshot.digests }}</div>
+        <div class="metric-card__meta">
+          {% if meta.snapshot.publishedDate %}
+            Latest {{ meta.snapshot.publishedDate | prettyDate }}
+          {% else %}
+            No published briefing yet
+          {% endif %}
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__label">Unique candidates</div>
+        <div class="metric-card__value">{{ meta.snapshot.uniqueCandidates }}</div>
+        <div class="metric-card__meta">{{ meta.snapshot.totalCandidates }} total rows before shortlist</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__label">Story clusters</div>
+        <div class="metric-card__value">{{ meta.snapshot.groups }}</div>
+        <div class="metric-card__meta">{{ meta.snapshot.duplicateItems }} duplicate items compressed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__label">Source health</div>
+        <div class="metric-card__value">{{ meta.sourceHealth.ok }}/{{ meta.sourceHealth.configured }}</div>
+        <div class="metric-card__meta">
+          {% if meta.sourceHealth.hasRuntimeData %}
+            {{ meta.sourceHealth.errored }} source(s) errored last run
+          {% else %}
+            Waiting for runtime ingest data
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  {% if meta.latestDigest %}
-    <p class="lede">
-      A ranked shortlist of developments from curated sources, with provenance and explainability.
-      {% if meta.latestDigest.summary %}<span class="kicker">{{ meta.latestDigest.summary }}</span>{% endif %}
-    </p>
-
-    <div class="split" style="margin-top: 1rem;">
+<div class="home-grid mt-20">
+  <section class="panel">
+    <div class="section-header">
       <div>
-        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Top items</h2>
-        <ol class="items">
-          {% for item in meta.latestDigest.items %}
-            <li class="item">
-              <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+        <div class="eyebrow">Priority board</div>
+        <h2 class="section-header__title">
+          {% if meta.latestDigest %}
+            Daily briefing
+          {% elif candidates and candidates.available and candidates.items and candidates.items.length %}
+            Ranked signals
+          {% else %}
+            Console not populated yet
+          {% endif %}
+        </h2>
+      </div>
+      <div class="subtle">
+        {% if meta.latestDigest %}
+          {{ meta.latestDigest.date | prettyDate }}
+        {% elif meta.snapshot.latestRunAt %}
+          Latest run {{ meta.snapshot.latestRunAt }}
+        {% else %}
+          Awaiting first pipeline run
+        {% endif %}
+      </div>
+    </div>
+
+    {% if meta.latestDigest %}
+      <p class="lede">
+        A publish-ready briefing should surface only the developments worth judgment, with enough provenance to verify fast.
+      </p>
+      <ol class="items items--board">
+        {% for item in meta.latestDigest.items | slice(0, 6) %}
+          <li class="item">
+            <div class="item__rank">0{{ loop.index }}</div>
+            <div class="item__content">
+              <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
               {% if item.snippet %}
-                <p>{{ item.snippet }}</p>
+                <p class="item__body">{{ item.snippet }}</p>
               {% endif %}
               <div class="meta">
                 <span class="{{ item.impactLevel | impactClass }}">{{ item.impactLevel | upper }} impact</span>
@@ -39,93 +105,148 @@ title: Home
                   <span class="pill">{{ item.dedup.groupSize }} sources</span>
                 {% endif %}
               </div>
-            </li>
-          {% endfor %}
-        </ol>
-      </div>
-      <aside class="panel" style="padding: 0.95rem 1rem;">
-        <h2 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Browse</h2>
-        <ul class="list">
-          <li><a href="{{ '/digests/' | url }}">Briefing archive</a></li>
-          <li><a href="{{ '/candidates/' | url }}">Ranked candidates</a></li>
-          <li><a href="{{ '/dedup/' | url }}">Story clusters</a></li>
-          <li><a href="{{ '/sources/' | url }}">Sources</a></li>
-          <li><a href="{{ '/items/' | url }}">Latest items</a></li>
-          <li><a href="{{ '/about/' | url }}">About this project</a></li>
-        </ul>
-        <details class="details">
-          <summary>How to read this</summary>
-          <p class="kicker" style="margin-top: 0.45rem;">
-            This briefing is a ranked shortlist. It links to original sources and exposes the signals behind the ranking.
-            Narrative summaries and cross-item synthesis aren’t published yet.
-          </p>
-        </details>
-      </aside>
-    </div>
-
-    <p style="margin-top: 1.1rem;">
-      Prefer the full daily page?
-      <a href="{{ ('/digests/' ~ meta.latestDigest.date ~ '/') | url }}">Open {{ meta.latestDigest.date }}</a>.
-    </p>
-  {% else %}
-    {% if candidates and candidates.available and candidates.items and candidates.items.length %}
-      <p class="lede">
-        No daily briefing page has been published yet. Here are the latest ranked items from the most recent run.
-        Browse more on <a href="{{ '/candidates/' | url }}">Ranked candidates</a>.
-      </p>
-      <h2 style="margin: 1.1rem 0 0.5rem; font-size: 1.1rem;">Top candidates</h2>
-      <ol class="items">
-        {% for item in candidates.items | slice(0, 10) %}
-          <li class="item">
-            <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
-            {% if item.snippet %}
-              <p>{{ item.snippet }}</p>
-            {% endif %}
-            <div class="meta">
-              {% if item.classification %}
-                <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
-                <span class="pill">{{ item.classification.impactArea }}</span>
-                {% for tag in item.classification.tags %}
-                  <span class="pill">#{{ tag }}</span>
-                {% endfor %}
-              {% endif %}
-              {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
-                <span class="pill">{{ item.dedup.groupSize }} sources</span>
-              {% endif %}
-              {% if item.sourceName %}
-                <span class="pill">{{ item.sourceName }}</span>
-              {% endif %}
             </div>
           </li>
         {% endfor %}
       </ol>
-    {% else %}
-      <p class="lede">
-        No published data yet.
-        <a href="{{ '/about/' | url }}">About</a> explains what appears here once ingestion artifacts are available.
+      <p class="kicker--spaced">
+        Need the full edition?
+        <a href="{{ ('/digests/' ~ meta.latestDigest.date ~ '/') | url }}">Open the daily briefing</a>.
       </p>
-      <details class="details">
-        <summary>For contributors</summary>
-        <p class="kicker" style="margin-top: 0.45rem;">
-          Generate the data locally with <code>npm run pipeline</code>, then build the site with <code>npm run build</code>.
+    {% elif candidates and candidates.available and candidates.items and candidates.items.length %}
+      <p class="lede">
+        There is no published digest page yet, but the ranking layer is already working. This is the right fallback surface for an operator view.
+      </p>
+      <ol class="items items--board">
+        {% for item in candidates.items | slice(0, 6) %}
+          <li class="item">
+            <div class="item__rank">0{{ loop.index }}</div>
+            <div class="item__content">
+              <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              {% if item.snippet %}
+                <p class="item__body">{{ item.snippet }}</p>
+              {% endif %}
+              <div class="meta">
+                {% if item.classification %}
+                  <span class="{{ item.classification.impactLevel | impactClass }}">{{ item.classification.impactLevel | upper }} impact</span>
+                  <span class="pill">{{ item.classification.impactArea }}</span>
+                  {% for tag in item.classification.tags %}
+                    <span class="pill">#{{ tag }}</span>
+                  {% endfor %}
+                {% endif %}
+                {% if item.dedup and item.dedup.groupSize and item.dedup.groupSize > 1 %}
+                  <span class="pill">{{ item.dedup.groupSize }} sources</span>
+                {% endif %}
+                {% if item.sourceName %}
+                  <span class="pill">{{ item.sourceName }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+      <p class="kicker--spaced">
+        Browse the full ranking on <a href="{{ '/candidates/' | url }}">Ranked candidates</a>.
+      </p>
+    {% else %}
+      <div class="empty-panel">
+        <div class="empty-panel__title">No published data yet</div>
+        <p class="empty-panel__body">
+          The UI is ready, but the pipeline has not produced fresh artifacts for this workspace yet.
         </p>
-      </details>
+        <div class="empty-panel__actions">
+          <a class="action-link action-link--primary" href="{{ '/about/' | url }}">Read the publishing model</a>
+          <span class="subtle">Run <code>npm run pipeline</code> then <code>npm run build</code></span>
+        </div>
+      </div>
     {% endif %}
-  {% endif %}
-</section>
+  </section>
+
+  <aside class="rail">
+    <section class="panel panel--rail">
+      <div class="eyebrow">Coverage mix</div>
+      <h2 class="section-header__title">Impact radar</h2>
+      <div class="radar">
+        <div class="radar__row">
+          <span class="badge badge--high">HIGH</span>
+          <strong>{{ meta.impactSummary.high }}</strong>
+        </div>
+        <div class="radar__row">
+          <span class="badge badge--medium">MEDIUM</span>
+          <strong>{{ meta.impactSummary.medium }}</strong>
+        </div>
+        <div class="radar__row">
+          <span class="badge badge--low">LOW</span>
+          <strong>{{ meta.impactSummary.low }}</strong>
+        </div>
+      </div>
+      <p class="kicker--spaced">
+        A good intelligence surface should help you spot whether the day is genuinely consequential or just noisy.
+      </p>
+    </section>
+
+    <section class="panel panel--rail">
+      <div class="eyebrow">Operator status</div>
+      <h2 class="section-header__title">System posture</h2>
+      <ul class="signal-list">
+        <li>
+          <span>Latest run</span>
+          <strong>{% if meta.snapshot.latestRunAt %}{{ meta.snapshot.latestRunAt }}{% else %}Not available{% endif %}</strong>
+        </li>
+        <li>
+          <span>Configured sources</span>
+          <strong>{{ meta.sourceHealth.configured }}</strong>
+        </li>
+        <li>
+          <span>Healthy last fetch</span>
+          <strong>{{ meta.sourceHealth.ok }}</strong>
+        </li>
+        <li>
+          <span>Errored last fetch</span>
+          <strong>{{ meta.sourceHealth.errored }}</strong>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel panel--rail">
+      <div class="eyebrow">Explore surfaces</div>
+      <h2 class="section-header__title">Work modes</h2>
+      <div class="lane-list">
+        <a class="lane-card" href="{{ '/candidates/' | url }}">
+          <strong>Ranked view</strong>
+          <span>Best for prioritizing what to read now.</span>
+        </a>
+        <a class="lane-card" href="{{ '/dedup/' | url }}">
+          <strong>Cluster view</strong>
+          <span>Best for spotting story duplication and spread.</span>
+        </a>
+        <a class="lane-card" href="{{ '/sources/' | url }}">
+          <strong>Source view</strong>
+          <span>Best for operational trust and feed quality.</span>
+        </a>
+      </div>
+    </section>
+  </aside>
+</div>
 
 {% if ingested and ingested.items and ingested.items.length %}
-  <section class="panel" style="margin-top: 1rem;">
-    <div class="page-title">
-      <h2 style="margin: 0;">Latest ingested items</h2>
+  <section class="panel mt-20">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow">Raw intake</div>
+        <h2 class="section-header__title">Latest ingested items</h2>
+      </div>
       <div class="subtle">{{ ingested.run.finishedAt }}</div>
     </div>
+    <p class="lede">
+      Keep this section utilitarian. It is a verification surface, not the main reading surface.
+    </p>
     <ol class="items">
       {% for item in ingested.items | slice(0, 5) %}
         <li class="item">
-          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          <h3 class="item__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
           {% if item.snippet %}
-            <p>{{ item.snippet }}</p>
+            <p class="item__body">{{ item.snippet }}</p>
           {% endif %}
           <div class="meta">
             <span class="pill">{{ item.sourceName }}</span>
@@ -136,8 +257,5 @@ title: Home
         </li>
       {% endfor %}
     </ol>
-    <p class="kicker" style="margin-top: 0.9rem;">
-      Browse more on <a href="{{ '/items/' | url }}">Items</a>.
-    </p>
   </section>
 {% endif %}
