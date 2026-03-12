@@ -3,5 +3,5 @@ public/
 .cache/
 .npm-cache/
 .data/
-artifacts/
-src/_data/ingested.json
+data/raw/
+data/normalized/

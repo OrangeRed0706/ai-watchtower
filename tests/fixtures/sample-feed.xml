@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Sample Feed</title>
+    <link>https://example.com</link>
+    <description>Sample feed for tests</description>
+    <item>
+      <title>Introducing GPT-5.4</title>
+      <link>https://openai.com/index/introducing-gpt-5-4?utm_source=rss</link>
+      <guid>gpt54</guid>
+      <pubDate>Wed, 05 Mar 2026 10:00:00 GMT</pubDate>
+      <description><![CDATA[<p>A frontier model release with updated reasoning.</p>]]></description>
+    </item>
+    <item>
+      <title>Secret scanning pattern updates - March 2026</title>
+      <link>https://github.blog/changelog/2026-03-10-secret-scanning-pattern-updates</link>
+      <guid>secret-scanning</guid>
+      <pubDate>Tue, 10 Mar 2026 21:03:15 GMT</pubDate>
+      <description><![CDATA[<p>Security detection improvements for repositories.</p>]]></description>
+    </item>
+  </channel>
+</rss>

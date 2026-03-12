@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "runId": "run_20260312T101500Z",
+  "generatedAt": "2026-03-12T10:15:00.000Z",
+  "configHash": "cfg_123",
+  "window": {
+    "start": "2026-03-01T00:00:00.000Z",
+    "end": "2026-03-12T10:15:00.000Z",
+    "timezone": "Asia/Taipei"
+  },
+  "sources": [
+    {
+      "id": "openai-blog",
+      "name": "OpenAI Blog",
+      "siteUrl": "https://openai.com/blog",
+      "feedUrl": "https://openai.com/blog/rss.xml",
+      "category": "Model / Product",
+      "tier": "official",
+      "priority": 95,
+      "sourceType": "vendor_blog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 200,
+        "at": "2026-03-12T10:15:00.000Z",
+        "snapshotPath": "data/raw/2026/03/12/openai-blog/run_20260312T101500Z.jsonl.gz"
+      }
+    },
+    {
+      "id": "github-changelog",
+      "name": "GitHub Changelog",
+      "siteUrl": "https://github.blog/changelog",
+      "feedUrl": "https://github.blog/changelog/feed/",
+      "category": "Tooling",
+      "tier": "primary",
+      "priority": 70,
+      "sourceType": "changelog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": false,
+        "status": 503,
+        "at": "2026-03-12T10:15:00.000Z",
+        "error": "upstream timeout"
+      }
+    }
+  ],
+  "items": [
+    {
+      "runId": "run_20260312T101500Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/introducing-gpt-5-4",
+      "guid": "https://openai.com/index/introducing-gpt-5-4",
+      "url": "https://openai.com/index/introducing-gpt-5-4",
+      "title": "Introducing GPT-5.4",
+      "snippet": "A frontier model release with updated reasoning and tool use.",
+      "publishedAt": "2026-03-05T10:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "fp_gpt54_openai",
+      "contentHash": "content_gpt54",
+      "firstSeenAt": "2026-03-05T10:05:00.000Z",
+      "lastSeenAt": "2026-03-12T10:15:00.000Z"
+    },
+    {
+      "runId": "run_20260312T101500Z",
+      "sourceId": "github-changelog",
+      "sourceName": "GitHub Changelog",
+      "sourceUrl": "https://github.blog/changelog",
+      "sourcePriority": 70,
+      "sourceTier": "primary",
+      "sourceType": "changelog",
+      "category": "Tooling",
+      "entryUid": "https://github.blog/changelog/2026-03-10-secret-scanning-pattern-updates",
+      "guid": "https://github.blog/changelog/2026-03-10-secret-scanning-pattern-updates",
+      "url": "https://github.blog/changelog/2026-03-10-secret-scanning-pattern-updates",
+      "title": "Secret scanning pattern updates - March 2026",
+      "snippet": "Security detection improvements for repositories and push protection.",
+      "publishedAt": "2026-03-10T21:03:15.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "fp_secret_scanning",
+      "contentHash": "content_secret_scanning",
+      "firstSeenAt": "2026-03-10T21:10:00.000Z",
+      "lastSeenAt": "2026-03-12T10:15:00.000Z"
+    },
+    {
+      "runId": "run_20260312T101500Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/introducing-gpt-5-4?utm_source=x",
+      "guid": "https://openai.com/index/introducing-gpt-5-4?utm_source=x",
+      "url": "https://openai.com/index/introducing-gpt-5-4",
+      "title": "Introducing GPT-5.4",
+      "snippet": "Same story repeated by another ingest run.",
+      "publishedAt": "2026-03-05T10:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "fp_gpt54_dup",
+      "contentHash": "content_gpt54",
+      "firstSeenAt": "2026-03-06T10:05:00.000Z",
+      "lastSeenAt": "2026-03-12T10:15:00.000Z"
+    }
+  ]
+}

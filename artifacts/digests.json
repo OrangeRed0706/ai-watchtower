@@ -1,0 +1,1030 @@
+[
+  {
+    "date": "2026-03-12",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "How NVIDIA AI-Q Reached \\#1 on DeepResearch Bench I and II",
+        "url": "https://huggingface.co/blog/nvidia/how-nvidia-won-deepresearch-bench",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 112,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:0a7277eea76d1e792e507256773271ffe626cb74a21721101f880e7bf7606734",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-11",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "From model to agent: Equipping the Responses API with a computer environment",
+        "url": "https://openai.com/index/equip-responses-api-computer-environment",
+        "snippet": "How OpenAI built an agent runtime using the Responses API, shell tool, and hosted containers to run secure, scalable agents with files, tools, and state.",
+        "impactArea": "model",
+        "impactLevel": "high",
+        "tags": [
+          "sdk"
+        ],
+        "score": 143,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:01572b4c34e91a6301328019f096b326f3eef5a74d18cb0b6fc85982a8c8e8fd",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Rakuten fixes issues twice as fast with Codex",
+        "url": "https://openai.com/index/rakuten",
+        "snippet": "Rakuten uses Codex, the coding agent from OpenAI, to ship software faster and safer, reducing MTTR 50%, automating CI/CD reviews, and delivering full-stack builds in weeks.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 137,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:0ed7a8a167fee1d4ad4d66af8f393569415ef8f4a003e799f8db01bf5d568df6",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Designing AI agents to resist prompt injection",
+        "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+        "snippet": "How ChatGPT defends against prompt injection and social engineering by constraining risky actions and protecting sensitive data in agent workflows.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 137,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:3dec299964e674ad17605cbc5ef160c86c4f43bbf04fc6fd1a4d06c0b336e19d",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-10",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Improving instruction hierarchy in frontier LLMs",
+        "url": "https://openai.com/index/instruction-hierarchy-challenge",
+        "snippet": "IH-Challenge trains models to prioritize trusted instructions, improving instruction hierarchy, safety steerability, and resistance to prompt injection attacks.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 129,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:18b7ee4fe5e46ca112b5ae83f4793c971eec479f7ab5f689272704e9aafb8073",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "New ways to learn math and science in ChatGPT",
+        "url": "https://openai.com/index/new-ways-to-learn-math-and-science-in-chatgpt",
+        "snippet": "ChatGPT introduces interactive visual explanations for math and science, helping students explore formulas, variables, and concepts in real time.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 129,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:101605e3044aa24dfa0af7e0edd379220454949677ea6fc5b28b09468fe84438",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Introducing Storage Buckets on the Hugging Face Hub",
+        "url": "https://huggingface.co/blog/storage-buckets",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 114,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:25505e303fd770794866fae682c2202d0c2920b991e5619e1990a7da768662b0",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Keep the Tokens Flowing: Lessons from 16 Open-Source RL Libraries",
+        "url": "https://huggingface.co/blog/async-rl-training-landscape",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 104,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:b8544e21ac38f5f4589827f6d13b1f1b227d5a51595fa680f010dda3793f434d",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Granite 4.0 1B Speech: Compact, Multilingual, and Built for the Edge",
+        "url": "https://huggingface.co/blog/ibm-granite/granite-4-speech",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 104,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:df4c1c085b843c2f1a0d3d1cfeb46eccc1ffcec05ba5397c799d357f2e241c94",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "PyTorch at NVIDIA GTC 2026: Join Us in San Jose!",
+        "url": "https://pytorch.org/blog/pytorch-at-nvidia-gtc-2026",
+        "snippet": "",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 90,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:8460cf066a8fc72902a15c7a9c334056d81359237a475daae00f931cee49e93f",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-09",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "OpenAI to acquire Promptfoo",
+        "url": "https://openai.com/index/openai-to-acquire-promptfoo",
+        "snippet": "OpenAI is acquiring Promptfoo, an AI security platform that helps enterprises identify and remediate vulnerabilities in AI systems during development.",
+        "impactArea": "security",
+        "impactLevel": "high",
+        "tags": [
+          "security"
+        ],
+        "score": 129,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:f16a35767e05c152e1637429c0c32759caabe291386bb89670f257eb0a39c073",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Ulysses Sequence Parallelism: Training with Million-Token Contexts",
+        "url": "https://huggingface.co/blog/ulysses-sp",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 96,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:5ccb6851805d833a1bbe07e0aca198e936143942d9daf3a18378285b55503816",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "LeRobot v0.5.0: Scaling Every Dimension",
+        "url": "https://huggingface.co/blog/lerobot-release-v050",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 96,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:0052db55dfd78e7be0548aebefbe94737e380d974218b26ddca0c0870938fa94",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-07",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "KernelAgent: Hardware-Guided GPU Kernel Optimization via Multi-Agent Orchestration",
+        "url": "https://pytorch.org/blog/kernelagent-hardware-guided-gpu-kernel-optimization-via-multi-agent-orchestration",
+        "snippet": "Summary Recently, the PyTorch team released KernelAgent, an open agentic system achieving 100% correctness across all 250 L1/L2/L3 KernelBench tasks. In this post, we extend that work by adding a...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 82,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:d0816f25a7b217604c244badedc6d01e7f9b4336e9cb9187ccc2d489d71f6508",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-06",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Codex Security: now in research preview",
+        "url": "https://openai.com/index/codex-security-now-in-research-preview",
+        "snippet": "Codex Security is an AI application security agent that analyzes project context to detect, validate, and patch complex vulnerabilities with higher confidence and less noise.",
+        "impactArea": "security",
+        "impactLevel": "high",
+        "tags": [
+          "security"
+        ],
+        "score": 151,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:5becf449a527f5c9c85cf1a79382721e0a50eba2c41081a28ef73f4a2d94908c",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "How Descript enables multilingual video dubbing at scale",
+        "url": "https://openai.com/index/descript",
+        "snippet": "Descript uses OpenAI models to scale multilingual video dubbing, optimizing translations for both meaning and timing so dubbed speech sounds natural across languages.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 121,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:878b3b60e9d0121512683c5ca322567009d7461364784a8eb47e853ec49242ea",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "How Balyasny Asset Management built an AI research engine for investing",
+        "url": "https://openai.com/index/balyasny-asset-management",
+        "snippet": "See how Balyasny built an AI research system with GPT-5.4, rigorous model evaluation, and agent workflows to transform investment analysis at scale.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 121,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:dc37dabb98018360f125bde12a60411f7a3ff4f03795b6d6d0f6a6ab90eab0de",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "FlexAttention + FlashAttention-4: Fast and Flexible",
+        "url": "https://pytorch.org/blog/flexattention-flashattention-4-fast-and-flexible",
+        "snippet": "TL;DR: On Hopper and Blackwell GPUs, FlexAttention now has a FlashAttention-4 backend. We added support in PyTorch to automatically generate CuTeDSL score/mask modification functions, and to JIT-instantiate FlashAttention-4 for custom...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 82,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:383ac7329dd7ca7d8e4d40816e17a15f5584d8cb716fa3af86a93baf0db6caeb",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-05",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Introducing GPT-5.4",
+        "url": "https://openai.com/index/introducing-gpt-5-4",
+        "snippet": "Introducing GPT-5.4, OpenAI’s most most capable and efficient frontier model for professional work, with state-of-the-art coding, computer use, tool search, and 1M-token context.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 131,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:eea6230f612ad1136377dd259d7e03a073fb9f71f6ee47e2a118fe5a1018305a",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Introducing ChatGPT for Excel and new financial data integrations",
+        "url": "https://openai.com/index/chatgpt-for-excel",
+        "snippet": "OpenAI introduces ChatGPT for Excel and new financial app integrations, powered by GPT-5.4 to accelerate modeling, research, and analysis in regulated environments.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 125,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:61b0991879bce7e14b6ffd46f70070d057b111b8b911bcc45ff002cb1bea1c4f",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Introducing the Adoption news channel",
+        "url": "https://openai.com/index/introducing-the-adoption-news-channel",
+        "snippet": "Practical insights and frameworks to turn AI progress into business advantage",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 125,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:39ce611a50f882ddb05bd516233d6f0357230b78870b8f86b27ce651d121d14c",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Introducing Modular Diffusers - Composable Building Blocks for Diffusion Pipelines",
+        "url": "https://huggingface.co/blog/modular-diffusers",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 100,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:2207a1b2fa244cd193f8f47ecfd2b89bd0cfcbad11c80d6efcd97806deb0bdea",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Bringing Robotics AI to Embedded Platforms: Dataset Recording, VLA Fine‑Tuning, and On‑Device Optimizations",
+        "url": "https://huggingface.co/blog/nxp/bringing-robotics-ai-to-embedded-platforms",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 96,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:058383c4e5386880e2562b59e95f6b96211bbb9d57ba22dfa329d4b94b225596",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Deploying PyTorch Models to the Micro-Edge with ExecuTorch and Arm",
+        "url": "https://pytorch.org/blog/deploying-pytorch-models-to-the-micro-edge-with-executorch-and-arm",
+        "snippet": "The world of AI is expanding beyond the cloud, reaching devices that fit in the palm of your hand. Running PyTorch models on these tiny systems, where memory is measured...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 82,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:9118fb3465f57b25295b2cb82e339855d18bdb4307383327865906b87ef910be",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Quantization-Aware Training in TorchAO (II)",
+        "url": "https://pytorch.org/blog/quantization-aware-training-in-torchao-ii",
+        "snippet": "In our previous Quantization-Aware Training (QAT) blog, we introduced the initial QAT flow in TorchAO for large language models targeting edge devices with ExecuTorch. Since then, we extended this flow...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 76,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:6b92feb13aca903ac795f15c0f7b63b17421f0db644e5d7d42a1cc04397ac375",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-04",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Extending single-minus amplitudes to gravitons",
+        "url": "https://openai.com/index/extending-single-minus-amplitudes-to-gravitons",
+        "snippet": "A new preprint extends single-minus amplitudes to gravitons, with GPT-5.2 Pro helping derive and verify nonzero graviton tree amplitudes in quantum gravity.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:5bd932ab7f49df706824b7351779316f7b6722051ebf024146692ba110dc120b",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "How Axios uses AI to help deliver high-impact local journalism",
+        "url": "https://openai.com/index/axios-allison-murphy",
+        "snippet": "Axios COO Allison Murphy explains how the company uses AI to support local reporters, streamline newsroom workflows, and deliver high-impact local journalism at scale.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:9e5718ec6cb8c09e5c851df19dd5385d70789e1d79faf71ffab139d4eb430168",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Understanding AI and learning outcomes",
+        "url": "https://openai.com/index/understanding-ai-and-learning-outcomes",
+        "snippet": "OpenAI introduces the Learning Outcomes Measurement Suite to assess AI’s impact on student learning across diverse educational environments over time.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:83a834f6928a70ba238b638000ba4b65d743bc04e3f70868f03d6fdbd7311b3b",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "PRX Part 3 — Training a Text-to-Image Model in 24h!",
+        "url": "https://huggingface.co/blog/Photoroom/prx-part3",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 90,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:8a924fa243d4c3392e0cbfe023e464e976e397aaa8e3d7f7fa2f1197cf09e501",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-03-03",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "GPT-5.3 Instant System Card",
+        "url": "https://openai.com/index/gpt-5-3-instant-system-card",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:b4a245738a8f15bbdebab3ef1373fcf79551da4eab3fe1224e5ae079f72fc8af",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "GPT-5.3 Instant: Smoother, more useful everyday conversations",
+        "url": "https://openai.com/index/gpt-5-3-instant",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:46b3e364b73731677062f4a9768f7e118174d4b13989c0d576352836c297c4f5",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-02-28",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Our agreement with the Department of War",
+        "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
+        "snippet": "Details on OpenAI’s contract with the Department of War, outlining safety red lines, legal protections, and how AI systems will be deployed in classified environments.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:2a0618695f6143caa102dad6eed350f4001b88707979c58b6801133d5f509ed9",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-02-27",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "OpenAI and Amazon announce strategic partnership",
+        "url": "https://openai.com/index/amazon-partnership",
+        "snippet": "OpenAI and Amazon announce a strategic partnership bringing OpenAI’s Frontier platform to AWS, expanding AI infrastructure, custom models, and enterprise AI agents.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 125,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:ced2f6d2cab8772ae7ccd95bf473092f5f331d88506cb64343563a25ecd28f72",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Introducing the Stateful Runtime Environment for Agents in Amazon Bedrock",
+        "url": "https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock",
+        "snippet": "Stateful Runtime for Agents in Amazon Bedrock brings persistent orchestration, memory, and secure execution to multi-step AI workflows powered by OpenAI.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 125,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:3b4e959bd5949ae25fdc4dd267b011ffb85a2c0c1f56db8c2e2abf9bcde0acc3",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Joint Statement from OpenAI and Microsoft",
+        "url": "https://openai.com/index/continuing-microsoft-partnership",
+        "snippet": "Microsoft and OpenAI continue to work closely across research, engineering, and product development, building on years of deep collaboration and shared success.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:62d5030d2dd442c959d432985a33a7579532ef1935bb5715ccf65f02599d2cdf",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-02-26",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "OpenAI Codex and Figma launch seamless code-to-design experience",
+        "url": "https://openai.com/index/figma-partnership",
+        "snippet": "OpenAI and Figma launch a new Codex integration that connects code and design, enabling teams to move between implementation and the Figma canvas to iterate and ship faster.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 120,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:4b51d8cada0e95386b12b30f4142654df30c4fa87540704c3e7d9da46358ade4",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Pacific Northwest National Laboratory and OpenAI partner to accelerate federal permitting",
+        "url": "https://openai.com/index/pacific-northwest-national-laboratory",
+        "snippet": "OpenAI and Pacific Northwest National Laboratory introduce DraftNEPABench, a new benchmark evaluating how AI coding agents can accelerate federal permitting—showing potential to reduce NEPA drafting time by up to 15% and modernize infrastructure reviews.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 115,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:b50e3d195c6e850f753f8544c4801e5245d6f4ade61b5272cf01bc58ce50328d",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Mixture of Experts (MoEs) in Transformers",
+        "url": "https://huggingface.co/blog/moe-transformers",
+        "snippet": "",
+        "impactArea": "model",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 85,
+        "sources": [
+          {
+            "name": "Hugging Face Blog",
+            "url": "https://huggingface.co/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:8855719404fbbab886a39660903d24eaf593df8646a45f09da6ec7ef44b940d4",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-02-25",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Disrupting malicious uses of AI | February 2026",
+        "url": "https://openai.com/index/disrupting-malicious-ai-uses",
+        "snippet": "Our latest threat report examines how malicious actors combine AI models with websites and social platforms—and what it means for detection and defense.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 110,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:d163670fb22ce1f94653406e43ad887053f19768cbe4125f107489940766c357",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Enhancing Multimodal Training and Memory Efficiency with DeepSpeed",
+        "url": "https://pytorch.org/blog/enhancing-multimodal-training-and-memory-efficiency-with-deepspeed",
+        "snippet": "Overview This blog walks through two crucial DeepSpeed updates: (1) a PyTorch-identical backward API that enables efficient training of multimodal, multi-component models (including non-scalar backward calls), and (2) low-precision model...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 71,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:10c72893e89e63af97960e40c97b9aa8cca105a1a0fb58a1908cfe2e72af0fb2",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      },
+      {
+        "title": "Accelerating Autotuning in Helion with Bayesian Optimization",
+        "url": "https://pytorch.org/blog/accelerating-autotuning-in-helion",
+        "snippet": "Introduction As introduced in a previous blog post, Helion is a high-level DSL that empowers developers to write high-performance ML kernels using a familiar PyTorch-like syntax, delegating the complex task...",
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "score": 71,
+        "sources": [
+          {
+            "name": "PyTorch Blog",
+            "url": "https://pytorch.org/blog/"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:ebdc632ece8f556750562706b42afd28efa4cd066ba88b19f2ebde7a3f2b4c14",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  },
+  {
+    "date": "2026-02-24",
+    "title": "Daily briefing",
+    "summary": "Deterministic daily briefing built from ranked, deduplicated intelligence signals.",
+    "items": [
+      {
+        "title": "Arvind KC appointed Chief People Officer",
+        "url": "https://openai.com/index/arvind-kc-chief-people-officer",
+        "snippet": "OpenAI appoints Arvind KC as Chief People Officer to help scale the company, strengthen its culture, and lead how work evolves in the age of AI.",
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "score": 110,
+        "sources": [
+          {
+            "name": "OpenAI Blog",
+            "url": "https://openai.com/blog"
+          }
+        ],
+        "dedup": {
+          "version": 1,
+          "key": "u:ef455565a9b47a554a207dbd568633172cbc03aa44628680da800fe5bccafa25",
+          "basis": "url",
+          "groupSize": 1,
+          "isCanonical": true
+        }
+      }
+    ]
+  }
+]

@@ -51,8 +51,7 @@ module.exports = {
     totalCandidates: Number(candidates?.totalItems) || 0,
     groups: Number(dedupGroups?.stats?.groups) || 0,
     duplicateItems: Number(dedupGroups?.stats?.duplicateItems) || 0,
-    latestRunAt:
-      ingested?.run?.finishedAt || candidates?.run?.finishedAt || candidates?.generatedAt || null,
+    latestRunAt: ingested?.generatedAt || candidates?.generatedAt || null,
     publishedDate: latestDigest?.date || null
   }
 };

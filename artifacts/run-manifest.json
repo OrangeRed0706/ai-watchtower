@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-12T06:10:31.910Z",
+  "runId": "run_20260312T061031Z",
+  "configHash": "e1c61389cbedcc0ffe840653e1344a860264e4edcdfd0df84b9c388c143e369d",
+  "timezone": "Asia/Taipei",
+  "normalizedInput": {
+    "file": "/Users/lynn/StudyProject/ai-watchtower/data/normalized/run_20260312T061031Z.json",
+    "hash": "274c5dc725c7093ef77ebcf8656cbc48a8c587d34f000066abbbaba5a4414b74"
+  },
+  "artifacts": [
+    {
+      "name": "items.json",
+      "hash": "274c5dc725c7093ef77ebcf8656cbc48a8c587d34f000066abbbaba5a4414b74",
+      "records": 1643
+    },
+    {
+      "name": "candidates.json",
+      "hash": "53223f1b689920d341ccd9bf6359449351d3928ce99dfddd3b7a818f06427857",
+      "records": 12
+    },
+    {
+      "name": "digests.json",
+      "hash": "b3fa3bd140aedc4c7809ee7e9ab6eae7ea7271fb2f7cf2fc034b50a018b55cb2",
+      "records": 14
+    },
+    {
+      "name": "dedup-groups.json",
+      "hash": "02e87a4985a2262c1bc211470e7375df0f47009aeb0cccf18cfed186e4b1cece",
+      "records": 1643
+    },
+    {
+      "name": "source-health.json",
+      "hash": "f5e60a4558245a3c8ed0b9c9218b3b836c4f32bfa8e79a04c13e678b1596cf75",
+      "records": 8
+    }
+  ],
+  "rawSnapshots": [
+    {
+      "sourceId": "openai-blog",
+      "path": "data/raw/2026/03/12/openai-blog/run_20260312T061031Z.jsonl.gz",
+      "status": 200
+    },
+    {
+      "sourceId": "huggingface-blog",
+      "path": "data/raw/2026/03/12/huggingface-blog/run_20260312T061031Z.jsonl.gz",
+      "status": 200
+    },
+    {
+      "sourceId": "pytorch-blog",
+      "path": "data/raw/2026/03/12/pytorch-blog/run_20260312T061031Z.jsonl.gz",
+      "status": 200
+    }
+  ],
+  "sourceFetchSummary": {
+    "configured": 8,
+    "ok": 7,
+    "errored": 0
+  },
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}

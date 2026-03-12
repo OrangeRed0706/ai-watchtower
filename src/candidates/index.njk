@@ -8,7 +8,7 @@ permalink: /candidates/index.html
   <div class="page-title">
     <h1>Ranked candidates</h1>
     {% if candidates and candidates.available and candidates.items and candidates.items.length %}
-      {% set ingestTime = (candidates.run and candidates.run.finishedAt) or candidates.generatedAt %}
+      {% set ingestTime = candidates.generatedAt %}
       <div class="subtle">
         {% if ingestTime %}Updated {{ ingestTime }} &middot; {% endif %}
         Showing top {{ candidates.topCount }} of {{ candidates.uniqueItems }} unique ({{ candidates.totalItems }} total)
@@ -31,12 +31,8 @@ permalink: /candidates/index.html
     {% if candidates and candidates.available and candidates.scoring %}
       <p class="kicker">Scoring: v{{ candidates.scoring.version }} &middot; {{ candidates.scoring.scoredAt }}</p>
     {% endif %}
-    {% if candidates and candidates.available and candidates.dedup and candidates.dedup.version %}
-      <p class="kicker">Dedup: v{{ candidates.dedup.version }} &middot; {{ candidates.dedup.dedupedAt }}</p>
-    {% endif %}
-    {% if candidates and candidates.available and candidates.classification and candidates.classification.version %}
-      <p class="kicker">Classification: v{{ candidates.classification.version }} &middot; {{ candidates.classification.classifiedAt }}</p>
-    {% endif %}
+    <p class="kicker">Dedup: deterministic URL/content/title-day grouping</p>
+    <p class="kicker">Classification: deterministic rules-first impact labeling</p>
   </details>
 
   {% if candidates and candidates.available and candidates.items and candidates.items.length %}

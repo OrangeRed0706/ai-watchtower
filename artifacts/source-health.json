@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-12T06:10:31.910Z",
+  "runId": "run_20260312T061031Z",
+  "configHash": "e1c61389cbedcc0ffe840653e1344a860264e4edcdfd0df84b9c388c143e369d",
+  "sources": [
+    {
+      "id": "openai-blog",
+      "name": "OpenAI Blog",
+      "siteUrl": "https://openai.com/blog",
+      "feedUrl": "https://openai.com/blog/rss.xml",
+      "category": "Model / Product",
+      "tier": "official",
+      "priority": 95,
+      "sourceType": "vendor_blog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 200,
+        "at": "2026-03-12T06:10:32.352Z",
+        "snapshotPath": "data/raw/2026/03/12/openai-blog/run_20260312T061031Z.jsonl.gz"
+      }
+    },
+    {
+      "id": "github-changelog",
+      "name": "GitHub Changelog",
+      "siteUrl": "https://github.blog/changelog/",
+      "feedUrl": "https://github.blog/changelog/feed/",
+      "category": "Tooling",
+      "tier": "primary",
+      "priority": 70,
+      "sourceType": "changelog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 304,
+        "at": "2026-03-12T06:10:33.253Z",
+        "error": "HTTP 304"
+      }
+    },
+    {
+      "id": "aws-ml-blog",
+      "name": "AWS Machine Learning Blog",
+      "siteUrl": "https://aws.amazon.com/blogs/machine-learning/",
+      "feedUrl": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "category": "Tooling / Infrastructure",
+      "tier": "official",
+      "priority": 55,
+      "sourceType": "vendor_blog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 304,
+        "at": "2026-03-12T06:10:33.478Z",
+        "error": "HTTP 304"
+      }
+    },
+    {
+      "id": "huggingface-blog",
+      "name": "Hugging Face Blog",
+      "siteUrl": "https://huggingface.co/blog",
+      "feedUrl": "https://huggingface.co/blog/feed.xml",
+      "category": "Model / Tooling",
+      "tier": "official",
+      "priority": 65,
+      "sourceType": "vendor_blog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 200,
+        "at": "2026-03-12T06:10:33.802Z",
+        "snapshotPath": "data/raw/2026/03/12/huggingface-blog/run_20260312T061031Z.jsonl.gz"
+      }
+    },
+    {
+      "id": "pytorch-blog",
+      "name": "PyTorch Blog",
+      "siteUrl": "https://pytorch.org/blog/",
+      "feedUrl": "https://pytorch.org/blog/feed.xml",
+      "category": "Tooling / Frameworks",
+      "tier": "official",
+      "priority": 55,
+      "sourceType": "project_blog",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 200,
+        "at": "2026-03-12T06:10:34.320Z",
+        "snapshotPath": "data/raw/2026/03/12/pytorch-blog/run_20260312T061031Z.jsonl.gz"
+      }
+    },
+    {
+      "id": "openai-python-releases",
+      "name": "openai-python releases (GitHub)",
+      "siteUrl": "https://github.com/openai/openai-python/releases",
+      "feedUrl": "https://github.com/openai/openai-python/releases.atom",
+      "category": "Tooling / SDK",
+      "tier": "primary",
+      "priority": 60,
+      "sourceType": "release_notes",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 304,
+        "at": "2026-03-12T06:10:34.977Z",
+        "error": "HTTP 304"
+      }
+    },
+    {
+      "id": "openai-node-releases",
+      "name": "openai-node releases (GitHub)",
+      "siteUrl": "https://github.com/openai/openai-node/releases",
+      "feedUrl": "https://github.com/openai/openai-node/releases.atom",
+      "category": "Tooling / SDK",
+      "tier": "primary",
+      "priority": 55,
+      "sourceType": "release_notes",
+      "fetchPolicy": "feed",
+      "enabled": true,
+      "lastFetch": {
+        "ok": true,
+        "status": 304,
+        "at": "2026-03-12T06:10:35.363Z",
+        "error": "HTTP 304"
+      }
+    },
+    {
+      "id": "anthropic-news",
+      "name": "Anthropic News",
+      "siteUrl": "https://www.anthropic.com/news",
+      "feedUrl": "",
+      "category": "Model / Product",
+      "tier": "official",
+      "priority": 90,
+      "sourceType": "vendor_news",
+      "fetchPolicy": "manual",
+      "enabled": false
+    }
+  ],
+  "summary": {
+    "configured": 8,
+    "ok": 7,
+    "errored": 0,
+    "hasRuntimeData": true
+  }
+}

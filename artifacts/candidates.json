@@ -1,0 +1,811 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-12T06:10:31.910Z",
+  "runId": "run_20260312T061031Z",
+  "configHash": "e1c61389cbedcc0ffe840653e1344a860264e4edcdfd0df84b9c388c143e369d",
+  "totalItems": 1643,
+  "uniqueItems": 1643,
+  "topCount": 12,
+  "items": [
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/codex-security-now-in-research-preview",
+      "guid": "https://openai.com/index/codex-security-now-in-research-preview",
+      "url": "https://openai.com/index/codex-security-now-in-research-preview",
+      "title": "Codex Security: now in research preview",
+      "snippet": "Codex Security is an AI application security agent that analyzes project context to detect, validate, and patch complex vulnerabilities with higher confidence and less noise.",
+      "publishedAt": "2026-03-06T10:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "0dcab15fb3c8b22a5e223cb53d6de37da3e5dc215c5f8c70b05598241ea08a19",
+      "contentHash": "4d144e3d688aa380464835895073fd38c8ecf2eb940cf1b40672d47fa41b5a21",
+      "firstSeenAt": "2026-03-12T05:50:19.147Z",
+      "lastSeenAt": "2026-03-12T06:10:32.352Z",
+      "score": 151,
+      "scoreVersion": 1,
+      "scoreAgeHours": 140.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 76,
+          "note": "95"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "time:recency",
+          "delta": 14,
+          "note": "140h old"
+        },
+        {
+          "key": "title:security",
+          "delta": 14
+        },
+        {
+          "key": "category:hint",
+          "delta": 11,
+          "note": "Model / Product"
+        },
+        {
+          "key": "url:security",
+          "delta": 10
+        },
+        {
+          "key": "title:preview",
+          "delta": 6
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "security",
+        "impactLevel": "high",
+        "tags": [
+          "security"
+        ],
+        "reasons": [
+          {
+            "key": "title:security",
+            "note": "security/vulnerability keyword"
+          }
+        ]
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:5becf449a527f5c9c85cf1a79382721e0a50eba2c41081a28ef73f4a2d94908c",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/equip-responses-api-computer-environment",
+      "guid": "https://openai.com/index/equip-responses-api-computer-environment",
+      "url": "https://openai.com/index/equip-responses-api-computer-environment",
+      "title": "From model to agent: Equipping the Responses API with a computer environment",
+      "snippet": "How OpenAI built an agent runtime using the Responses API, shell tool, and hosted containers to run secure, scalable agents with files, tools, and state.",
+      "publishedAt": "2026-03-11T11:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "c5dd1cd9ae354b93d85f5ce77f5f85b6f27679caf4be94502e618056ad8a208f",
+      "contentHash": "d92501dbe05ee6d727132ff71878f35bfbeba6d014c2b79333b564df29e54d42",
+      "firstSeenAt": "2026-03-12T05:50:19.147Z",
+      "lastSeenAt": "2026-03-12T06:10:32.352Z",
+      "score": 143,
+      "scoreVersion": 1,
+      "scoreAgeHours": 19.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 76,
+          "note": "95"
+        },
+        {
+          "key": "time:recency",
+          "delta": 30,
+          "note": "19h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 11,
+          "note": "Model / Product"
+        },
+        {
+          "key": "title:sdk",
+          "delta": 6
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "model",
+        "impactLevel": "high",
+        "tags": [
+          "sdk"
+        ],
+        "reasons": [
+          {
+            "key": "title:sdk",
+            "note": "sdk/api hint"
+          }
+        ]
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:01572b4c34e91a6301328019f096b326f3eef5a74d18cb0b6fc85982a8c8e8fd",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/rakuten",
+      "guid": "https://openai.com/index/rakuten",
+      "url": "https://openai.com/index/rakuten",
+      "title": "Rakuten fixes issues twice as fast with Codex",
+      "snippet": "Rakuten uses Codex, the coding agent from OpenAI, to ship software faster and safer, reducing MTTR 50%, automating CI/CD reviews, and delivering full-stack builds in weeks.",
+      "publishedAt": "2026-03-11T13:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "15418b6b0beb773852cf75002515d2863df27c0985b93de348e0ed196f835f6a",
+      "contentHash": "87989306b6b0cf2557c413281693a2e0b298b76970e9f086d6bb63e0e76c5a5a",
+      "firstSeenAt": "2026-03-12T05:50:19.147Z",
+      "lastSeenAt": "2026-03-12T06:10:32.352Z",
+      "score": 137,
+      "scoreVersion": 1,
+      "scoreAgeHours": 17.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 76,
+          "note": "95"
+        },
+        {
+          "key": "time:recency",
+          "delta": 30,
+          "note": "17h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 11,
+          "note": "Model / Product"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:0ed7a8a167fee1d4ad4d66af8f393569415ef8f4a003e799f8db01bf5d568df6",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "openai-blog",
+      "sourceName": "OpenAI Blog",
+      "sourceUrl": "https://openai.com/blog",
+      "sourcePriority": 95,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Product",
+      "entryUid": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "guid": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "url": "https://openai.com/index/designing-agents-to-resist-prompt-injection",
+      "title": "Designing AI agents to resist prompt injection",
+      "snippet": "How ChatGPT defends against prompt injection and social engineering by constraining risky actions and protecting sensitive data in agent workflows.",
+      "publishedAt": "2026-03-11T11:30:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "012c16f5ac1df8c947baff82f43211d6af8aaa08ead1f7c8a7fa694aad8d2457",
+      "contentHash": "055ab813aa5bb920ee8b6d78e4f7a13fb819fb0b10b41047cfd3cf21d2c14027",
+      "firstSeenAt": "2026-03-12T05:50:19.147Z",
+      "lastSeenAt": "2026-03-12T06:10:32.352Z",
+      "score": 137,
+      "scoreVersion": 1,
+      "scoreAgeHours": 18.7,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 76,
+          "note": "95"
+        },
+        {
+          "key": "time:recency",
+          "delta": 30,
+          "note": "19h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 11,
+          "note": "Model / Product"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:3dec299964e674ad17605cbc5ef160c86c4f43bbf04fc6fd1a4d06c0b336e19d",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "huggingface-blog",
+      "sourceName": "Hugging Face Blog",
+      "sourceUrl": "https://huggingface.co/blog",
+      "sourcePriority": 65,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Tooling",
+      "entryUid": "https://huggingface.co/blog/storage-buckets",
+      "guid": "https://huggingface.co/blog/storage-buckets",
+      "url": "https://huggingface.co/blog/storage-buckets",
+      "title": "Introducing Storage Buckets on the Hugging Face Hub",
+      "snippet": "",
+      "publishedAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "29815993b76a148a969d78eb6d0fa143312454cdc3c893278b875a471d3b46eb",
+      "contentHash": "ba664f1cc6dde2bfeb9f0620220bf0ce9d1e9af5ce3865de793200e18b0be966",
+      "firstSeenAt": "2026-03-12T05:50:52.800Z",
+      "lastSeenAt": "2026-03-12T06:10:33.802Z",
+      "score": 114,
+      "scoreVersion": 1,
+      "scoreAgeHours": 54.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 52,
+          "note": "65"
+        },
+        {
+          "key": "time:recency",
+          "delta": 22,
+          "note": "54h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 10,
+          "note": "Model / Tooling"
+        },
+        {
+          "key": "title:announce",
+          "delta": 10
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:25505e303fd770794866fae682c2202d0c2920b991e5619e1990a7da768662b0",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "huggingface-blog",
+      "sourceName": "Hugging Face Blog",
+      "sourceUrl": "https://huggingface.co/blog",
+      "sourcePriority": 65,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Tooling",
+      "entryUid": "https://huggingface.co/blog/nvidia/how-nvidia-won-deepresearch-bench",
+      "guid": "https://huggingface.co/blog/nvidia/how-nvidia-won-deepresearch-bench",
+      "url": "https://huggingface.co/blog/nvidia/how-nvidia-won-deepresearch-bench",
+      "title": "How NVIDIA AI-Q Reached \\#1 on DeepResearch Bench I and II",
+      "snippet": "",
+      "publishedAt": "2026-03-12T03:53:34.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "c8685f191f4606b51118ead091fa5356b1fa5b5692c4001319e8f5cc79a674b4",
+      "contentHash": "45158f206208f9403d2c40d9e5722f6801ab6f072b764201e66db47033eb791f",
+      "firstSeenAt": "2026-03-12T05:50:52.800Z",
+      "lastSeenAt": "2026-03-12T06:10:33.802Z",
+      "score": 112,
+      "scoreVersion": 1,
+      "scoreAgeHours": 2.3,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 52,
+          "note": "65"
+        },
+        {
+          "key": "time:recency",
+          "delta": 30,
+          "note": "2h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 10,
+          "note": "Model / Tooling"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "model",
+        "impactLevel": "medium",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:0a7277eea76d1e792e507256773271ffe626cb74a21721101f880e7bf7606734",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "huggingface-blog",
+      "sourceName": "Hugging Face Blog",
+      "sourceUrl": "https://huggingface.co/blog",
+      "sourcePriority": 65,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Tooling",
+      "entryUid": "https://huggingface.co/blog/pricing-update",
+      "guid": "https://huggingface.co/blog/pricing-update",
+      "url": "https://huggingface.co/blog/pricing-update",
+      "title": "Introducing our new pricing",
+      "snippet": "",
+      "publishedAt": "2022-11-08T00:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "652151af5bb9dd82242bfc088ec20c69f9c9cbf1d50ab599c564f0cb385e7120",
+      "contentHash": "fc73f9d73476b1080c34c03a359f9f7af9562fe7b0c328d6ed6ba7e72e99d9cc",
+      "firstSeenAt": "2026-03-12T05:50:52.800Z",
+      "lastSeenAt": "2026-03-12T06:10:33.802Z",
+      "score": 108,
+      "scoreVersion": 1,
+      "scoreAgeHours": 29286.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 52,
+          "note": "65"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 10,
+          "note": "Model / Tooling"
+        },
+        {
+          "key": "title:announce",
+          "delta": 10
+        },
+        {
+          "key": "title:pricing",
+          "delta": 10
+        },
+        {
+          "key": "url:pricing",
+          "delta": 6
+        },
+        {
+          "key": "time:recency",
+          "delta": 0,
+          "note": "29286h old"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "product",
+        "impactLevel": "high",
+        "tags": [
+          "pricing"
+        ],
+        "reasons": [
+          {
+            "key": "pricing:hint",
+            "note": "pricing/cost hint"
+          }
+        ]
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:0aa7a1de00d513b0c454c61bed7f9b9506be204a33f5595559f0553235c5b0c7",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "huggingface-blog",
+      "sourceName": "Hugging Face Blog",
+      "sourceUrl": "https://huggingface.co/blog",
+      "sourcePriority": 65,
+      "sourceTier": "official",
+      "sourceType": "vendor_blog",
+      "category": "Model / Tooling",
+      "entryUid": "https://huggingface.co/blog/gradio-5-security",
+      "guid": "https://huggingface.co/blog/gradio-5-security",
+      "url": "https://huggingface.co/blog/gradio-5-security",
+      "title": "A Security Review of Gradio 5",
+      "snippet": "",
+      "publishedAt": "2024-10-10T00:00:00.000Z",
+      "updatedAt": null,
+      "author": null,
+      "fingerprint": "eafd9155a493a66b278fb7b303d2d573be88cb8db9dbf18ac6ebd4c5d8066a96",
+      "contentHash": "d15094fec0fd16f1e85d44a36f09fd18c7b64d45447becf87525b09ac71b8b9b",
+      "firstSeenAt": "2026-03-12T05:50:52.800Z",
+      "lastSeenAt": "2026-03-12T06:10:33.802Z",
+      "score": 106,
+      "scoreVersion": 1,
+      "scoreAgeHours": 12438.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 52,
+          "note": "65"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "title:security",
+          "delta": 14
+        },
+        {
+          "key": "category:hint",
+          "delta": 10,
+          "note": "Model / Tooling"
+        },
+        {
+          "key": "url:security",
+          "delta": 10
+        },
+        {
+          "key": "time:recency",
+          "delta": 0,
+          "note": "12438h old"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "security",
+        "impactLevel": "high",
+        "tags": [
+          "security"
+        ],
+        "reasons": [
+          {
+            "key": "title:security",
+            "note": "security/vulnerability keyword"
+          }
+        ]
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:d9f58bb38913594134c7164c1fdc74e94ad6654e346f3451a3ce9b3d1b8f4272",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "pytorch-blog",
+      "sourceName": "PyTorch Blog",
+      "sourceUrl": "https://pytorch.org/blog/",
+      "sourcePriority": 55,
+      "sourceTier": "official",
+      "sourceType": "project_blog",
+      "category": "Tooling / Frameworks",
+      "entryUid": "https://pytorch.org/?p=58382",
+      "guid": "https://pytorch.org/?p=58382",
+      "url": "https://pytorch.org/blog/pytorch-at-nvidia-gtc-2026",
+      "title": "PyTorch at NVIDIA GTC 2026: Join Us in San Jose!",
+      "snippet": "",
+      "publishedAt": "2026-03-09T20:19:39.000Z",
+      "updatedAt": null,
+      "author": "Clement Anthonioz Blanc, Chris Gottbrath, PyTorch Team at Meta",
+      "fingerprint": "97954fd6db246e045651b1ac1b86d6ba0894022ef4386f49e08e752deb76c81a",
+      "contentHash": "44100878c4f84ffb21bf8b251a7c7b842fd31d0d3c7a347adf8ea259d94d0806",
+      "firstSeenAt": "2026-03-12T05:50:53.358Z",
+      "lastSeenAt": "2026-03-12T06:10:34.320Z",
+      "score": 90,
+      "scoreVersion": 1,
+      "scoreAgeHours": 57.8,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 44,
+          "note": "55"
+        },
+        {
+          "key": "time:recency",
+          "delta": 22,
+          "note": "58h old"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "category:hint",
+          "delta": 4,
+          "note": "Tooling / Frameworks"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:8460cf066a8fc72902a15c7a9c334056d81359237a475daae00f931cee49e93f",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "pytorch-blog",
+      "sourceName": "PyTorch Blog",
+      "sourceUrl": "https://pytorch.org/blog/",
+      "sourcePriority": 55,
+      "sourceTier": "official",
+      "sourceType": "project_blog",
+      "category": "Tooling / Frameworks",
+      "entryUid": "https://pytorch.org/?p=58155",
+      "guid": "https://pytorch.org/?p=58155",
+      "url": "https://pytorch.org/blog/kernelagent-hardware-guided-gpu-kernel-optimization-via-multi-agent-orchestration",
+      "title": "KernelAgent: Hardware-Guided GPU Kernel Optimization via Multi-Agent Orchestration",
+      "snippet": "Summary Recently, the PyTorch team released KernelAgent, an open agentic system achieving 100% correctness across all 250 L1/L2/L3 KernelBench tasks. In this post, we extend that work by adding a...",
+      "publishedAt": "2026-03-06T20:00:50.000Z",
+      "updatedAt": null,
+      "author": "Kaiming Cheng, Laura Wang, Jack Khuu, Mark Saroufim, Wenyuan Chi, Jiannan Wang, and Joe Isaacson",
+      "fingerprint": "1932d1c89d4941e5a83d2ff89c57e4b2bd49fed9976bbf5b7fded5f3d653562b",
+      "contentHash": "204f8dcd541a9b17625ab08ef1d16c0fbb981799c4d919a69dacb3222d348c74",
+      "firstSeenAt": "2026-03-12T05:50:53.358Z",
+      "lastSeenAt": "2026-03-12T06:10:34.320Z",
+      "score": 82,
+      "scoreVersion": 1,
+      "scoreAgeHours": 130.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 44,
+          "note": "55"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "time:recency",
+          "delta": 14,
+          "note": "130h old"
+        },
+        {
+          "key": "category:hint",
+          "delta": 4,
+          "note": "Tooling / Frameworks"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:d0816f25a7b217604c244badedc6d01e7f9b4336e9cb9187ccc2d489d71f6508",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "pytorch-blog",
+      "sourceName": "PyTorch Blog",
+      "sourceUrl": "https://pytorch.org/blog/",
+      "sourcePriority": 55,
+      "sourceTier": "official",
+      "sourceType": "project_blog",
+      "category": "Tooling / Frameworks",
+      "entryUid": "https://pytorch.org/?p=46919",
+      "guid": "https://pytorch.org/?p=46919",
+      "url": "https://pytorch.org/blog/flexattention-flashattention-4-fast-and-flexible",
+      "title": "FlexAttention + FlashAttention-4: Fast and Flexible",
+      "snippet": "TL;DR: On Hopper and Blackwell GPUs, FlexAttention now has a FlashAttention-4 backend. We added support in PyTorch to automatically generate CuTeDSL score/mask modification functions, and to JIT-instantiate FlashAttention-4 for custom...",
+      "publishedAt": "2026-03-05T17:55:43.000Z",
+      "updatedAt": null,
+      "author": "Driss Guessous, Reuben Stern, Markus Hoehnerbach, Fung Xie, Ted Zadouri, Jay Shah, Tri Dao",
+      "fingerprint": "612eed2c5909a799d472bf467ead857177788585b00c221f2256b4a2f0f27d30",
+      "contentHash": "ea245bd6d596dad3216dee2cd04657bb2e6b501a0d8a1b167f7fd5a04557e646",
+      "firstSeenAt": "2026-03-12T05:50:53.358Z",
+      "lastSeenAt": "2026-03-12T06:10:34.320Z",
+      "score": 82,
+      "scoreVersion": 1,
+      "scoreAgeHours": 156.2,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 44,
+          "note": "55"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "time:recency",
+          "delta": 14,
+          "note": "156h old"
+        },
+        {
+          "key": "category:hint",
+          "delta": 4,
+          "note": "Tooling / Frameworks"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:383ac7329dd7ca7d8e4d40816e17a15f5584d8cb716fa3af86a93baf0db6caeb",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    },
+    {
+      "runId": "run_20260312T061031Z",
+      "sourceId": "pytorch-blog",
+      "sourceName": "PyTorch Blog",
+      "sourceUrl": "https://pytorch.org/blog/",
+      "sourcePriority": 55,
+      "sourceTier": "official",
+      "sourceType": "project_blog",
+      "category": "Tooling / Frameworks",
+      "entryUid": "https://pytorch.org/?p=47927",
+      "guid": "https://pytorch.org/?p=47927",
+      "url": "https://pytorch.org/blog/deploying-pytorch-models-to-the-micro-edge-with-executorch-and-arm",
+      "title": "Deploying PyTorch Models to the Micro-Edge with ExecuTorch and Arm",
+      "snippet": "The world of AI is expanding beyond the cloud, reaching devices that fit in the palm of your hand. Running PyTorch models on these tiny systems, where memory is measured...",
+      "publishedAt": "2026-03-05T15:55:23.000Z",
+      "updatedAt": null,
+      "author": "Dominica Abena Oforiwaa Amanfo",
+      "fingerprint": "bdead061ce41777bebe8d0d5eb31de7f135ad1cac4c5d042f8018940712d3f80",
+      "contentHash": "02935cdf653d95fc214395fd5abbd46fcc92ea7f83311354473608de1e691c32",
+      "firstSeenAt": "2026-03-12T05:50:53.358Z",
+      "lastSeenAt": "2026-03-12T06:10:34.320Z",
+      "score": 82,
+      "scoreVersion": 1,
+      "scoreAgeHours": 158.3,
+      "scoreReasons": [
+        {
+          "key": "source:priority",
+          "delta": 44,
+          "note": "55"
+        },
+        {
+          "key": "source:tier",
+          "delta": 20,
+          "note": "official"
+        },
+        {
+          "key": "time:recency",
+          "delta": 14,
+          "note": "158h old"
+        },
+        {
+          "key": "category:hint",
+          "delta": 4,
+          "note": "Tooling / Frameworks"
+        }
+      ],
+      "classification": {
+        "version": 1,
+        "impactArea": "tooling",
+        "impactLevel": "low",
+        "tags": [],
+        "reasons": []
+      },
+      "dedup": {
+        "version": 1,
+        "key": "u:9118fb3465f57b25295b2cb82e339855d18bdb4307383327865906b87ef910be",
+        "basis": "url",
+        "groupSize": 1,
+        "isCanonical": true
+      }
+    }
+  ]
+}

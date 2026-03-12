@@ -1,309 +1,353 @@
 # ai-watchtower
 
-`ai-watchtower` 不是單純的 AI 新聞站，也不是一般的 RSS reader。
+`ai-watchtower` 是一個 **artifact-first 的 AI 情報出版系統**。  
+它的工作不是把 AI 新聞做成無限捲動的 feed，而是把多來源、易重複、易焦慮的 AI 資訊流，整理成一條 **可定期更新、可追溯、可重建、可靜態發布** 的 intelligence pipeline。
 
-它的目標是把高噪音、分散、容易造成焦慮的 AI 資訊流，轉成一套**可驗證、可回看、可判斷**的個人 intelligence publishing system。
+## Highlights
 
-## 專案定位
+- 以 **TypeScript + Node 24** 實作 pipeline 與 CLI
+- `SQLite` 只作為 **control plane**，不承擔發布資料真相
+- raw snapshots、normalized snapshot、publish artifacts 明確分層
+- `Eleventy` 只讀 `artifacts/`，站點不再依賴 legacy snapshot
+- `GitHub Pages` 是主要部署目標
 
-這個專案目前的核心不是「做一個互動很多的前端框架應用」，而是：
+## 目錄
 
-- 穩定抓取高價值來源
-- 用 deterministic pipeline 做 normalization / dedup / classification / scoring
-- 產出可重建、可檢查的 artifacts
-- 以靜態網站方式發布每日 intelligence surface
+- [系統目標](#系統目標)
+- [核心架構](#核心架構)
+- [資料分層與版控策略](#資料分層與版控策略)
+- [CLI 介面](#cli-介面)
+- [本機開發](#本機開發)
+- [Artifact contract](#artifact-contract)
+- [專案結構](#專案結構)
+- [測試與驗證](#測試與驗證)
+- [CI / Deploy](#ci--deploy)
+- [為什麼不是把所有資料都塞進-sqlite](#為什麼不是把所有資料都塞進-sqlite)
 
-換句話說，這是一個**artifact-first 的情報出版系統**。
+## 系統目標
 
-## 目前技術決策
+這個專案要解決的是：
 
-### 前端
+- 抓取高價值 AI 資訊來源
+- 用 deterministic pipeline 做 normalization / dedup / scoring / classification
+- 按固定節奏重新產出 digest 與 ranking surfaces
+- 保留 provenance，讓每個輸出都能追到來源與建構過程
+- 用靜態站方式發布結果，而不是做一個高度耦合的全端 app
 
-目前前端仍採用 **Eleventy + Nunjucks (`.njk`)**，沒有先搬到 React / Next.js / Astro。
+一句話說，這不是一般 RSS reader，而是一個 **資料產品導向的情報整理系統**。
 
-這個決策是刻意的，理由如下：
-
-- 目前主要需求是「資訊架構、掃讀性、信任感、可驗證性」，不是 client-side 複雜互動
-- 專案本身的資料邊界已經很清楚：`pipeline -> artifacts -> static publish`
-- GitHub Pages 與靜態輸出非常適合現在的部署模型
-- 現階段先把 artifact contract 與 publishing surface 做穩，比整站改框架更有價值
-
-未來如果要加入更強的互動式篩選、視覺化時間軸、watchlist、使用者工作台，再評估：
-
-- `Eleventy + islands`
-- `Astro`
-- 或真正升級成完整 app framework
-
-### UI / UX 方向
-
-目前 UI 已往 **情報台 / intelligence console** 的方向調整，而不是一般 landing page。
-
-重點是：
-
-- 首頁先給你「今日狀態」而不是行銷文案
-- 先看 signal、再看 raw feed
-- 把 ranked / cluster / source health / latest ingest 分成不同工作面
-- 視覺上偏向 editorial intelligence desk，而不是一般 SaaS dashboard
-
-## 系統架構
-
-### 高層架構圖
+## 核心架構
 
 ```mermaid
 flowchart TD
-    A["來源清單<br/>config/sources.json"] --> B["擷取層<br/>scripts/ingest.js"]
-    B --> C["SQLite 狀態庫<br/>.data/watchtower.sqlite"]
-    B --> D["原始快照<br/>artifacts/ingested.json"]
-    D --> E["發布 artifact 建構<br/>scripts/build-artifacts.js"]
-    E --> F["發布資料<br/>candidates.json / digests.json / dedupGroups.json"]
-    F --> G["Eleventy Site Layer<br/>src/"]
-    G --> H["靜態輸出<br/>public/"]
-    H --> I["GitHub Pages"]
+    A["config/sources.json<br/>來源設定"] --> B["watchtower ingest"]
+    B --> C["SQLite<br/>control plane"]
+    B --> D["data/raw/<date>/<source>/<run-id>.jsonl.gz<br/>immutable raw snapshots"]
+    D --> E["watchtower normalize"]
+    C --> E
+    E --> F["data/normalized/<run-id>.json<br/>normalized snapshot"]
+    F --> G["watchtower build-artifacts"]
+    G --> H["artifacts/*.json<br/>publish contract"]
+    H --> I["Eleventy site layer"]
+    I --> J["public/"]
+    J --> K["GitHub Pages"]
 ```
 
-### 執行流程圖
+### 執行流程
 
-```mermaid
-sequenceDiagram
-    participant U as 開發者 / CI
-    participant I as ingest.js
-    participant DB as SQLite
-    participant A as artifacts
-    participant S as Eleventy
-    participant P as GitHub Pages
+1. `ingest`
+   - 讀取 `config/sources.json`
+   - 發送 feed requests
+   - 更新 SQLite 的 source state / fetch runs / lineage index
+   - 將每次抓取結果寫成 raw snapshot
+2. `normalize`
+   - 讀取 raw snapshots
+   - canonicalize URL / timestamp / snippet
+   - 生成 normalized snapshot
+3. `build-artifacts`
+   - 對 normalized items 做 scoring / classification / dedup / digest assembly
+   - 驗證 artifact schema
+   - 輸出 manifest 與 publish artifacts
+4. `build`
+   - Eleventy 讀取 `artifacts/`
+   - 生成靜態網站
 
-    U->>I: npm run ingest
-    I->>DB: 寫入 ingestion_runs / sources / feed_entries_raw
-    I->>A: 產出 ingested.json
-    U->>A: npm run artifacts
-    A->>A: 產出 candidates.json / digests.json / dedupGroups.json
-    U->>S: npm run build
-    S->>S: 載入 artifacts 並 render 頁面
-    S->>P: 部署 public/
-```
+## 資料分層與版控策略
 
-### Site Layer 關係圖
+### 1. Control plane
 
-```mermaid
-flowchart LR
-    A["artifacts/ingested.json"] --> B["src/_data/ingested.js"]
-    C["artifacts/candidates.json"] --> D["src/_data/candidates.js"]
-    E["artifacts/digests.json"] --> F["src/_data/digests.js"]
-    G["artifacts/dedupGroups.json"] --> H["src/_data/dedupGroups.js"]
+路徑：
 
-    B --> I["首頁 / Items / Sources"]
-    D --> J["Candidates"]
-    F --> K["Digests"]
-    H --> L["Dedup"]
-```
+- `.data/watchtower.sqlite`
 
-## 設計原則
+用途：
 
-### 1. Artifact-first
+- source registry snapshot
+- fetch state（`etag` / `last-modified` / last fetch status）
+- run metadata
+- fetch attempts
+- lineage index
 
-先產資料，再渲染網站。
+這層是 **runtime state**，不是資料版控對象。
 
-- pipeline 先輸出 artifacts
-- site 只讀 artifacts
-- deploy 只發布靜態結果
+### 2. Raw layer
 
-### 2. Deterministic-first
+路徑：
 
-現階段優先建立穩定、可回放、可追蹤的 deterministic 基礎。
+- `data/raw/<yyyy>/<mm>/<dd>/<source>/<run-id>.jsonl.gz`
 
-- dedup 先 deterministic
-- classification 先 deterministic
-- scoring 先 deterministic
-- AI summary / synthesis 之後再疊上去
+用途：
 
-### 3. Source-of-truth 邊界清楚
+- 保留每次抓取的原始 feed entries
+- 做為可回放、可追溯的原始證據
 
-- pipeline truth: `artifacts/*.json`
-- site truth: `src/`
-- deployment truth: `public/`
+這層預設不進 Git；如果未來需要長期版本化，優先考慮 object storage / DVC，而不是把大型 mutable DB 丟進版控。
 
-### 4. Real-data-first
+### 3. Normalized layer
 
-主要展示應該建立在真實 ingest 結果，而不是假資料或靜態示例內容。
+路徑：
 
-## 重複執行是否會重複拉資料
+- `data/normalized/<run-id>.json`
+- `data/normalized/latest.json`
 
-重複執行會重新抓來源，但**不會無條件把同一筆一直新增進資料庫**。
+用途：
 
-目前設計重點如下：
+- 聚合 raw snapshots
+- 統一 canonical URL、timestamp、snippet、fingerprint、content hash
+- 做為 artifact build 的單一輸入
 
-- `feed_entries_raw` 有 `UNIQUE(source_id, entry_uid)`
-- `entry_uid` 會優先使用 `guid`，其次是 canonical URL，再退回 fingerprint
-- 同一來源同一筆資料再次出現時，會更新 `last_seen_at`，不是直接新增重複列
-- 發布層另外還有 cross-source dedup，會依 canonical URL、content hash、或 title/day 做群組
+### 4. Publish layer
 
-也就是說：
+路徑：
 
-- **同 source 重跑通常不會一直累積重複列**
-- **跨 source 相同新聞會盡量在發布層收斂成同一個 cluster**
-- 如果來源自己更換了 `guid`、URL、標題或時間欄位，還是可能看起來像新資料
-
-## 目前網站工作面
-
-### Home
-
-情報台首頁，先看：
-
-- 今日是否有 briefing
-- unique candidates 數量
-- cluster 與 source health
-- 工作入口（ranked / clusters / sources）
-
-### Ranked Candidates
-
-給你最值得先讀的 shortlist。
-
-### Story Clusters
-
-給你看同一故事如何在不同來源之間擴散，避免重複閱讀。
-
-### Sources
-
-給你看來源清單、狀態與最近抓取情況。
-
-### Items
-
-這是 raw intake / verification surface，不是最終閱讀面。
-
-## 目前 artifact 輸出
-
-執行 pipeline 後，會產生：
-
-- `artifacts/ingested.json`
+- `artifacts/run-manifest.json`
 - `artifacts/candidates.json`
 - `artifacts/digests.json`
-- `artifacts/dedupGroups.json`
+- `artifacts/dedup-groups.json`
+- `artifacts/source-health.json`
+- `artifacts/items.json`（站點 verification surface）
 
-這些檔案是網站渲染時的正式輸入。
+這層是 **正式 publish contract**。  
+站點只讀這層；如果要做 Git-based review、diff、再現，應該看的也是這層。
 
-## 專案目錄
+## CLI 介面
 
-- `config/sources.json`
-  - 來源設定、tier、priority、fetch policy
-- `scripts/ingest.js`
-  - 擷取、normalize、寫入 SQLite、輸出 `ingested.json`
-- `scripts/build-artifacts.js`
-  - 由 `ingested.json` 衍生發布 artifacts
-- `scripts/lib/`
-  - dedup / classify / normalize / scoring / publish
-- `src/`
-  - Eleventy templates、樣式、site data loaders
-- `artifacts/`
-  - pipeline 產物，網站正式資料輸入
-- `public/`
-  - 最終靜態輸出
-- `.data/watchtower.sqlite`
-  - 本機 ingestion state
+目前 repo 的主要命令：
 
-## 本機執行方式
+```bash
+npm run watchtower -- <command>
+```
 
-### 1. 安裝依賴
+或直接用 script alias：
+
+```bash
+npm run ingest
+npm run normalize
+npm run artifacts
+npm run pipeline
+```
+
+### Commands
+
+```bash
+# 只抓來源並寫 raw snapshots / SQLite
+npm run ingest
+
+# 將 raw snapshots 聚合成 normalized snapshot
+npm run normalize
+
+# 從 normalized snapshot 產出 publish artifacts
+npm run artifacts
+
+# 依序執行 ingest -> normalize -> build-artifacts
+npm run pipeline
+
+# 先補齊 artifacts（若已有 normalized snapshot）再建站
+npm run build
+
+# 只執行 Eleventy site build
+npm run build:site
+```
+
+## 本機開發
+
+### 需求
+
+- Node `>= 24`
+- npm `>= 10`
+
+### 安裝
 
 ```bash
 npm ci
 ```
 
-### 2. 跑 pipeline
+### 典型流程
 
 ```bash
 npm run pipeline
-```
-
-這一步會：
-
-- 抓來源
-- 更新 SQLite
-- 產出 artifacts
-
-### 3. 建置網站
-
-```bash
 npm run build
 ```
 
-### 4. 本機開發模式
+若 artifacts 已經存在，只想單獨重跑 Eleventy：
+
+```bash
+npm run build:site
+```
+
+本機開發模式：
 
 ```bash
 npm run dev
 ```
 
-### 5. 清理
+清理快取與 build outputs：
 
 ```bash
 npm run clean
 ```
 
-## Node 版本要求
+## Artifact contract
 
-專案目前要求：
+### `run-manifest.json`
+
+包含：
+
+- `schemaVersion`
+- `generatedAt`
+- `runId`
+- `configHash`
+- normalized input hash
+- raw snapshot 清單
+- artifact hash 清單
+- source fetch summary
+- validation 結果
+
+這是每次 build 的 provenance 索引。
+
+### `candidates.json`
+
+用於：
+
+- 首頁 priority board
+- ranked candidates 頁
+
+內容聚焦在：
+
+- canonical items
+- score / score reasons
+- classification
+- dedup metadata
+
+### `digests.json`
+
+用於：
+
+- briefing archive
+- 每日 digest surfaces
+
+### `dedup-groups.json`
+
+用於：
+
+- cluster / story overlap 檢查
+- provenance / canonical member 檢視
+
+### `source-health.json`
+
+用於：
+
+- sources 頁
+- run health / fetch summary / operational trust
+
+### `items.json`
+
+用於：
+
+- verification surface
+- 檢查 normalized items 是否正確落地
+
+## 專案結構
 
 ```text
-Node >= 24
+config/
+  sources.json              # 來源設定
+data/
+  raw/                      # immutable raw snapshots
+  normalized/               # normalized snapshots
+src/
+  cli/                      # watchtower CLI
+  contracts/                # schema / types / artifact contracts
+  pipeline/                 # ingest, normalize, scoring, dedup, manifest
+  _data/                    # Eleventy data adapters (read artifacts only)
+  _includes/                # layouts / partials
+  assets/                   # styles
+artifacts/                  # publish contract
+docs/
+  architecture/             # 架構文件
+tests/
+  fixtures/                 # feed / snapshot fixtures
 ```
 
-原因是 ingestion layer 使用了 `node:sqlite`。
+## 測試與驗證
 
-如果你用 Node 18 執行 `npm run pipeline`，會遇到：
+執行測試：
 
-- `ERR_UNKNOWN_BUILTIN_MODULE: node:sqlite`
+```bash
+npm test
+```
 
-但單純 `npm run build` 仍可能成功，因為 build 只是在渲染已存在的 artifacts。
+目前測試面包含：
+
+- normalization utilities
+- scoring / classification rules
+- artifact builder contract
+- fixture-based ingest -> normalize integration
+
+建議每次修改 pipeline 後至少重跑：
+
+```bash
+npm test
+npm run pipeline
+npm run build
+```
 
 ## CI / Deploy
 
-GitHub Actions Pages workflow 現在流程是：
+主要部署流程在 [`.github/workflows/pages.yml`](/Users/lynn/StudyProject/ai-watchtower/.github/workflows/pages.yml)。
+
+GitHub Actions 目前做的事：
 
 1. `npm ci`
 2. `npm run pipeline`
 3. `npm run build`
-4. deploy `public/`
+4. 上傳 `public/`
+5. Deploy 到 GitHub Pages
 
-這代表：
+這代表 CI 的責任分工是：
 
-- CI 不再只是 build template
-- CI 會先生成 artifacts
-- Pages 上看到的是 pipeline 與 site 一致的結果
+- pipeline 產生 artifacts
+- Eleventy 產生 static output
+- Pages 只負責發布 `public/`
 
-## Live URLs
+## 為什麼不是把所有資料都塞進 SQLite
 
-- Site: <https://orangered0706.github.io/ai-watchtower/>
-- Candidates: <https://orangered0706.github.io/ai-watchtower/candidates/>
-- Dedup: <https://orangered0706.github.io/ai-watchtower/dedup/>
-- Repo: <https://github.com/OrangeRed0706/ai-watchtower>
+因為那樣會同時踩到三個問題：
 
-## 現階段狀態
+1. **不可版控**
+   - `.sqlite` 是 mutable binary，不適合做 diff / review / artifact audit
+2. **資料邊界不清楚**
+   - runtime state、raw evidence、publish outputs 會混成一層
+3. **重建能力差**
+   - 你很難回答「這個 digest 是根據哪一次抓取、哪一批輸入、哪個 config 生成的」
 
-### 已完成
+這個專案的目標不是讓 SQLite 成為一切，而是讓它退回應有的位置：  
+**control plane，而不是 publish truth。**
 
-- RSS / Atom ingestion MVP
-- source policy / tiering
-- deterministic normalization
-- candidate scoring
-- cross-source dedup 初版
-- deterministic classification 初版
-- artifact-first 主幹落地
-- GitHub Pages pipeline + build 流程
-- 情報台風格前端骨架
+真正應該被 review、被 diff、被拿來重建的是 `artifacts/`，而不是資料庫檔案。
 
-### 接下來
+## 延伸閱讀
 
-- digest assembly 再產品化
-- AI summary / why-it-matters / synthesis layer
-- 更穩定的 artifact contract
-- 更完整的 weekly / daily intelligence surface
-- 若未來互動需求成長，再評估 islands 或框架升級
-
-## 判斷這個專案有沒有做對
-
-不是看頁面數量，而是看這幾件事是否同時成立：
-
-1. pipeline / artifacts / site / deploy 邊界清楚
-2. local / CI / Pages 一致
-3. 輸出真的降低資訊噪音
-4. 你能快速看懂並做判斷
-5. 專案可以長期穩定演進
+- [Artifact-First Architecture](/Users/lynn/StudyProject/ai-watchtower/docs/architecture/artifact-first-architecture.md)
+- [Pipeline spec](/Users/lynn/StudyProject/ai-watchtower/docs/pipeline.md)
+- [Data model notes](/Users/lynn/StudyProject/ai-watchtower/docs/data-model.md)

@@ -7,9 +7,9 @@ permalink: /items/index.html
 <section class="panel">
   <div class="page-title">
     <h1>Latest items</h1>
-    {% if ingested and ingested.run %}
+    {% if ingested and ingested.generatedAt %}
       <div class="subtle">
-        Last ingest: {{ ingested.run.finishedAt }} &middot; {{ ingested.run.entriesNew }} new
+        Last normalize: {{ ingested.generatedAt }} &middot; {{ ingested.items.length }} item(s)
       </div>
     {% else %}
       <div class="subtle">No ingested data yet</div>

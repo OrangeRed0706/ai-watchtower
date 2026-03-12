@@ -6,17 +6,29 @@
     "node": ">=24"
   },
   "scripts": {
-    "ingest": "node scripts/ingest.js",
-    "artifacts": "node scripts/build-artifacts.js",
-    "pipeline": "npm run ingest && npm run artifacts",
-    "build": "eleventy",
+    "watchtower": "tsx src/cli/watchtower.ts",
+    "ingest": "tsx src/cli/watchtower.ts ingest",
+    "normalize": "tsx src/cli/watchtower.ts normalize",
+    "artifacts": "tsx src/cli/watchtower.ts build-artifacts",
+    "pipeline": "tsx src/cli/watchtower.ts pipeline",
+    "build": "tsx src/cli/watchtower.ts build",
+    "build:site": "eleventy",
     "dev": "eleventy --serve --watch",
-    "clean": "rm -rf public .cache artifacts src/_data/ingested.json"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf public .cache artifacts data/normalized .vitest-cache"
   },
   "dependencies": {
+    "ajv": "^8.17.1",
+    "better-sqlite3": "^11.10.0",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "@types/node": "^24.0.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1",
+    "zod": "^3.25.64"
   }
 }
