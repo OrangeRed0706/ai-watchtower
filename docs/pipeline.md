@@ -2,7 +2,7 @@
 
 ## Overview
 
-The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to SQLite as the source of truth and generates deterministic site content and a GitHub Pages artifact (CI can be adapted to GitLab Pages if needed).
+The pipeline runs on a schedule (daily MVP) and is safe to rerun. It writes to SQLite as the control plane, generates deterministic site content, and produces the artifacts deployed to GitHub Pages.
 
 ## Stage 0 — Inputs and configuration
 
@@ -131,9 +131,6 @@ This produces a **digest-candidate** shortlist (still pre-dedup/classification) 
 
 **Static build**
 - Run the static site generator; output to `public/`.
-
-**GitLab Pages**
-- `pages` job publishes `public/` as artifact.
 
 **GitHub Pages**
 - GitHub Actions builds the static site and deploys `public/` as the Pages artifact.

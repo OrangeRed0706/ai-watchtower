@@ -18,6 +18,7 @@
 - [資料分層與版控策略](#資料分層與版控策略)
 - [CLI 介面](#cli-介面)
 - [本機開發](#本機開發)
+- [Agent docs](#agent-docs)
 - [Artifact contract](#artifact-contract)
 - [專案結構](#專案結構)
 - [測試與驗證](#測試與驗證)
@@ -207,6 +208,21 @@ npm run dev
 npm run clean
 ```
 
+## Agent docs
+
+repo 內的 agent 指南採用「短 `AGENTS.md` + 版本化支援文件 + 機械化檢查」的結構。
+
+- entrypoint: [AGENTS.md](/Users/lynn/StudyProject/ai-watchtower/AGENTS.md)
+- reading order: [docs/agent/context-map.md](/Users/lynn/StudyProject/ai-watchtower/docs/agent/context-map.md)
+- workflows: [docs/agent/workflows.md](/Users/lynn/StudyProject/ai-watchtower/docs/agent/workflows.md)
+- verification: [docs/agent/testing.md](/Users/lynn/StudyProject/ai-watchtower/docs/agent/testing.md)
+
+檢查 agent docs 結構：
+
+```bash
+npm run check:agent-docs
+```
+
 ## Artifact contract
 
 ### `run-manifest.json`
@@ -310,6 +326,12 @@ npm test
 npm test
 npm run pipeline
 npm run build
+```
+
+若只修改 `AGENTS.md` 或 `docs/agent/*`，至少執行：
+
+```bash
+npm run check:agent-docs
 ```
 
 ## CI / Deploy

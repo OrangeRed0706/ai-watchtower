@@ -2,15 +2,15 @@
 
 ## Scope boundary (what “MVP done” means)
 
-MVP is complete when a scheduled GitLab CI run can ingest configured sources, deduplicate and classify items, produce a daily digest, and publish it to GitLab Pages with provenance links—reliably and idempotently—at low cost.
+MVP is complete when a scheduled CI run can ingest configured sources, deduplicate and classify items, produce a daily digest, and publish it to GitHub Pages with provenance links reliably and idempotently at low cost.
 
 ## Phase 0 — Repo + CI scaffolding
 
 **Deliverables**
 - Directory structure for pipeline outputs and site content.
-- GitLab CI skeleton with:
+- CI skeleton with:
   - scheduled pipeline support
-  - `pages` job publishing `public/`
+  - a Pages deployment job publishing `public/`
 - Config files (sources list, thresholds, tag vocabulary).
 
 **Acceptance criteria**
@@ -18,7 +18,7 @@ MVP is complete when a scheduled GitLab CI run can ingest configured sources, de
 - No secrets committed; CI variables documented.
 
 **Risks**
-- GitLab Pages conventions (job naming/artifacts) must be correct.
+- Pages deployment conventions and artifacts must be correct.
 
 ## Phase 1 — Ingestion + storage
 
@@ -78,7 +78,7 @@ MVP is complete when a scheduled GitLab CI run can ingest configured sources, de
 - Source list page and basic tag/impact pages (optional MVP).
 
 **Acceptance criteria**
-- GitLab Pages site shows:
+- GitHub Pages site shows:
   - Latest digest (today)
   - Archive navigation
   - Each digest item links to its canonical source(s)
@@ -105,4 +105,3 @@ MVP is complete when a scheduled GitLab CI run can ingest configured sources, de
 
 **Cost control**
 - Prefer deterministic summarization for very short items (e.g., release notes titles) and reserve AI for meaningful items.
-

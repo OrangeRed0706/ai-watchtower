@@ -6,7 +6,7 @@
 AI news is high volume, uneven quality, and often duplicated across sources. Lynn wants a daily, high-signal digest that highlights what matters and why, with traceability back to original sources.
 
 **Primary output**
-- A **GitLab Pages static site** containing a daily digest and archives.
+- A **GitHub Pages static site** containing a daily digest and archives.
 
 **Primary user**
 - Lynn (single-user system, initially).
@@ -89,7 +89,7 @@ Generate a static site that includes:
 - Taxonomy pages (tags/impact areas) (optional MVP)
 
 Build output:
-- `public/` is the GitLab Pages artifact.
+- `public/` is the static site artifact deployed by Pages.
 
 ## 4) Non-functional requirements
 
@@ -119,14 +119,14 @@ Build output:
   - cached by content hash
   - bounded (max tokens, max items/day)
 
-## 5) Scheduling + operations (GitLab CI)
+## 5) Scheduling + operations (CI)
 
 **Trigger**
 - Scheduled pipeline (daily) plus manual trigger.
 
 **Jobs**
 - `pipeline`: run ingestion→publish; produce `public/`
-- `pages`: publish `public/` as GitLab Pages artifact
+- `pages`: publish `public/` as the Pages artifact
 
 **Retry strategy**
 - Per-source exponential backoff for transient failures.
@@ -135,7 +135,7 @@ Build output:
 ## 6) Security + privacy
 
 - Do not store secrets in repo.
-- AI API keys via GitLab CI variables.
+- AI API keys via CI variables.
 - Store only necessary content; avoid personal data.
 - User-agent identifies the project; obey robots and terms for fetched HTML.
 
@@ -145,11 +145,10 @@ Included:
 - RSS/Atom ingest
 - SQLite store with provenance
 - Dedup + classification + summarization
-- GitLab Pages site with digest + archive
+- GitHub Pages site with digest + archive
 
 Excluded (MVP):
 - Telegram notifications
 - Full-text crawling at scale
 - User accounts / personalization UI
 - Complex search (optional later: Lunr/mini search on generated JSON)
-
